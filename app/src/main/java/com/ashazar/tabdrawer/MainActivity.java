@@ -81,19 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
             }
-           /*
-            @Override
-            public void onClick(View v) {
-                super.onClick(v);
-
-                String text;
-                //text = clickedTabPos + " - " + clickedTabDetailPos;
-                text = "Tab " + clickedTabPos;
-
-                Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-            */
         };
 
         tabDrawer.setTabPadding(3, 3, 3, 3);
@@ -107,5 +94,11 @@ public class MainActivity extends AppCompatActivity {
         tabDrawer.initialize();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (tabDrawer.isDrawerOpen)
+            tabDrawer.closeDrawer();
+        else
+            super.onBackPressed();
     }
 }
