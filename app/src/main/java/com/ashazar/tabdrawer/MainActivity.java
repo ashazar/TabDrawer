@@ -16,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     Activity activity;
 
+    TabDrawer tabDrawer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         activity = this;
 
+        if (savedInstanceState == null) {
+            prepareTabDrawer();
+        }
+    }
+
+    private void prepareTabDrawer() {
         ArrayList<Tab> tabArray = new ArrayList<>();
         ArrayList<TabDetail> tabDetailArray = new ArrayList<>();
         Tab tab;
@@ -61,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         tab = new Tab("Settings", R.drawable.n_settings, R.drawable.s_settings);
         tabArray.add(tab);
 
-        TabDrawer tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
+        tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
             @Override
             public void onTabClicked(int pos) {
                 super.onTabClicked(pos);
@@ -93,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
         tabDrawer.setTabBackgroundSelectedColor(Color.parseColor("#3199ff"));
         tabDrawer.setTabBackgroundSelectedPassiveColor(Color.parseColor("#cccccc"));
 
-        //tabDrawer.setTabListContainerHeight(350);
+        tabDrawer.setTabListContainerPadding(16, 16, 16, 16);
 
         tabDrawer.initialize();
+    }
 
     }
 }
