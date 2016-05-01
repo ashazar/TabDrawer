@@ -2,14 +2,18 @@ package com.ashazar.tabdrawer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ashazar.tabdrawer.model.Tab;
+import com.ashazar.tabdrawer.model.TabDetail;
 
 import java.util.ArrayList;
 
@@ -44,6 +48,10 @@ public class TabDrawer implements View.OnClickListener {
 
 
     int tabListContainerHeight = 0;
+    int tabListContainerPaddingLeft = 0;
+    int tabListContainerPaddingTop = 0;
+    int tabListContainerPaddingRight = 0;
+    int tabListContainerPaddingBottom = 0;
 
 
     ArrayList<Tab> tabs;
@@ -148,15 +156,14 @@ public class TabDrawer implements View.OnClickListener {
 
     private void addTabs() {
         for (int i = 0; i < tabCount; i++) {
-            Tab tab = tabs.get(i);
 
-            tabContainer.addView(prepareTab(tab));
+            tabContainer.addView(prepareTab(i));
         }
     }
 
     // TODO: Prepare an XML Tab Layout, and give the customization to developer.
-    private LinearLayout prepareTab(Tab tab) {
-        int pos = tab.pos;
+    private LinearLayout prepareTab(int pos) {
+        Tab tab = tabs.get(pos);
         int posi = pos + 1;
 
         LinearLayout tabLayout = new LinearLayout(context);
@@ -204,20 +211,69 @@ public class TabDrawer implements View.OnClickListener {
         return tabLayout;
     }
 
+    public void setTabListContainerPadding(int left, int top, int right, int bottom) {  // params in dp
+        tabListContainerPaddingLeft = dpTOpx(left);
+        tabListContainerPaddingTop = dpTOpx(top);
+        tabListContainerPaddingRight = dpTOpx(right);
+        tabListContainerPaddingBottom = dpTOpx(bottom);
+    }
 
     private void addTabListContainer() {
         tabListContainer = new LinearLayout(context);
         tabListContainer.setOrientation(LinearLayout.VERTICAL);
         tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, tabListContainerHeight));
         tabListContainer.setBackgroundColor(tabBackgroundSelectedColor);
+        tabListContainer.setPadding(tabListContainerPaddingLeft, tabListContainerPaddingTop, tabListContainerPaddingRight, tabListContainerPaddingBottom);
         tabListContainer.setTag("tabListContainer");
 
+
+        ListView listView = addListView(1);
+        tabListContainer.addView(listView);
 
         tabDrawerContainer.addView(tabListContainer);
     }
 
+    private ListView addListView(int pos) {
+        ArrayList<TabDetail> list = tabs.get(pos).list;
+        //if (list == null) return null;
+
+
+        ListView listView = new ListView(context);
+        listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, tabListContainerHeight));
+        //listView.setBackgroundColor(Color.parseColor("#336699"));
+        listView.setDividerHeight(0);
+        listView.setDivider(null);
+        listView.setTag("LISTVIEW_" + pos);
+
+        String[] items = {"item 1", "item 2", "item 3", "item 4", "item 5", "item 6"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, items);
+
+        listView.setAdapter(adapter);
+
+
+        return listView;
+    }
+
+    private void updateTabListContainer() {
+        Tab selectedTab = tabs.get(currentSelectedTabPos);
+
+        if (selectedTab.list == null) {
+            if (isDrawerOpen) showTabListContainer(false);
+            return;
+        }
+
+
+    }
+
     public boolean isDrawerOpen() {
         return isDrawerOpen;
+    }
+
+    public void openDrawer() {
+        showTabListContainer(true);
+    }
+    public void closeDrawer() {
+        showTabListContainer(false);
     }
 
     private void showTabListContainer(boolean show) {
@@ -248,8 +304,7 @@ public class TabDrawer implements View.OnClickListener {
         String tag = (String) v.getTag();
 
         if (tag == null) {
-            toggle = false;
-            showTabListContainer(toggle);
+            showTabListContainer(false);
 
             return;
         }
