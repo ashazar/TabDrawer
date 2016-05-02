@@ -2,7 +2,7 @@ package com.ashazar.tabdrawer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,9 +84,9 @@ public class TabDrawer implements View.OnClickListener {
 
         prepareTabContainer();
         addTabs();
-        setSelectedTab(0);
-
         addTabListContainer();
+
+        setSelectedTab(0);
 
         //showTabListContainer(false);
         tabDrawerContainer.setTranslationY(tabListContainerHeight); toggle = false;
@@ -151,12 +151,13 @@ public class TabDrawer implements View.OnClickListener {
                 if (hasTitle) title.setTextColor(tabBackgroundSelectedColor);
             }
         }
+
+        updateTabListContainer();
     }
 
 
     private void addTabs() {
         for (int i = 0; i < tabCount; i++) {
-
             tabContainer.addView(prepareTab(i));
         }
     }
@@ -220,36 +221,48 @@ public class TabDrawer implements View.OnClickListener {
 
     private void addTabListContainer() {
         tabListContainer = new LinearLayout(context);
-        tabListContainer.setOrientation(LinearLayout.VERTICAL);
+        tabListContainer.setOrientation(LinearLayout.HORIZONTAL);
         tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, tabListContainerHeight));
         tabListContainer.setBackgroundColor(tabBackgroundSelectedColor);
         tabListContainer.setPadding(tabListContainerPaddingLeft, tabListContainerPaddingTop, tabListContainerPaddingRight, tabListContainerPaddingBottom);
         tabListContainer.setTag("tabListContainer");
 
+        for (int i = 0; i < tabCount; i++) {
+            ListView listView = prepareListView(i);
+            if (i == 0)
+                listView.setVisibility(View.GONE);
+            else
+                listView.setVisibility(View.VISIBLE);
 
-        ListView listView = addListView(1);
-        tabListContainer.addView(listView);
+            tabListContainer.addView(listView);
+        }
 
         tabDrawerContainer.addView(tabListContainer);
     }
 
-    private ListView addListView(int pos) {
-        ArrayList<TabDetail> list = tabs.get(pos).list;
-        //if (list == null) return null;
-
-
+    private ListView prepareListView(int pos) {
         ListView listView = new ListView(context);
         listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, tabListContainerHeight));
-        //listView.setBackgroundColor(Color.parseColor("#336699"));
         listView.setDividerHeight(0);
         listView.setDivider(null);
         listView.setTag("LISTVIEW_" + pos);
 
-        String[] items = {"item 1", "item 2", "item 3", "item 4", "item 5", "item 6"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, items);
+        ArrayList<TabDetail> list = tabs.get(pos).list;
+        Log.d("ASH--", "TAB " + pos + " - " + tabs.get(pos).title);
+        if (list == null) return listView;
 
+        ArrayList<String> items = new ArrayList<>();
+        int listSize = list.size();
+
+        Log.d("ASH--", "prepareListView - pos: " + pos);
+        for (int i = 0; i < listSize; i++) {
+            items.add(list.get(i).title);
+            Log.d("ASH--", list.get(i).title);
+        }
+        Log.d("ASH--", "");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.tab_detail_item, items);
         listView.setAdapter(adapter);
-
 
         return listView;
     }
@@ -262,7 +275,16 @@ public class TabDrawer implements View.OnClickListener {
             return;
         }
 
+        for (int i = 0; i < tabCount; i++) {
+            ListView listView = (ListView) tabListContainer.getChildAt(i);
 
+            if (i == currentSelectedTabPos) {
+                listView.setVisibility(View.GONE);
+            }
+            else {
+                listView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     public boolean isDrawerOpen() {

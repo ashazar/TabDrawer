@@ -1,7 +1,7 @@
 package com.ashazar.tabdrawer.model;
 
 /**
- * Created by mac_bta11410 on 26/04/16.
+ * Created by Serdar Hazar on 26/04/16.
  */
 public class TabDetail {
     public String title;

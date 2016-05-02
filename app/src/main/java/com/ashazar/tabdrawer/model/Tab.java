@@ -11,11 +11,6 @@ public class Tab {
     public int selectedDrawableId = 0;
     public ArrayList<TabDetail> list = null;
 
-    /*
-    boolean withIcon;
-    boolean hasList;
-    */
-
 
     public Tab(String tabTitle) {
         title = tabTitle;
@@ -31,7 +26,6 @@ public class Tab {
         drawableId = iconDrawableId[0];
         if (iconDrawableId.length >= 2) selectedDrawableId = iconDrawableId[1];
     }
-
 
     public void addList(ArrayList<TabDetail> tabList) {
         list = tabList;
