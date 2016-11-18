@@ -1,4 +1,4 @@
-package com.ashazar.tabdrawer;
+package com.ashazar.tabdrawerexample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

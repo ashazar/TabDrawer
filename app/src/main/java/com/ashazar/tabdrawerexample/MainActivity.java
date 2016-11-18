@@ -1,4 +1,4 @@
-package com.ashazar.tabdrawer;
+package com.ashazar.tabdrawerexample;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabDetail;
 

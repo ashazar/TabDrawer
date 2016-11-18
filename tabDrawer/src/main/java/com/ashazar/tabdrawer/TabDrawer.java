@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ashazar.tabdrawer.R;
 import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabDetail;
 
@@ -61,7 +62,7 @@ public class TabDrawer implements View.OnClickListener {
     int currentSelectedTabPos = 0;
 
     boolean toggle = false;
-    boolean isDrawerOpen = false;
+    public boolean isDrawerOpen = false;
 
     public TabDrawer(Context context, Activity activity, int tabDrawerContainerId, ArrayList<Tab> tabArrayList) {
         this.context = context;
