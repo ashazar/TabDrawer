@@ -5,10 +5,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
+import com.ashazar.tabdrawer.model.TabArray;
 import com.ashazar.tabdrawer.model.TabDetail;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareTabDrawer() {
+        /*
         ArrayList<Tab> tabArray = new ArrayList<>();
         ArrayList<TabDetail> tabDetailArray = new ArrayList<>();
         Tab tab;
@@ -70,6 +73,67 @@ public class MainActivity extends AppCompatActivity {
 
         tab = new Tab("Settings", R.drawable.n_settings, R.drawable.s_settings);
         tabArray.add(tab);
+        */
+
+        /*
+        ArrayList<Tab> tabArray = new ArrayList<>();
+        ArrayList<TabDetail> tabDetailArray = new ArrayList<>();
+        Tab tab;
+        TabDetail tabDetail;
+
+        tab = new Tab("Activity", R.drawable.n_activity, R.drawable.s_activity);
+        tab = new Tab("Queue", R.drawable.n_queue, R.drawable.s_queue);
+        tab = new Tab("Chat", R.drawable.n_chat, R.drawable.s_chat);
+        tab = new Tab("Reports", R.drawable.n_report, R.drawable.s_report);
+        tab = new Tab("Settings", R.drawable.n_settings, R.drawable.s_settings);
+        */
+        TabArray tabArray = new TabArray();
+        tabArray.addTab( new Tab()
+                        .setTitle("Activity")
+                        .setDrawableId(R.drawable.n_activity)
+                        .setSelectedDrawableId(R.drawable.s_activity)
+                        .addTabDetailItem(new TabDetail("TAB 1 - item 1"))
+                        .addTabDetailItem(new TabDetail("TAB 1 - item 2"))
+                        )
+                .addTab( new Tab()
+                        .setTitle("Queue")
+                        .setDrawableId(R.drawable.n_queue)
+                        .setSelectedDrawableId(R.drawable.s_queue)
+                        .addTabDetailItem(new TabDetail("TAB 2 - item 11"))
+                        .addTabDetailItem(new TabDetail("TAB 2 - item 22"))
+                        .addTabDetailItem(new TabDetail("TAB 2 - item 33"))
+                        )
+
+                .addTab( new Tab()
+                        .setTitle("Chat")
+                        .setDrawableId(R.drawable.n_chat)
+                        .setSelectedDrawableId(R.drawable.s_chat)
+                        .addTabDetailItem(new TabDetail("TAB 3 - item 111"))
+                        )
+
+                .addTab( new Tab()
+                        .setTitle("Reports")
+                        .setDrawableId(R.drawable.n_report)
+                        .setSelectedDrawableId(R.drawable.s_report)
+                        .addTabDetailItem(new TabDetail("TAB 4 - item 1111"))
+                        .addTabDetailItem(new TabDetail("TAB 4 - item 2222"))
+                        .addTabDetailItem(new TabDetail("TAB 4 - item 3333"))
+                    )
+
+                .addTab( new Tab()
+                        .setTitle("Settings")
+                        .setDrawableId(R.drawable.n_settings)
+                        .setSelectedDrawableId(R.drawable.s_settings)
+                        .addTabDetailItem(new TabDetail("TAB 5 - item 11111"))
+                        .addTabDetailItem(new TabDetail("TAB 5 - item 22222"))
+                        .addTabDetailItem(new TabDetail("TAB 5 - item 33333"))
+                        .addTabDetailItem(new TabDetail("TAB 5 - item 44444"))
+                );
+
+        Log.d("--ASH--", "tabArray: " + tabArray.getTab(0).getTabItemList().get(0).getTitle());
+        Log.d("--ASH--", "tabArray: " + tabArray.getTab(0).getTabItemList().get(1).getTitle());
+        Log.d("--ASH--", "tabArray: " + tabArray.getTab(1).getTabItemList().get(0).getTitle());
+        Log.d("--ASH--", "tabArray: " + tabArray.getTab(1).getTabItemList().get(1).getTitle());
 
         tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
             @Override
@@ -84,20 +148,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        tabDrawer.setTabPadding(3, 3, 3, 3);
-        tabDrawer.setTabTitleColor(Color.parseColor("#3199ff"));
-        tabDrawer.setTabBackgroundColor(Color.parseColor("#ffffff"));
-        tabDrawer.setTabBackgroundSelectedColor(Color.parseColor("#3199ff"));
-        tabDrawer.setTabBackgroundSelectedPassiveColor(Color.parseColor("#cccccc"));
-
-        tabDrawer.setTabListContainerPadding(16, 16, 16, 16);
 
         tabDrawer.initialize();
     }
 
     @Override
     public void onBackPressed() {
-        if (tabDrawer.isDrawerOpen)
+        if (tabDrawer.isDrawerOpen())
             tabDrawer.closeDrawer();
         else
             super.onBackPressed();

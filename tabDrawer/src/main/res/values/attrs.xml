@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TabDrawerLayout">
+        <attr name="height_tabBar" format="dimension"/>
+        <attr name="height_Total" format="dimension"/>
+
+        <attr name="tabBarPosition" format="enum">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr>
+
+        <attr name="defaultSelectedTab" format="integer"/>
+        <attr name="custom_tabItemLayout" format="integer"/>
+
+        <attr name="padding" format="dimension"/>
+        <attr name="paddingLeft" format="dimension"/>
+        <attr name="paddingRight" format="dimension"/>
+        <attr name="paddingTop" format="dimension"/>
+        <attr name="paddingBottom" format="dimension"/>
+
+        <attr name="titleSize" format="dimension"/>
+        <attr name="titleColor" format="color"/>
+        <attr name="titleColor_selected" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="backgroundColor_selected" format="color"/>
+
+        <attr name="list_padding" format="dimension"/>
+        <attr name="list_paddingLeft" format="dimension"/>
+        <attr name="list_paddingRight" format="dimension"/>
+        <attr name="list_paddingTop" format="dimension"/>
+        <attr name="list_paddingBottom" format="dimension"/>
+
+    </declare-styleable>
+</resources>
