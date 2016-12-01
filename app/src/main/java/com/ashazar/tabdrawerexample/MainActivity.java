@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                                             .setSelectedDrawableId(R.drawable.s_activity)
                                             .addTabDetailItem( new TabDetail("TAB 1 - item 1") )
                                             .addTabDetailItem( new TabDetail("TAB 1 - item 2") )
-                                            )
+                                    )
                                     .addTab( new Tab()
                                             .setTitle("Queue")
                                             .setDrawableId(R.drawable.n_queue)
@@ -51,15 +51,14 @@ public class MainActivity extends AppCompatActivity {
                                             .addTabDetailItem( new TabDetail("TAB 2 - item 11") )
                                             .addTabDetailItem( new TabDetail("TAB 2 - item 22") )
                                             .addTabDetailItem( new TabDetail("TAB 2 - item 33") )
-                                            )
-
+                                    )
                                     .addTab( new Tab()
                                             .setTitle("Chat")
                                             .setDrawableId(R.drawable.n_chat)
                                             .setSelectedDrawableId(R.drawable.s_chat)
                                             .addTabDetailItem( new TabDetail("TAB 3 - item 111") )
-                                            )
-
+                                            .addTabDetailItem( new TabDetail("TAB 3 - item 222") )
+                                    )
                                     .addTab( new Tab()
                                             .setTitle("Reports")
                                             .setDrawableId(R.drawable.n_report)
@@ -67,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
                                             .addTabDetailItem( new TabDetail("TAB 4 - item 1111") )
                                             .addTabDetailItem( new TabDetail("TAB 4 - item 2222") )
                                             .addTabDetailItem( new TabDetail("TAB 4 - item 3333") )
-                                        )
-
+                                    )
                                     .addTab( new Tab()
                                             .setTitle("Settings")
                                             .setDrawableId(R.drawable.n_settings)
@@ -81,17 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
         tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
             @Override
-            public void onTabClicked(int pos) {
-                super.onTabClicked(pos);
+            public void onTabClicked(int tabPos, int itemPos) {
+                super.onTabClicked(tabPos, itemPos);
 
                 String text;
-                text = "Tab " + pos;
+                text = "Tab " + tabPos + " - item " + itemPos;
 
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
             }
         };
-
 
         tabDrawer.initialize();
     }

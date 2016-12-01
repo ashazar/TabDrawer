@@ -2,10 +2,12 @@ package com.ashazar.tabdrawer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,8 +23,9 @@ import java.util.ArrayList;
 /**
  * Created by Serdar Hazar on 26/04/16.
  */
-public class TabDrawer implements View.OnClickListener {
+public class TabDrawer implements View.OnClickListener, ListView.OnItemClickListener {
     private Context context;
+    private Activity activity;
 
     private TabDrawerLayout tabDrawerLayout;
     private LinearLayout tabContainer;
@@ -32,18 +35,18 @@ public class TabDrawer implements View.OnClickListener {
     private int tabBarHeight = 0;
     private int tabListContainerHeight = 0;
 
-    //private ArrayList<Tab> tabs;
     private TabArray tabArray;
     private int tabCount;
-    private int clickedTabPos = -1;
-    private int clickedTabDetailPos = -1;
     private int currentSelectedTabPos = 0;
+    private int clickedTabDetailPos = -1;
+    private View previousTabDetailItemView = null;
 
-    private boolean toggle = false;
-    private boolean isDrawerOpen = false;
+    private boolean drawerOpen = false;
+
 
     protected TabDrawer(Context context, Activity activity, int tabDrawerLayoutId, TabArray tabArray) {
         this.context = context;
+        this.activity = activity;
 
         View rootView = activity.findViewById(android.R.id.content);
         tabDrawerLayout = (TabDrawerLayout) rootView.findViewById(tabDrawerLayoutId);
@@ -63,14 +66,10 @@ public class TabDrawer implements View.OnClickListener {
         addTabs();
         addTabListContainer();
 
-        int defaultSelectedTab = tabDrawerLayout.getDefaultSelectedTab() - 1;
-        if (tabDrawerLayout.getDefaultSelectedTab() > tabCount) defaultSelectedTab = 0;
-
+        int defaultSelectedTab = (tabDrawerLayout.getDefaultSelectedTab() > tabCount) ? 0 : tabDrawerLayout.getDefaultSelectedTab() - 1;
         setSelectedTab(defaultSelectedTab);
 
         tabDrawerLayout.setTranslationY(tabListContainerHeight);
-        toggle = false;
-
         tabDrawerLayout.setOnClickListener(this);
     }
 
@@ -78,11 +77,104 @@ public class TabDrawer implements View.OnClickListener {
         tabContainer = new LinearLayout(context);
         tabContainer.setOrientation(LinearLayout.HORIZONTAL);
         tabContainer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tabBarHeight));
-        tabContainer.setTag("tabContainer");
 
         tabDrawerLayout.addView(tabContainer);
     }
 
+    private void addTabs() {
+        for (int i = 0; i < tabCount; i++) {
+            tabContainer.addView(prepareTab(i));
+        }
+    }
+
+    // TODO: Prepare an XML Tab Layout, and give the customization to developer.
+    private LinearLayout prepareTab(int pos) {
+        Tab tab = tabArray.getTab(pos);
+
+        LinearLayout tabLayout = new LinearLayout(context);
+        tabLayout.setOrientation(LinearLayout.VERTICAL);
+        tabLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+        tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
+        tabLayout.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor());
+
+        if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) tabLayout.setWeightSum(10);
+
+        tabLayout.setId(1000 + pos);
+        tabLayout.setClickable(true);
+
+        if (tab.getDrawableId() != 0) {
+            ImageView icon = new ImageView(context);
+            icon.setImageResource(tab.getDrawableId());
+
+            if (tab.getTitle() == null)
+                icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            else
+                icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 6));
+
+            icon.setId(1100 + pos);
+            tabLayout.addView(icon);
+        }
+
+        if (tab.getTitle() != null) {
+            TextView title = new TextView(context);
+            if (tab.getDrawableId() != 0)
+                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 4));
+            else
+                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            title.setText(tab.getTitle());
+            title.setTextColor(tabDrawerLayout.getTabTitleColor());
+            title.setTextSize(tabDrawerLayout.getTabTitleSize());
+
+            title.setId(1200 + pos);
+            tabLayout.addView(title);
+        }
+
+        tabLayout.setOnClickListener(this);
+
+        return tabLayout;
+    }
+
+    private void addTabListContainer() {
+        tabListContainer = new LinearLayout(context);
+        tabListContainer.setOrientation(LinearLayout.HORIZONTAL);
+        tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(getScreenWidth() * tabCount, tabListContainerHeight));
+        tabListContainer.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor_selected());
+        //tabListContainer.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
+
+        for (int i = 0; i < tabCount; i++) {
+            ListView layout = prepareContainerView(i);
+            tabListContainer.addView(layout);
+        }
+
+        tabDrawerLayout.addView(tabListContainer);
+    }
+
+    private ListView prepareContainerView(int pos) {
+        ListView listView = new ListView(context);
+        listView.setLayoutParams(new LinearLayout.LayoutParams(getScreenWidth(), LinearLayout.LayoutParams.MATCH_PARENT));
+        listView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
+        listView.setDividerHeight(0);
+        listView.setDivider(null);
+
+        ArrayList<TabDetail> list = tabArray.getTab(pos).getTabItemList();
+        if (list == null  ||  list.size() == 0)
+            return listView;
+
+        ArrayList<String> items = new ArrayList<>();
+        int listSize = list.size();
+
+        for (int i = 0; i < listSize; i++) {
+            items.add(list.get(i).getTitle());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.tab_detail_item, items);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(this);
+
+        return listView;
+    }
 
     private void setSelectedTab(int pos) {
         currentSelectedTabPos = pos;
@@ -121,134 +213,31 @@ public class TabDrawer implements View.OnClickListener {
         updateTabListContainer();
     }
 
-
-    private void addTabs() {
-        for (int i = 0; i < tabCount; i++) {
-            tabContainer.addView(prepareTab(i));
-        }
-    }
-
-    // TODO: Prepare an XML Tab Layout, and give the customization to developer.
-    private LinearLayout prepareTab(int pos) {
-        Tab tab = tabArray.getTab(pos);
-        //int posi = pos + 1;
-
-        LinearLayout tabLayout = new LinearLayout(context);
-        tabLayout.setOrientation(LinearLayout.VERTICAL);
-        tabLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
-        tabLayout.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor());
-        if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) tabLayout.setWeightSum(10);
-
-        tabLayout.setId(1000 + pos);
-        tabLayout.setTag("TAB_" + String.valueOf(pos));
-        tabLayout.setClickable(true);
-
-        if (tab.getDrawableId() != 0) {
-            ImageView icon = new ImageView(context);
-            icon.setImageResource(tab.getDrawableId());
-
-            if (tab.getTitle() == null)
-                icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            else
-                icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 7));
-
-            icon.setId(1100 + pos);
-            tabLayout.addView(icon);
-        }
-
-
-        if (tab.getTitle() != null) {
-            TextView title = new TextView(context);
-            if (tab.getDrawableId() != 0)
-                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 3));
-            else
-                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            title.setText(tab.getTitle());
-            title.setTextColor(tabDrawerLayout.getTabTitleColor());
-            title.setTextSize(tabDrawerLayout.getTabTitleSize());
-
-            title.setId(1200 + pos);
-            tabLayout.addView(title);
-        }
-
-        tabLayout.setOnClickListener(this);
-
-        return tabLayout;
-    }
-
-    private void addTabListContainer() {
-        tabListContainer = new LinearLayout(context);
-        tabListContainer.setOrientation(LinearLayout.HORIZONTAL);
-        tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, tabListContainerHeight));
-        tabListContainer.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor_selected());
-        tabListContainer.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
-        tabListContainer.setTag("tabListContainer");
-
-        for (int i = 0; i < tabCount; i++) {
-            ListView listView = prepareListView(i);
-            if (i == 0)
-                listView.setVisibility(View.GONE);
-            else
-                listView.setVisibility(View.VISIBLE);
-
-            tabListContainer.addView(listView);
-        }
-
-        tabDrawerLayout.addView(tabListContainer);
-    }
-
-    private ListView prepareListView(int pos) {
-        ListView listView = new ListView(context);
-        listView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, tabListContainerHeight));
-        listView.setDividerHeight(0);
-        listView.setDivider(null);
-        listView.setTag("LISTVIEW_" + pos);
-
-        //ArrayList<TabDetail> list = tabs.get(pos).getTabItemList();
-        ArrayList<TabDetail> list = tabArray.getTab(pos).getTabItemList();
-        Log.d("ASH--", "TAB " + pos + " - " + tabArray.getTab(pos).getTabItemList());
-        if (list == null) return listView;
-
-        ArrayList<String> items = new ArrayList<>();
-        int listSize = list.size();
-
-        Log.d("ASH--", "prepareListView - pos: " + pos);
-        for (int i = 0; i < listSize; i++) {
-            items.add(list.get(i).getTitle());
-            Log.d("ASH--", list.get(i).getTitle());
-        }
-        Log.d("ASH--", "");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.tab_detail_item, items);
-        listView.setAdapter(adapter);
-
-        return listView;
-    }
-
     private void updateTabListContainer() {
         Tab selectedTab = tabArray.getTab(currentSelectedTabPos);
 
         if (selectedTab.getTabItemList() == null) {
-            if (isDrawerOpen) showTabListContainer(false);
+            if (drawerOpen) showTabListContainer(false);
             return;
         }
 
-        for (int i = 0; i < tabCount; i++) {
-            ListView listView = (ListView) tabListContainer.getChildAt(i);
+        if (drawerOpen)
+            tabListContainer.animate().translationX(0 - (getScreenWidth() * currentSelectedTabPos));
+        else
+            tabListContainer.setTranslationX(0 - (getScreenWidth() * currentSelectedTabPos));
 
-            if (i == currentSelectedTabPos) {
-                listView.setVisibility(View.GONE);
-            }
-            else {
-                listView.setVisibility(View.VISIBLE);
-            }
-        }
+    }
+
+    private int getScreenWidth() {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        return size.x;
     }
 
     public boolean isDrawerOpen() {
-        return isDrawerOpen;
+        return drawerOpen;
     }
 
     public void openDrawer() {
@@ -263,11 +252,11 @@ public class TabDrawer implements View.OnClickListener {
 
         if (show) {
             position = 0;
-            isDrawerOpen = true;
+            drawerOpen = true;
         }
         else {
             position = tabListContainerHeight;
-            isDrawerOpen = false;
+            drawerOpen = false;
         }
 
         tabDrawerLayout.animate().translationY(position);
@@ -276,29 +265,46 @@ public class TabDrawer implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //int clickedId = v.getId();
-        String tag = (String) v.getTag();
+        int clickedId = v.getId();
+        int clickedTabPos;
 
-        if (tag == null) {
+        if (clickedId >= 1000  &&  clickedId < (1000 + tabCount)) {
+            clickedTabPos = clickedId - 1000;
+        }
+        else {
             showTabListContainer(false);
-
             return;
         }
-        clickedTabPos = Integer.parseInt(tag.replace("TAB_", ""));
-
 
         if (clickedTabPos == currentSelectedTabPos) {
-            showTabListContainer(!isDrawerOpen);
+            if (tabArray.getTab(clickedTabPos).hasItems())
+                showTabListContainer(!isDrawerOpen());
+
             return;
         }
         setSelectedTab(clickedTabPos);
-        showTabListContainer(true);
 
-        onTabClicked(clickedTabPos);
-
+        if (tabArray.getTab(clickedTabPos).hasItems())
+            showTabListContainer(true);
+        else
+            onTabClicked(clickedTabPos, 0);
     }
 
-    public void onTabClicked(int pos) {
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (previousTabDetailItemView != null) {
+            previousTabDetailItemView.setTranslationX(0);
+        }
 
+        showTabListContainer(false);
+
+        view.setTranslationX(20);
+
+        previousTabDetailItemView = view;
+        clickedTabDetailPos = i;
+
+        onTabClicked(currentSelectedTabPos, i);
     }
+
+    public void onTabClicked(int tabPos, int itemPos) { }
 }

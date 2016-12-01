@@ -42,4 +42,7 @@ public class Tab {
     public int getDrawableId() { return drawableId; }
     public int getDrawableId_selected() { return drawableId_selected; }
     public ArrayList<TabDetail> getTabItemList() { return list; }
+    public boolean hasItems() {
+        return !(list == null  ||  list.size() == 0);
+    }
 }
