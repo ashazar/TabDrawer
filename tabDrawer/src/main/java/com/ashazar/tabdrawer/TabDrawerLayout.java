@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
  */
 
 public class TabDrawerLayout extends LinearLayout {
+    private int tabBarPosition;
     private int height_tabBar;
     private int height_Total;
 
@@ -33,6 +34,8 @@ public class TabDrawerLayout extends LinearLayout {
     private int tabBackgroundColor_selected;
 
     // TAB Detail List
+    private int defaultSelectedTabItem;
+
     private int list_padding;
     private int list_paddingLeft;
     private int list_paddingRight;
@@ -62,8 +65,10 @@ public class TabDrawerLayout extends LinearLayout {
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.TabDrawerLayout);
 
         defaultSelectedTab = arr.getInteger(R.styleable.TabDrawerLayout_defaultSelectedTab, 1);
+        defaultSelectedTabItem = arr.getInteger(R.styleable.TabDrawerLayout_defaultSelectedTabItem, 1);
         customTabItemLayoutResId = arr.getInteger(R.styleable.TabDrawerLayout_custom_tabItemLayout, 0);
 
+        tabBarPosition = arr.getInteger(R.styleable.TabDrawerLayout_tabBarPosition, 0);
         height_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_height_tabBar, 120);
         height_Total = (int) arr.getDimension(R.styleable.TabDrawerLayout_height_Total, getLayoutHeight_tabBar() * 2);
 
@@ -91,9 +96,11 @@ public class TabDrawerLayout extends LinearLayout {
     }
 
 
-    public int getDefaultSelectedTab() { return defaultSelectedTab; }
+    public int getDefaultSelectedTab() { return defaultSelectedTab - 1; }
+    public int getDefaultSelectedTabItem() { return defaultSelectedTabItem - 1; }
     public int getCustomTabItemLayoutResId() { return customTabItemLayoutResId; }
 
+    public int getTabBarPosition() { return tabBarPosition; }
     public int getLayoutHeight_tabBar() { return height_tabBar; }
     public int getLayoutHeight_Total() { return height_Total; }
     public int getLayoutHeight_ListContainer() { return getLayoutHeight_Total() - getLayoutHeight_tabBar(); }

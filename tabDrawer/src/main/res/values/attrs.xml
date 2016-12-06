@@ -10,6 +10,7 @@
         </attr>
 
         <attr name="defaultSelectedTab" format="integer"/>
+        <attr name="defaultSelectedTabItem" format="integer"/>
         <attr name="custom_tabItemLayout" format="integer"/>
 
         <attr name="padding" format="dimension"/>

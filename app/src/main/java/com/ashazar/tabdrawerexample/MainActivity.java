@@ -2,18 +2,14 @@ package com.ashazar.tabdrawerexample;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabArray;
 import com.ashazar.tabdrawer.model.TabDetail;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Context context;
@@ -30,9 +26,7 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         activity = this;
 
-        if (savedInstanceState == null) {
-            prepareTabDrawer();
-        }
+        prepareTabDrawer();
     }
 
     private void prepareTabDrawer() {
@@ -79,11 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
             @Override
-            public void onTabClicked(int tabPos, int itemPos) {
-                super.onTabClicked(tabPos, itemPos);
+            public void onTabDrawerClicked(int tabPosition, int itemPosition) {
+                super.onTabDrawerClicked(tabPosition, itemPosition);
 
-                String text;
-                text = "Tab " + tabPos + " - item " + itemPos;
+                String text = "Tab " + tabPosition + " - item " + itemPosition;
 
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
