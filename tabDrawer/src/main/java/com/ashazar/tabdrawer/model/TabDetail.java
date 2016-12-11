@@ -5,8 +5,10 @@ package com.ashazar.tabdrawer.model;
  */
 public class TabDetail {
     private String title;
-    private int drawableId;
+    private int drawableId = -1;
     private boolean isSelected;
+    private int textColor;
+    private int textSize;
 
     public TabDetail() { }
 
@@ -27,4 +29,10 @@ public class TabDetail {
 
     public void setSelected(boolean status) { this.isSelected = status; }
     public boolean isSelected() { return isSelected; }
+
+    public void setTextColor(int color) { textColor = color; }
+    public int getTextColor() { return textColor; }
+
+    public void setTextSize(int size) { textSize = size; }
+    public int getTextSize() { return textSize; }
 }

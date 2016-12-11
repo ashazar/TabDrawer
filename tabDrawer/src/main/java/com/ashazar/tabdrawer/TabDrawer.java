@@ -47,7 +47,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     private static int currentSelectedTabPos = -1;
     private static int currentSelectedTabItemPos = -1;
     private int tempSelectedTabPos = -1;
-    private View previousTabDetailItemView = null;
+    private static int previousSelectedTabItemPos = -1;
+    private static int previousSelectedTabWithListPos = -1;
 
     private boolean drawerOpen = false;
 
@@ -76,7 +77,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             prepareTabListContainer();
             tabDrawerLayout.setTranslationY(tabListContainerHeight);
         }
-        else {
+        else if (tabBarPosition == TAB_BAR_POSITION_TOP) {
             prepareTabListContainer();
             prepareTabContainer();
             tabDrawerLayout.setTranslationY(0 - tabListContainerHeight);
@@ -89,6 +90,9 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             currentSelectedTabItemPos = (tabArray.getTab(currentSelectedTabPos).hasItems()
                                         &&  (tabDrawerLayout.getDefaultSelectedTabItem() <= tabArray.getTab(currentSelectedTabPos).getTabItemList().size()-1))
                                         ? tabDrawerLayout.getDefaultSelectedTabItem() : 0;
+
+            if (tabArray.getTab(currentSelectedTabPos).hasItems())
+                previousSelectedTabWithListPos = currentSelectedTabPos;
         }
 
         refreshTabBar(currentSelectedTabPos);
@@ -175,27 +179,21 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabDrawerLayout.addView(tabListContainer);
     }
 
-    private RelativeLayout prepareItemListContainerView(int pos) {
+    private RelativeLayout prepareItemListContainerView(int tabPos) {
         RelativeLayout container = new RelativeLayout(context);
         container.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth(), RelativeLayout.LayoutParams.MATCH_PARENT));
 
-        if (!tabArray.getTab(pos).hasItems()) return container;
+        if (!tabArray.getTab(tabPos).hasItems()) return container;
 
         ListView listView = new ListView(context);
         listView.setLayoutParams(new LinearLayout.LayoutParams(getScreenWidth(), LinearLayout.LayoutParams.MATCH_PARENT));
         listView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
         listView.setDividerHeight(0);
         listView.setDivider(null);
+        listView.setId(10000 + tabPos);
 
-        ArrayList<TabDetail> list = tabArray.getTab(pos).getTabItemList();
-        ArrayList<String> items = new ArrayList<>();
-        int listSize = list.size();
 
-        for (int i = 0; i < listSize; i++) {
-            items.add(list.get(i).getTitle());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.tab_detail_item, items);
+        TabListAdapter adapter = new TabListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(this);
@@ -250,6 +248,32 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabListContainer.setTranslationX(0 - (getScreenWidth() * tabPos));
     }
 
+    private void refreshTabLists(int tabPos, int tabItemPos) {
+        TabListAdapter adapter;
+
+        if (previousSelectedTabItemPos > -1  &&  previousSelectedTabWithListPos > -1) {
+            tabArray.getTab(previousSelectedTabWithListPos).getTabItemList().get(previousSelectedTabItemPos).setSelected(false);
+            ListView prevListView = (ListView) tabListContainer.findViewById(10000 + previousSelectedTabWithListPos);
+
+            adapter = new TabListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
+            prevListView.setAdapter(adapter);
+        }
+
+
+        tabArray.getTab(tabPos).getTabItemList().get(tabItemPos).setSelected(true);
+        ListView listView = (ListView) tabListContainer.findViewById(10000 + tabPos);
+
+        adapter = new TabListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
+        listView.setAdapter(adapter);
+
+
+        previousSelectedTabWithListPos = tabPos;
+        previousSelectedTabItemPos = tabItemPos;
+
+        currentSelectedTabPos = tabPos;
+        currentSelectedTabItemPos = tabItemPos;
+    }
+
     private int getScreenWidth() {
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -270,10 +294,10 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     public void closeDrawer() {
         if (!isDrawerOpen()) return;
 
-        int height;
+        int height = 0;
         if (tabBarPosition == TAB_BAR_POSITION_BOTTOM)
             height = tabListContainerHeight;
-        else
+        else if (tabBarPosition == TAB_BAR_POSITION_TOP)
             height = 0 - tabListContainerHeight;
 
         refreshTabBar(currentSelectedTabPos);
@@ -296,7 +320,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
 
         if (clickedId >= 1000 && clickedId < (1000 + tabCount)) {
             clickedTabPos = clickedId - 1000;
-        } else {            refreshTabBar(tempSelectedTabPos);
+        } else {
+            refreshTabBar(tempSelectedTabPos);
             if (isDrawerOpen()) closeDrawer();
             return;
         }
@@ -325,18 +350,13 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (previousTabDetailItemView != null) {
-            previousTabDetailItemView.setTranslationX(0);
+        if (previousSelectedTabWithListPos == tempSelectedTabPos  &&  previousSelectedTabItemPos == i) {
+            closeDrawer();
+            return;
         }
 
-        view.setTranslationX(20);
-
-        previousTabDetailItemView = view;
-        currentSelectedTabItemPos = i;
-
-        currentSelectedTabPos = tempSelectedTabPos;
+        refreshTabLists(tempSelectedTabPos, i);
         closeDrawer();
-
         onTabDrawerClicked(currentSelectedTabPos, i);
     }
 

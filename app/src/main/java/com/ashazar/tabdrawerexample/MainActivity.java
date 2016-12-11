@@ -2,6 +2,7 @@ package com.ashazar.tabdrawerexample;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareTabDrawer() {
         TabArray tabArray = new TabArray()
+                                    .setTabItemListTextColor(Color.parseColor("#ffffff"))
+                                    .setTabItemListTextSize(18)
+
                                     .addTab( new Tab()
                                             .setTitle("Activity")
                                             .setDrawableId(R.drawable.n_activity)
