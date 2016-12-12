@@ -7,8 +7,8 @@ public class TabDetail {
     private String title;
     private int drawableId = -1;
     private boolean isSelected;
-    private int textColor;
-    private int textSize;
+    private int textColor = 0;
+    private int textSize = 16;
 
     public TabDetail() { }
 

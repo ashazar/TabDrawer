@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class TabArray {
     private ArrayList<Tab> tabArray = null;
-    private int tabItemListTextColor;
-    private int tabItemListTextSize;
+    private int tabItemListTextColor = 0;
+    private int tabItemListTextSize = 16;
 
     public TabArray() { tabArray = new ArrayList<>(); }
 
