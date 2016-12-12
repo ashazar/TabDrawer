@@ -96,7 +96,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         }
 
         refreshTabBar(currentSelectedTabPos);
-        // TODO: Make Selected item of the selected tab, SELECTED
+        refreshTabLists(currentSelectedTabPos, currentSelectedTabItemPos);
 
         tabDrawerLayout.setOnClickListener(this);
     }
