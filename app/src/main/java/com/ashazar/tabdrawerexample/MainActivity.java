@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+import android.R.drawable;
 
 import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareTabDrawer() {
-        TabArray tabArray = new TabArray()
+        final TabArray tabArray = new TabArray()
                                     .setTabItemListTextColor(Color.parseColor("#ffffff"))
                                     .setTabItemListTextSize(18)
 
@@ -39,40 +40,42 @@ public class MainActivity extends AppCompatActivity {
                                             .setTitle("Activity")
                                             .setDrawableId(R.drawable.n_activity)
                                             .setSelectedDrawableId(R.drawable.s_activity)
-                                            .addTabDetailItem( new TabDetail("TAB 1 - item 1") )
-                                            .addTabDetailItem( new TabDetail("TAB 1 - item 2") )
+                                            .addTabDetailItem( new TabDetail("Dialog Map", drawable.ic_dialog_map) )
+                                            .addTabDetailItem( new TabDetail("Dialog Alert", drawable.ic_dialog_alert) )
                                     )
                                     .addTab( new Tab()
                                             .setTitle("Queue")
                                             .setDrawableId(R.drawable.n_queue)
                                             .setSelectedDrawableId(R.drawable.s_queue)
-                                            .addTabDetailItem( new TabDetail("TAB 2 - item 11") )
-                                            .addTabDetailItem( new TabDetail("TAB 2 - item 22") )
-                                            .addTabDetailItem( new TabDetail("TAB 2 - item 33") )
+                                            .addTabDetailItem( new TabDetail("Dialog Dialer", drawable.ic_dialog_dialer ) )
+                                            .addTabDetailItem( new TabDetail("Dialog E-mail", drawable.ic_dialog_email) )
+                                            .addTabDetailItem( new TabDetail("Dialog Info", drawable.ic_dialog_info) )
                                     )
                                     .addTab( new Tab()
                                             .setTitle("Chat")
                                             .setDrawableId(R.drawable.n_chat)
                                             .setSelectedDrawableId(R.drawable.s_chat)
-                                            .addTabDetailItem( new TabDetail("TAB 3 - item 111") )
-                                            .addTabDetailItem( new TabDetail("TAB 3 - item 222") )
+                                            .addTabDetailItem( new TabDetail("Previous", drawable.ic_media_previous) )
+                                            .addTabDetailItem( new TabDetail("Next", drawable.ic_media_next) )
                                     )
                                     .addTab( new Tab()
                                             .setTitle("Reports")
                                             .setDrawableId(R.drawable.n_report)
                                             .setSelectedDrawableId(R.drawable.s_report)
-                                            .addTabDetailItem( new TabDetail("TAB 4 - item 1111") )
-                                            .addTabDetailItem( new TabDetail("TAB 4 - item 2222") )
-                                            .addTabDetailItem( new TabDetail("TAB 4 - item 3333") )
+                                            .addTabDetailItem( new TabDetail("Clear All", drawable.ic_notification_clear_all) )
+                                            .addTabDetailItem( new TabDetail("Disk Full", drawable.ic_popup_disk_full) )
+                                            .addTabDetailItem( new TabDetail("Menu Zoom", drawable.ic_menu_zoom) )
                                     )
                                     .addTab( new Tab()
                                             .setTitle("Settings")
                                             .setDrawableId(R.drawable.n_settings)
                                             .setSelectedDrawableId(R.drawable.s_settings)
-                                            .addTabDetailItem( new TabDetail("TAB 5 - item 11111") )
-                                            .addTabDetailItem( new TabDetail("TAB 5 - item 22222") )
-                                            .addTabDetailItem( new TabDetail("TAB 5 - item 33333") )
-                                            .addTabDetailItem( new TabDetail("TAB 5 - item 44444") )
+                                            .addTabDetailItem( new TabDetail("Menu Share", drawable.ic_menu_share) )
+                                            .addTabDetailItem( new TabDetail("Menu View", drawable.ic_menu_view) )
+                                            .addTabDetailItem( new TabDetail("Menu SlideShow", drawable.ic_menu_slideshow) )
+                                            .addTabDetailItem( new TabDetail("Menu Agenda", drawable.ic_menu_agenda) )
+                                            .addTabDetailItem( new TabDetail("Menu Camera", drawable.ic_menu_camera) )
+                                            .addTabDetailItem( new TabDetail("Menu Call", drawable.ic_menu_call) )
                                     );
 
         tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
@@ -80,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabDrawerClicked(int tabPosition, int itemPosition) {
                 super.onTabDrawerClicked(tabPosition, itemPosition);
 
-                String text = "Tab " + tabPosition + " - item " + itemPosition;
+                String text = tabArray.getTab(tabPosition).getTitle()
+                        + " -> "
+                        + tabArray.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle()
+                        + " - ( " + tabPosition + ", " + itemPosition + " )";
+
 
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
