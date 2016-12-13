@@ -17,6 +17,7 @@
         android:id="@+id/list_item_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical|start"
         android:padding="3dp"
         />
 
