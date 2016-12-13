@@ -11,17 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Main Activity\nwith BOTTOM TabDrawer in Portrait\nLandscape orientation has LEFT TabDrawer"
+        android:text="Activity with RIGHT TabDrawer"
         />
 
 
     <com.ashazar.tabdrawer.TabDrawerLayout
         android:id="@+id/tabDrawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        tab:tabBarPosition="left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        tab:tabBarPosition="right"
         tab:width_tabBar="60dp"
         tab:width_Total="250dp"
         tab:defaultSelectedTab="1"
