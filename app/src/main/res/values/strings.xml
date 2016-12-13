@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TabDrawer Example</string>
+
+    <string name="main_activity_text">HomePage\nBOTTOM TabDrawer in Portrait\nLEFT TabDrawer in Landscape</string>
+    <string name="top_tabdrawer_text">Activity with TOP TabDrawer</string>
+    <string name="bottom_tabdrawer_text">Activity with BOTTOM TabDrawer</string>
+    <string name="left_tabdrawer_text">Activity with LEFT TabDrawer</string>
+    <string name="right_tabdrawer_text">Activity with RIGHT TabDrawer</string>
 </resources>

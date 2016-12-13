@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Main Activity\nwith BOTTOM TabDrawer in Portrait\nLandscape orientation has LEFT TabDrawer"
+        android:gravity="center"
+        android:text="@string/main_activity_text"
         />
 
 
@@ -22,7 +23,7 @@
         android:layout_alignParentBottom="true"
         tab:tabBarPosition="bottom"
         tab:height_tabBar="48dp"
-        tab:height_Total="200dp"
+        tab:height_Total="240dp"
         tab:defaultSelectedTab="1"
         tab:padding="3dp"
         tab:list_padding="16dp"

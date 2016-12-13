@@ -12,19 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="@string/left_tabdrawer_text"
+        android:text="@string/bottom_tabdrawer_text"
         />
 
 
     <com.ashazar.tabdrawer.TabDrawerLayout
         android:id="@+id/tabDrawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        tab:tabBarPosition="left"
-        tab:width_tabBar="60dp"
-        tab:width_Total="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tab:tabBarPosition="bottom"
+        tab:height_tabBar="48dp"
+        tab:height_Total="240dp"
         tab:defaultSelectedTab="1"
         tab:padding="3dp"
         tab:list_padding="16dp"

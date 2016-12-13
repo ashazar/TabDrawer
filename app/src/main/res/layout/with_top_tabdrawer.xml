@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Activity with TOP TabDrawer"
+        android:gravity="center"
+        android:text="@string/top_tabdrawer_text"
         />
 
 
@@ -22,7 +23,7 @@
         android:layout_alignParentTop="true"
         tab:tabBarPosition="top"
         tab:height_tabBar="48dp"
-        tab:height_Total="200dp"
+        tab:height_Total="240dp"
         tab:defaultSelectedTab="1"
         tab:padding="3dp"
         tab:list_padding="16dp"

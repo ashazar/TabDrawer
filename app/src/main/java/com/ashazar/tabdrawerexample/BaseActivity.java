@@ -29,7 +29,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void prepareTabDrawer() {
+    public void prepareTabDrawer() { prepareTabDrawer(false); }
+
+    public void prepareTabDrawer(boolean additional) {
         final TabArray tabArray = new TabArray()
                 .setTabItemListTextColor(Color.parseColor("#ffffff"))
                 .setTabItemListTextSize(16)
@@ -38,51 +40,71 @@ public class BaseActivity extends AppCompatActivity {
                         .setTitle("Demo")
                         .setDrawableId(R.drawable.n_activity)
                         .setSelectedDrawableId(R.drawable.s_activity)
-                        //.addTabDetailItem( new TabDetail("Dialog Map", drawable.ic_dialog_map) )
-                        //.addTabDetailItem( new TabDetail("Dialog Alert", drawable.ic_dialog_alert) )
-                        .addTabDetailItem( new TabDetail("Bottom TabDrawer", drawable.ic_dialog_alert) )
-                        .addTabDetailItem( new TabDetail("Top TabDrawer", drawable.ic_dialog_alert) )
-                        .addTabDetailItem( new TabDetail("Left TabDrawer", drawable.ic_dialog_alert) )
-                        .addTabDetailItem( new TabDetail("Right TabDrawer", drawable.ic_dialog_alert) )
+                        .addTabDetailItem( new TabDetail("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Bottom TabDrawer", R.drawable.ic_action_collapse) )
+                        .addTabDetailItem( new TabDetail("Top TabDrawer", R.drawable.ic_action_expand) )
+                        .addTabDetailItem( new TabDetail("Left TabDrawer", R.drawable.ic_action_next_item) )
+                        .addTabDetailItem( new TabDetail("Right TabDrawer", R.drawable.ic_action_previous_item) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Queue")
                         .setDrawableId(R.drawable.n_queue)
                         .setSelectedDrawableId(R.drawable.s_queue)
-                        .addTabDetailItem( new TabDetail("Dialog Dialer", drawable.ic_dialog_dialer ) )
-                        .addTabDetailItem( new TabDetail("Dialog E-mail", drawable.ic_dialog_email) )
-                        .addTabDetailItem( new TabDetail("Dialog Info", drawable.ic_dialog_info) )
+                        .addTabDetailItem( new TabDetail("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
+                        .addTabDetailItem( new TabDetail("Archive", R.drawable.ic_archive_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Delete", R.drawable.ic_delete_forever_white_24dp) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Chat")
                         .setDrawableId(R.drawable.n_chat)
                         .setSelectedDrawableId(R.drawable.s_chat)
-                        .addTabDetailItem( new TabDetail("Previous", drawable.ic_media_previous) )
-                        .addTabDetailItem( new TabDetail("Next", drawable.ic_media_next) )
+                        .addTabDetailItem( new TabDetail("Friends", R.drawable.ic_face_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Add Friend", R.drawable.ic_person_add_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Start Group Chat", R.drawable.ic_people_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Funny Moments", R.drawable.ic_sentiment_very_satisfied_white_24dp) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Reports")
                         .setDrawableId(R.drawable.n_report)
                         .setSelectedDrawableId(R.drawable.s_report)
-                        .addTabDetailItem( new TabDetail("Clear All", drawable.ic_notification_clear_all) )
-                        .addTabDetailItem( new TabDetail("Disk Full", drawable.ic_popup_disk_full) )
-                        .addTabDetailItem( new TabDetail("Menu Zoom", drawable.ic_menu_zoom) )
+                        .addTabDetailItem( new TabDetail("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Documents", R.drawable.ic_description_white_24dp) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Settings")
                         .setDrawableId(R.drawable.n_settings)
                         .setSelectedDrawableId(R.drawable.s_settings)
-                        .addTabDetailItem( new TabDetail("Menu Share", drawable.ic_menu_share) )
-                        .addTabDetailItem( new TabDetail("Menu View", drawable.ic_menu_view) )
-                        .addTabDetailItem( new TabDetail("Menu SlideShow", drawable.ic_menu_slideshow) )
-                        .addTabDetailItem( new TabDetail("Menu Agenda", drawable.ic_menu_agenda) )
-                        .addTabDetailItem( new TabDetail("Menu Camera", drawable.ic_menu_camera) )
-                        .addTabDetailItem( new TabDetail("Menu Call", drawable.ic_menu_call) )
+                        .addTabDetailItem( new TabDetail("General", R.drawable.ic_settings_white_24dp) )
+                        .addTabDetailItem( new TabDetail("My Account", R.drawable.ic_lock_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Accesibility", R.drawable.ic_accessibility_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Notifications", R.drawable.ic_notifications_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Bookmarks", R.drawable.ic_collections_bookmark_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Shared Folders", R.drawable.ic_folder_shared_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Cast to TV", R.drawable.ic_cast_white_24dp) )
+                        .addTabDetailItem( new TabDetail("Other Applications", R.drawable.ic_apps_white_24dp) )
                 );
+
+        // Clone 3 tabs to the end to fill space when it is Left or Right TabDrawer
+        if (additional) {
+            Tab additionalTab = tabArray.getTab(3);
+            additionalTab.setTitle("Add 1");
+            tabArray.addTab(additionalTab);
+
+            additionalTab = tabArray.getTab(2);
+            additionalTab.setTitle("Add 2");
+            tabArray.addTab(additionalTab);
+
+            additionalTab = tabArray.getTab(1);
+            additionalTab.setTitle("Add 3");
+            tabArray.addTab(additionalTab);
+        }
+
 
         tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
             @Override
@@ -107,10 +129,12 @@ public class BaseActivity extends AppCompatActivity {
                         intent = new Intent(context, NewActivity.class);
 
                         if (itemPosition == 1)
-                            intent.putExtra(NewActivity.POSITION, NewActivity.POSITION_TOP);
+                            intent.putExtra(NewActivity.POSITION, NewActivity.POSITION_BOTTOM);
                         else if (itemPosition == 2)
-                            intent.putExtra(NewActivity.POSITION, NewActivity.POSITION_LEFT);
+                            intent.putExtra(NewActivity.POSITION, NewActivity.POSITION_TOP);
                         else if (itemPosition == 3)
+                            intent.putExtra(NewActivity.POSITION, NewActivity.POSITION_LEFT);
+                        else if (itemPosition == 4)
                             intent.putExtra(NewActivity.POSITION, NewActivity.POSITION_RIGHT);
                     }
 
