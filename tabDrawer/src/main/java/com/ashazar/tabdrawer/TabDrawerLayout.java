@@ -8,9 +8,11 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 /**
+ * TabDrawerLayout, extended from LinearLayout
+ * This layout will be the main layout for TabDrawer.
+ * <p>
  * Created by Serdar Hazar on 11/20/16.
  */
-
 public class TabDrawerLayout extends LinearLayout {
     private int tabBarPosition;
     private int height_tabBar;
@@ -44,15 +46,44 @@ public class TabDrawerLayout extends LinearLayout {
     private int list_paddingBottom;
 
 
+    /**
+     * Instantiates a new TabDrawerLayout.
+     *
+     * @param context the context
+     */
     public TabDrawerLayout(Context context) { super(context); }
+
+    /**
+     * Instantiates a new TabDrawerLayout.
+     *
+     * @param context the context
+     * @param attrs   the attrs
+     */
     public TabDrawerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         Init(context, attrs);
     }
+
+    /**
+     * Instantiates a new TabDrawerLayout.
+     *
+     * @param context      the context
+     * @param attrs        the attrs
+     * @param defStyleAttr the def style attr
+     */
     public TabDrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         Init(context, attrs);
     }
+
+    /**
+     * Instantiates a new TabDrawerLayout.
+     *
+     * @param context      the context
+     * @param attrs        the attrs
+     * @param defStyleAttr the def style attr
+     * @param defStyleRes  the def style res
+     */
     @TargetApi(21)
     public TabDrawerLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -60,6 +91,15 @@ public class TabDrawerLayout extends LinearLayout {
     }
 
 
+    /**
+     * Gets/Sets the custom attributes (tab:xyz="") of TabDrawer.
+     * Developer needs to add below namespace definition in root layout, in order to use these attributes.
+     *
+     * xmlns:tab="http://schemas.android.com/apk/res-auto
+     *
+     * @param context context
+     * @param attrs attributes
+     */
     private void Init(Context context, AttributeSet attrs) {
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.TabDrawerLayout);
 
@@ -102,34 +142,179 @@ public class TabDrawerLayout extends LinearLayout {
     }
 
 
+    /**
+     * Gets default selected tab.
+     *
+     * @return the default selected tab
+     */
     public int getDefaultSelectedTab() { return defaultSelectedTab - 1; }
+
+    /**
+     * Gets default selected tab item.
+     *
+     * @return the default selected tab item
+     */
     public int getDefaultSelectedTabItem() { return defaultSelectedTabItem - 1; }
+
+    /**
+     * Gets custom tab item layout res id.
+     *
+     * @return the custom tab item layout res id
+     */
     public int getCustomTabItemLayoutResId() { return customTabItemLayoutResId; }
 
+    /**
+     * Gets tab bar position.
+     *
+     * @return the tab bar position
+     */
     public int getTabBarPosition() { return tabBarPosition; }
+
+    /**
+     * Gets layout height tab bar.
+     *
+     * @return the layout height tab bar
+     */
     public int getLayoutHeight_tabBar() { return height_tabBar; }
+
+    /**
+     * Gets layout height total.
+     *
+     * @return the layout height total
+     */
     public int getLayoutHeight_Total() { return height_Total; }
+
+    /**
+     * Gets layout height list container.
+     *
+     * @return the layout height list container
+     */
     public int getLayoutHeight_ListContainer() { return getLayoutHeight_Total() - getLayoutHeight_tabBar(); }
+
+    /**
+     * Gets layout width tab bar.
+     *
+     * @return the layout width tab bar
+     */
     public int getLayoutWidth_tabBar() { return width_tabBar; }
+
+    /**
+     * Gets layout width total.
+     *
+     * @return the layout width total
+     */
     public int getLayoutWidth_Total() { return width_Total; }
+
+    /**
+     * Gets layout width list container.
+     *
+     * @return the layout width list container
+     */
     public int getLayoutWidth_ListContainer() { return getLayoutWidth_Total() - getLayoutWidth_tabBar(); }
 
+    /**
+     * Gets tab padding.
+     *
+     * @return the tab padding
+     */
     public int getTabPadding() { return tabPadding; }
+
+    /**
+     * Gets tab padding left.
+     *
+     * @return the tab padding left
+     */
     public int getTabPaddingLeft() { return (tabPaddingLeft != 0) ? tabPaddingLeft : tabPadding; }
+
+    /**
+     * Gets tab padding right.
+     *
+     * @return the tab padding right
+     */
     public int getTabPaddingRight() { return (tabPaddingRight != 0) ? tabPaddingRight : tabPadding; }
+
+    /**
+     * Gets tab padding top.
+     *
+     * @return the tab padding top
+     */
     public int getTabPaddingTop() { return (tabPaddingTop != 0) ? tabPaddingTop : tabPadding; }
+
+    /**
+     * Gets tab padding bottom.
+     *
+     * @return the tab padding bottom
+     */
     public int getTabPaddingBottom() { return (tabPaddingBottom != 0) ? tabPaddingBottom : tabPadding; }
 
+    /**
+     * Gets tab list padding.
+     *
+     * @return the tab list padding
+     */
     public int getTabListPadding() { return list_padding; }
+
+    /**
+     * Gets tab list padding left.
+     *
+     * @return the tab list padding left
+     */
     public int getTabListPaddingLeft() { return (list_paddingLeft != 0) ? list_paddingLeft : list_padding; }
+
+    /**
+     * Gets tab list padding right.
+     *
+     * @return the tab list padding right
+     */
     public int getTabListPaddingRight() { return (list_paddingRight != 0) ? list_paddingRight : list_padding; }
+
+    /**
+     * Gets tab list padding top.
+     *
+     * @return the tab list padding top
+     */
     public int getTabListPaddingTop() { return (list_paddingTop != 0) ? list_paddingTop : list_padding; }
+
+    /**
+     * Gets tab list padding bottom.
+     *
+     * @return the tab list padding bottom
+     */
     public int getTabListPaddingBottom() { return (list_paddingBottom != 0) ? list_paddingBottom : list_padding; }
 
+    /**
+     * Gets tab title size.
+     *
+     * @return the tab title size
+     */
     public int getTabTitleSize() { return tabTitleSize; }
+
+    /**
+     * Gets tab title color.
+     *
+     * @return the tab title color
+     */
     public int getTabTitleColor() { return tabTitleColor; }
+
+    /**
+     * Gets tab title color selected.
+     *
+     * @return the tab title color selected
+     */
     public int getTabTitleColor_selected() { return tabTitleColor_selected; }
+
+    /**
+     * Gets tab background color.
+     *
+     * @return the tab background color
+     */
     public int getTabBackgroundColor() { return tabBackgroundColor; }
+
+    /**
+     * Gets tab background color selected.
+     *
+     * @return the tab background color selected
+     */
     public int getTabBackgroundColor_selected() { return tabBackgroundColor_selected; }
 
 }

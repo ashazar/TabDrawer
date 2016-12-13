@@ -18,39 +18,91 @@ import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabArray;
 
 /**
+ * TabDrawer
+ * Navigation Tab Drawer for Android
+ * Alternative to Navigation Drawer (Hamburger Menu)
+ *
+ * @author      Serdar Hazar (ashazar) https://github.com/ashazar
+ * @version     1.0.0
+ *
+ *
  * Created by Serdar Hazar on 26/04/16.
  */
 public class TabDrawer implements View.OnClickListener, ListView.OnItemClickListener {
+    /**
+     * Context and the Activity of TabDrawer is being called.
+     */
     private Context context;
     private Activity activity;
 
+
+    /**
+     * Main TabDrawerLayout
+     */
     private TabDrawerLayout tabDrawerLayout;
+
+    /**
+     * Main container for Tabs.
+     * One of the 2 child views of TabDrawerLayout
+     */
     private LinearLayout tabContainer;
+
+    /**
+     * Main container of the Tabs' item lists.
+     * One of the 2 child views of TabDrawerLayout
+     */
     private LinearLayout tabListContainer;
 
-    private final float INACTIVE_SELECTED_TAB_ALPHA_VALUE = 0.85f;
-
+    /**
+     * Position of the TabBar.
+     */
     private final int TAB_BAR_POSITION_TOP = 0;
     private final int TAB_BAR_POSITION_BOTTOM = 1;
     private final int TAB_BAR_POSITION_LEFT = 2;
     private final int TAB_BAR_POSITION_RIGHT = 3;
     private int tabBarPosition;
 
-    // size = height for Bottom & Top; size = width for Left & Right  (size in px)
+    /**
+     * When tab drawer opened for some other tab, real-selected tab's opacity decreases.
+     */
+    private final float INACTIVE_SELECTED_TAB_ALPHA_VALUE = 0.85f;
+
+    /**
+     * size in px
+     * size = height for Bottom & Top; tabBarHeight and tabListContainerHeight
+     * size = width  for Left & Right; tabBarWidth and tabListContainerWidth
+     */
     private int tabBarSize = 0;
     private int tabListContainerSize = 0;
 
+
+    /**
+     * TabArray and Selected Tab & Item positions
+     */
     private TabArray tabArray;
     private int tabCount;
+    private int tempSelectedTabPos = -1;
     private static int currentSelectedTabPos = -1;
     private static int currentSelectedTabItemPos = -1;
-    private int tempSelectedTabPos = -1;
     private static int previousSelectedTabItemPos = -1;
     private static int previousSelectedTabWithListPos = -1;
 
+
+    /**
+     * TabDrawer's status
+     */
     private boolean drawerOpen = false;
 
 
+
+    /**
+     * Instantiates a new Tab drawer.
+     *
+     * @param context           the context
+     * @param activity          the activity
+     * @param tabDrawerLayoutId Layout Resource Id of TabDrawerLayout
+     * @param tabArray          the tab array (List for tabs and their item lists)
+     */
     protected TabDrawer(Context context, Activity activity, int tabDrawerLayoutId, TabArray tabArray) {
         this.context = context;
         this.activity = activity;
@@ -62,8 +114,14 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabCount = tabArray.size();
     }
 
-    // TODO: Currently, Root View is RelativeLayout. Haven't checked others yet...
+    /**
+     * Initialize TabDrawer.
+     * <p>
+     * TabBar and TabListContainer prepared here.
+     * Initial selected Tab and TabList item marked as selected.
+     */
     public void initialize() {
+        // TODO: Currently, Root View is RelativeLayout. Haven't checked others yet...
         tabBarPosition = tabDrawerLayout.getTabBarPosition();
         if (tabBarPositionTopOrBottom()) {
             tabBarSize = tabDrawerLayout.getLayoutHeight_tabBar();
@@ -110,6 +168,12 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabDrawerLayout.setOnClickListener(this);
     }
 
+    /**
+     * Prepare TabBar (TabContainer).
+     * This LinearLayout view will be main container for Tabs. Will be one of the 2 main child views of TabDrawerLayout.
+     *
+     * Add each Tab to TabBar.
+     */
     private void prepareTabContainer() {
         tabContainer = new LinearLayout(context);
         if (tabBarPositionTopOrBottom()) {
@@ -129,8 +193,14 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         }
     }
 
-    // TODO: Prepare an XML Tab Layout, and give the customization to developer.
+    /**
+     * Prepare view of one tab.
+     *
+     * @param pos Tab position. Get details (title, image, etc.) from TabArray
+     * @return LinearLayout view (Tab view)
+     */
     private LinearLayout prepareTab(int pos) {
+        // TODO: Prepare an XML Tab Layout, and give the customization to developer.
         Tab tab = tabArray.getTab(pos);
 
         LinearLayout tabLayout = new LinearLayout(context);
@@ -184,6 +254,12 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         return tabLayout;
     }
 
+    /**
+     * Prepare TabList Container.
+     * This LinearLayout view will be main container of List views. Will be one of the 2 main child views of TabDrawerLayout.
+     *
+     * Add each Tab's List containers to this view.
+     */
     private void prepareTabListContainer() {
         tabListContainer = new LinearLayout(context);
 
@@ -206,6 +282,12 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabDrawerLayout.addView(tabListContainer);
     }
 
+    /**
+     * Prepare view of one tab's item list container.
+     *
+     * @param tabPos Tab position. Get item list from TabArray
+     * @return RelativeLayout view (Tab's item list container). RelativeLayout is chosen for future flexibility needs.
+     */
     private RelativeLayout prepareItemListContainerView(int tabPos) {
         RelativeLayout container = new RelativeLayout(context);
         if (tabBarPositionTopOrBottom())
@@ -232,7 +314,12 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         return container;
     }
 
-
+    /**
+     * Refresh Tab Bar.
+     * Change views according to Tab's "selected" status.
+     *
+     * @param tabPos Clicked Tab position. This position does not mainly represent if the Tab is really "selected". (eg. temporarily selected, when it is clicked to open the TabDrower.)
+     */
     private void refreshTabBar(int tabPos) {
         for (int i = 0; i < tabCount; i++) {
             boolean hasIcon = false;
@@ -271,6 +358,13 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         }
     }
 
+    /**
+     * Update TabList Container.
+     * <p>
+     * When the TabDrawer is open, changes the content (manipulates the view) of the drawer, according to the clicked Tab.
+     *
+     * @param tabPos clicked Tab position
+     */
     private void updateTabListContainer(int tabPos) {
         if (tabBarPositionTopOrBottom()) {
             if (drawerOpen)
@@ -286,6 +380,13 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         }
     }
 
+    /**
+     * Refresh Tab List Items, according to their "selected" status.
+     * Previously selected ones will be updated as "not selected" as well.
+     *
+     * @param tabPos Position of the newly clicked Tab.
+     * @param tabItemPos Position of the newly clicked item.
+     */
     private void refreshTabLists(int tabPos, int tabItemPos) {
         TabListAdapter adapter;
 
@@ -312,6 +413,11 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         currentSelectedTabItemPos = tabItemPos;
     }
 
+    /**
+     * Get Screen Size
+     *
+     * @return Point; x and y properties will be retrieved for Width and Height.
+     */
     private Point getScreenSize() {
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -320,15 +426,45 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         return size;
     }
 
+    /**
+     * Get Screen Width. ( From getScreensize() )
+     *
+     * @return int Screen Width
+     */
     private int getScreenWidth() { return getScreenSize().x; }
+
+    /**
+     * Get Screen Height. ( From getScreensize() )
+     *
+     * @return int Screen Height
+     */
     private int getScreenHeight() { return getScreenSize().y; }
 
+
+    /**
+     * Is drawer open boolean.
+     *
+     * @return the boolean
+     */
     public boolean isDrawerOpen() { return drawerOpen; }
 
+    /**
+     * Is TabBarPosition Top or Bottom
+     *
+     * @return the boolean
+     */
     private boolean tabBarPositionTopOrBottom() { return tabBarPosition == TAB_BAR_POSITION_TOP  ||  tabBarPosition == TAB_BAR_POSITION_BOTTOM; }
 
+    /**
+     * Is TabBarPosition Bottom or Right
+     *
+     * @return the boolean
+     */
     private boolean tabBarPositionBottomOrRight() { return tabBarPosition == TAB_BAR_POSITION_BOTTOM  ||  tabBarPosition == TAB_BAR_POSITION_RIGHT; }
 
+    /**
+     * Open TabDrawer
+     */
     private void openDrawer() {
         drawerOpen = true;
         if (tabBarPositionTopOrBottom())
@@ -337,6 +473,9 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabDrawerLayout.animate().translationX(0);
     }
 
+    /**
+     * Close drawer.
+     */
     public void closeDrawer() {
         if (!isDrawerOpen()) return;
 
@@ -373,6 +512,12 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     }
 
 
+    /**
+     * Get Clicks for Tabs.
+     * For internal use only.
+     *
+     * @param v View of the clicked item
+     */
     @Override
     public void onClick(View v) {
         int clickedId = v.getId();
@@ -408,6 +553,15 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         if (!isDrawerOpen()) openDrawer();
     }
 
+    /**
+     * Get clicks for TabList items. (inside drawer)
+     * For internal use only.
+     *
+     * @param adapterView parent
+     * @param view view
+     * @param i Clicked item Position
+     * @param l Clicked item id
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (previousSelectedTabWithListPos == tempSelectedTabPos  &&  previousSelectedTabItemPos == i) {
@@ -420,5 +574,16 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         onTabDrawerClicked(currentSelectedTabPos, i);
     }
 
+
+    /**
+     * On tab drawer clicked. (Tab or TabListItem)
+     * This will be overridden to get clicked positions.
+     * <p>
+     * Only new clicks will be passed through.
+     * Same position clicks (Tab or Item), or clicks to open/close TabDrawer will be ignored.
+     *
+     * @param tabPosition  the tab position
+     * @param itemPosition the item position (This will be 0, if the selected Tab has no list items.)
+     */
     public void onTabDrawerClicked(int tabPosition, int itemPosition) { }
 }

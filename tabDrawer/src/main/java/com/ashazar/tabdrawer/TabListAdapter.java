@@ -17,11 +17,18 @@ import com.ashazar.tabdrawer.model.TabDetail;
 import java.util.ArrayList;
 
 /**
+ * Adapter for Tab's item list.
+ * <p>
  * Created by Serdar Hazar on 12/7/16.
  */
-
 class TabListAdapter extends ArrayAdapter<TabDetail> {
 
+    /**
+     * Instantiates a new Tab list adapter.
+     *
+     * @param context the context
+     * @param list    the list
+     */
     TabListAdapter(Context context, ArrayList<TabDetail> list) {
         super(context, 0, list);
     }
