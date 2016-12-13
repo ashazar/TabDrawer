@@ -2,6 +2,7 @@ package com.ashazar.tabdrawerexample;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private void prepareTabDrawer() {
         final TabArray tabArray = new TabArray()
                                     .setTabItemListTextColor(Color.parseColor("#ffffff"))
-                                    .setTabItemListTextSize(18)
+                                    .setTabItemListTextSize(16)
 
                                     .addTab( new Tab()
                                             .setTitle("Activity")
@@ -103,5 +104,11 @@ public class MainActivity extends AppCompatActivity {
             tabDrawer.closeDrawer();
         else
             super.onBackPressed();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_main);
     }
 }
