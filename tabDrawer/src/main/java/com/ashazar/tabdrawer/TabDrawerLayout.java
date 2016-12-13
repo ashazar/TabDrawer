@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 /**
@@ -16,6 +15,8 @@ public class TabDrawerLayout extends LinearLayout {
     private int tabBarPosition;
     private int height_tabBar;
     private int height_Total;
+    private int width_tabBar;
+    private int width_Total;
 
     // TAB
     private int defaultSelectedTab;
@@ -60,8 +61,6 @@ public class TabDrawerLayout extends LinearLayout {
 
 
     private void Init(Context context, AttributeSet attrs) {
-        this.setOrientation(VERTICAL);
-
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.TabDrawerLayout);
 
         defaultSelectedTab = arr.getInteger(R.styleable.TabDrawerLayout_defaultSelectedTab, 1);
@@ -71,6 +70,8 @@ public class TabDrawerLayout extends LinearLayout {
         tabBarPosition = arr.getInteger(R.styleable.TabDrawerLayout_tabBarPosition, 0);
         height_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_height_tabBar, 120);
         height_Total = (int) arr.getDimension(R.styleable.TabDrawerLayout_height_Total, getLayoutHeight_tabBar() * 2);
+        width_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_width_tabBar, 100);
+        width_Total = (int) arr.getDimension(R.styleable.TabDrawerLayout_width_Total, getLayoutWidth_tabBar() * 3);
 
         // TAB
         tabPadding = (int) arr.getDimension(R.styleable.TabDrawerLayout_padding, 0);
@@ -93,6 +94,11 @@ public class TabDrawerLayout extends LinearLayout {
         list_paddingBottom = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_paddingBottom, 0);
 
         arr.recycle();
+
+        if (tabBarPosition <= 1)
+            this.setOrientation(VERTICAL);
+        else
+            this.setOrientation(HORIZONTAL);
     }
 
 
@@ -104,6 +110,9 @@ public class TabDrawerLayout extends LinearLayout {
     public int getLayoutHeight_tabBar() { return height_tabBar; }
     public int getLayoutHeight_Total() { return height_Total; }
     public int getLayoutHeight_ListContainer() { return getLayoutHeight_Total() - getLayoutHeight_tabBar(); }
+    public int getLayoutWidth_tabBar() { return width_tabBar; }
+    public int getLayoutWidth_Total() { return width_Total; }
+    public int getLayoutWidth_ListContainer() { return getLayoutWidth_Total() - getLayoutWidth_tabBar(); }
 
     public int getTabPadding() { return tabPadding; }
     public int getTabPaddingLeft() { return (tabPaddingLeft != 0) ? tabPaddingLeft : tabPadding; }
