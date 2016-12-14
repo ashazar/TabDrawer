@@ -111,7 +111,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabDrawerLayout = (TabDrawerLayout) rootView.findViewById(tabDrawerLayoutId);
 
         this.tabArray = tabArray;
-        tabCount = tabArray.size();
+        tabCount = tabArray.getTabCount();
     }
 
     /**

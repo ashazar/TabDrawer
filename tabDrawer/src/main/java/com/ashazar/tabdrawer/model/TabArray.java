@@ -70,7 +70,7 @@ public class TabArray {
      *
      * @return the size of the array
      */
-    public int size() { return tabArray.size(); }
+    public int getTabCount() { return tabArray.size(); }
 
     /**
      * Gets the Tab at given position
