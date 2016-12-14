@@ -65,7 +65,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     /**
      * When tab drawer opened for some other tab, real-selected tab's opacity decreases.
      */
-    private final float INACTIVE_SELECTED_TAB_ALPHA_VALUE = 0.85f;
+    private final float INACTIVE_SELECTED_TAB_ALPHA_VALUE = 0.7f;
 
     /**
      * size in px
