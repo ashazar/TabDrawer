@@ -1,11 +1,11 @@
 package com.ashazar.tabdrawer.model;
 
 /**
- * TabDetail model (Item of Tab's itemList) for TabDrawer
+ * TabListItem model (Item of Tab's itemList) for TabDrawer
  * <p>
  * Created by Serdar Hazar on 26/04/16.
  */
-public class TabDetail {
+public class TabListItem {
     private String title;
     private int drawableId = -1;
     private boolean isSelected;
@@ -13,26 +13,26 @@ public class TabDetail {
     private int textSize = 16;
 
     /**
-     * Instantiates a new TabDetail.
+     * Instantiates a new TabListItem.
      */
-    public TabDetail() { }
+    public TabListItem() { }
 
     /**
-     * Instantiates a new TabDetail.
+     * Instantiates a new TabListItem.
      *
      * @param itemTitle title text
      */
-    public TabDetail(String itemTitle) {
+    public TabListItem(String itemTitle) {
         title = itemTitle;
     }
 
     /**
-     * Instantiates a new TabDetail.
+     * Instantiates a new TabListItem.
      *
      * @param itemTitle      title text
      * @param iconDrawableId Drawable Resource Id of the icon
      */
-    public TabDetail(String itemTitle, int iconDrawableId) {
+    public TabListItem(String itemTitle, int iconDrawableId) {
         title = itemTitle;
         drawableId = iconDrawableId;
     }

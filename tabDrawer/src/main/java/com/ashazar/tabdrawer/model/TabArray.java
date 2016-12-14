@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class TabArray {
     private ArrayList<Tab> tabArray = null;
-    private int tabItemListTextColor = 0;
-    private int tabItemListTextSize = 16;
+    private int tabListItemTextColor = 0;
+    private int tabListItemTextSize = 16;
 
     /**
      * Instantiates a new Tab array.
@@ -25,17 +25,17 @@ public class TabArray {
      */
     public TabArray addTab(Tab tab) {
         /*  Before adding the Tab,
-            set TabList item's text color and text size, if not set before.
+            set TabListItem's text color and text size, if not set before.
          */
-        if (tab.getItemListTextColor() == 0) {
-            for (TabDetail tabDetail : tab.getTabItemList()) {
-                tabDetail.setTextColor(tabItemListTextColor);
+        if (tab.getListItemTextColor() == 0) {
+            for (TabListItem tabListItem : tab.getTabItemList()) {
+                tabListItem.setTextColor(tabListItemTextColor);
             }
         }
 
-        if (tab.getItemListTextSize() == 0) {
-            for (TabDetail tabDetail : tab.getTabItemList()) {
-                tabDetail.setTextSize(tabItemListTextSize);
+        if (tab.getListItemTextSize() == 0) {
+            for (TabListItem tabListItem : tab.getTabItemList()) {
+                tabListItem.setTextSize(tabListItemTextSize);
             }
         }
 
@@ -49,8 +49,8 @@ public class TabArray {
      * @param color the color
      * @return the TabArray
      */
-    public TabArray setTabItemListTextColor(int color) {
-        tabItemListTextColor = color;
+    public TabArray setTabListItemTextColor(int color) {
+        tabListItemTextColor = color;
         return this;
     }
 
@@ -60,8 +60,8 @@ public class TabArray {
      * @param size the size
      * @return the TabArray
      */
-    public TabArray setTabItemListTextSize(int size) {
-        tabItemListTextSize = size;
+    public TabArray setTabListItemTextSize(int size) {
+        tabListItemTextSize = size;
         return this;
     }
 

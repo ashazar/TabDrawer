@@ -11,9 +11,9 @@ public class Tab {
     private String title = null;
     private int drawableId = 0;
     private int drawableId_selected = 0;
-    private int tabItemListTextColor = 0;
-    private int tabItemListTextSize = 0;
-    private ArrayList<TabDetail> list = null;
+    private int tabListItemTextColor = 0;
+    private int tabListItemTextSize = 0;
+    private ArrayList<TabListItem> list = null;
 
     /**
      * Instantiates a new Tab.
@@ -60,12 +60,12 @@ public class Tab {
      * @param item the item
      * @return the Tab
      */
-    public Tab addTabDetailItem(TabDetail item) {
+    public Tab addTabListItem(TabListItem item) {
         if (list == null)
             list = new ArrayList<>();
 
-        item.setTextColor(getItemListTextColor());
-        item.setTextSize(getItemListTextSize());
+        item.setTextColor(getListItemTextColor());
+        item.setTextSize(getListItemTextSize());
         list.add(item);
 
         return this;
@@ -77,8 +77,8 @@ public class Tab {
      * @param color the color
      * @return the Tab
      */
-    public Tab setTabItemListTextColor(int color) {
-        tabItemListTextColor = color;
+    public Tab setTabListItemTextColor(int color) {
+        tabListItemTextColor = color;
         return this;
     }
 
@@ -88,8 +88,8 @@ public class Tab {
      * @param size the size
      * @return the Tab
      */
-    public Tab setTabItemListTextSize(int size) {
-        tabItemListTextSize = size;
+    public Tab setTabListItemTextSize(int size) {
+        tabListItemTextSize = size;
         return this;
     }
 
@@ -119,7 +119,7 @@ public class Tab {
      *
      * @return the tab item list
      */
-    public ArrayList<TabDetail> getTabItemList() { return list; }
+    public ArrayList<TabListItem> getTabItemList() { return list; }
 
     /**
      * Has items boolean.
@@ -136,12 +136,12 @@ public class Tab {
      *
      * @return the item list text color
      */
-    int getItemListTextColor() { return tabItemListTextColor; }
+    int getListItemTextColor() { return tabListItemTextColor; }
 
     /**
      * Gets item list text size.
      *
      * @return the item list text size
      */
-    int getItemListTextSize() { return tabItemListTextSize; }
+    int getListItemTextSize() { return tabListItemTextSize; }
 }

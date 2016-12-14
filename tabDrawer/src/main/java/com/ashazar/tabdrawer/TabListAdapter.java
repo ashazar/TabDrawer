@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ashazar.tabdrawer.model.TabDetail;
+import com.ashazar.tabdrawer.model.TabListItem;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * <p>
  * Created by Serdar Hazar on 12/7/16.
  */
-class TabListAdapter extends ArrayAdapter<TabDetail> {
+class TabListAdapter extends ArrayAdapter<TabListItem> {
 
     /**
      * Instantiates a new Tab list adapter.
@@ -29,7 +29,7 @@ class TabListAdapter extends ArrayAdapter<TabDetail> {
      * @param context the context
      * @param list    the list
      */
-    TabListAdapter(Context context, ArrayList<TabDetail> list) {
+    TabListAdapter(Context context, ArrayList<TabListItem> list) {
         super(context, 0, list);
     }
 
@@ -40,7 +40,7 @@ class TabListAdapter extends ArrayAdapter<TabDetail> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.tab_detail_item, parent, false);
         }
 
-        TabDetail item = getItem(position);
+        TabListItem item = getItem(position);
         String title = item.getTitle();
         int imgDrawableId = item.getDrawableId();
         boolean isSelected = item.isSelected();
