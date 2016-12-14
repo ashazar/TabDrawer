@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-import android.R.drawable;
 
 import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
@@ -28,11 +27,8 @@ public class BaseActivity extends AppCompatActivity {
         activity = this;
     }
 
-
-    public void prepareTabDrawer() { prepareTabDrawer(false); }
-
-    public void prepareTabDrawer(boolean additional) {
-        final TabArray tabArray = new TabArray()
+    private TabArray prepareTabArray() {
+        TabArray tabArray = new TabArray()
                 .setTabItemListTextColor(Color.parseColor("#ffffff"))
                 .setTabItemListTextSize(16)
 
@@ -90,21 +86,23 @@ public class BaseActivity extends AppCompatActivity {
                         .addTabDetailItem( new TabDetail("Other Applications", R.drawable.ic_apps_white_24dp) )
                 );
 
+        return tabArray;
+    }
+
+    public void prepareTabDrawer() { prepareTabDrawer(false); }
+
+    public void prepareTabDrawer(boolean additional) {
+        TabArray tabArrayTemp = prepareTabArray();
+
         // Clone 3 tabs to the end to fill space when it is Left or Right TabDrawer
         if (additional) {
-            Tab additionalTab = tabArray.getTab(3);
-            additionalTab.setTitle("Add 1");
-            tabArray.addTab(additionalTab);
-
-            additionalTab = tabArray.getTab(2);
-            additionalTab.setTitle("Add 2");
-            tabArray.addTab(additionalTab);
-
-            additionalTab = tabArray.getTab(1);
-            additionalTab.setTitle("Add 3");
-            tabArray.addTab(additionalTab);
+            TabArray tabArrayTemp2 = prepareTabArray();
+            tabArrayTemp.addTab(tabArrayTemp2.getTab(3).setTitle("Add 1"));
+            tabArrayTemp.addTab(tabArrayTemp2.getTab(2).setTitle("Add 2"));
+            tabArrayTemp.addTab(tabArrayTemp2.getTab(1).setTitle("Add 3"));
         }
 
+        final TabArray tabArray = tabArrayTemp;
 
         tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
             @Override
