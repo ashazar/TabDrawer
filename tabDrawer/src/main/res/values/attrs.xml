@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TabDrawerLayout">
-        <!-- For Top and Bottom Tab Bar -->
-        <attr name="height_tabBar" format="dimension"/>
-        <attr name="height_Total" format="dimension"/>
-
-        <!-- For Left and Right Tab Bar -->
-        <attr name="width_tabBar" format="dimension"/>
-        <attr name="width_Total" format="dimension"/>
+        <!-- size = height for Top/Bottom TabDrawer; size = width for Left/Right TabDrawer -->
+        <attr name="size_tabBar" format="dimension"/>
+        <attr name="size_Total" format="dimension"/>
 
         <attr name="tabBarPosition" format="enum">
             <enum name="top" value="0"/>

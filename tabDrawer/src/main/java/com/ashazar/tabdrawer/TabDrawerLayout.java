@@ -15,10 +15,8 @@ import android.widget.LinearLayout;
  */
 public class TabDrawerLayout extends LinearLayout {
     private int tabBarPosition;
-    private int height_tabBar;
-    private int height_Total;
-    private int width_tabBar;
-    private int width_Total;
+    private int size_tabBar;
+    private int size_Total;
 
     // TAB
     private int defaultSelectedTab;
@@ -108,10 +106,8 @@ public class TabDrawerLayout extends LinearLayout {
         customTabItemLayoutResId = arr.getInteger(R.styleable.TabDrawerLayout_custom_tabItemLayout, 0);
 
         tabBarPosition = arr.getInteger(R.styleable.TabDrawerLayout_tabBarPosition, 0);
-        height_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_height_tabBar, 120);
-        height_Total = (int) arr.getDimension(R.styleable.TabDrawerLayout_height_Total, getLayoutHeight_tabBar() * 2);
-        width_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_width_tabBar, 100);
-        width_Total = (int) arr.getDimension(R.styleable.TabDrawerLayout_width_Total, getLayoutWidth_tabBar() * 3);
+        size_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_size_tabBar, 120);
+        size_Total = (int) arr.getDimension(R.styleable.TabDrawerLayout_size_Total, getLayoutSize_tabBar() * 2);
 
         // TAB
         tabPadding = (int) arr.getDimension(R.styleable.TabDrawerLayout_padding, 0);
@@ -171,46 +167,28 @@ public class TabDrawerLayout extends LinearLayout {
     public int getTabBarPosition() { return tabBarPosition; }
 
     /**
-     * Gets layout height tab bar.
-     *
-     * @return the layout height tab bar
-     */
-    public int getLayoutHeight_tabBar() { return height_tabBar; }
-
-    /**
-     * Gets layout height total.
-     *
-     * @return the layout height total
-     */
-    public int getLayoutHeight_Total() { return height_Total; }
-
-    /**
-     * Gets layout height list container.
-     *
-     * @return the layout height list container
-     */
-    public int getLayoutHeight_ListContainer() { return getLayoutHeight_Total() - getLayoutHeight_tabBar(); }
-
-    /**
-     * Gets layout width tab bar.
+     * Gets layout size tab bar.
+     * size = Height for Top/Bottom TabDrawer; size = Width for Left/Right TabDrawer
      *
      * @return the layout width tab bar
      */
-    public int getLayoutWidth_tabBar() { return width_tabBar; }
+    public int getLayoutSize_tabBar() { return size_tabBar; }
 
     /**
-     * Gets layout width total.
+     * Gets layout size total.
+     * size = Height for Top/Bottom TabDrawer; size = Width for Left/Right TabDrawer
      *
      * @return the layout width total
      */
-    public int getLayoutWidth_Total() { return width_Total; }
+    public int getLayoutSize_Total() { return size_Total; }
 
     /**
-     * Gets layout width list container.
+     * Gets layout size list container.
+     * size = Height for Top/Bottom TabDrawer; size = Width for Left/Right TabDrawer
      *
      * @return the layout width list container
      */
-    public int getLayoutWidth_ListContainer() { return getLayoutWidth_Total() - getLayoutWidth_tabBar(); }
+    public int getLayoutSize_ListContainer() { return getLayoutSize_Total() - getLayoutSize_tabBar(); }
 
     /**
      * Gets tab padding.

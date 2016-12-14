@@ -123,14 +123,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     public void initialize() {
         // TODO: Currently, Root View is RelativeLayout. Haven't checked others yet...
         tabBarPosition = tabDrawerLayout.getTabBarPosition();
-        if (tabBarPositionTopOrBottom()) {
-            tabBarSize = tabDrawerLayout.getLayoutHeight_tabBar();
-            tabListContainerSize = tabDrawerLayout.getLayoutHeight_ListContainer();
-        }
-        else {
-            tabBarSize = tabDrawerLayout.getLayoutWidth_tabBar();
-            tabListContainerSize = tabDrawerLayout.getLayoutWidth_ListContainer();
-        }
+        tabBarSize = tabDrawerLayout.getLayoutSize_tabBar();
+        tabListContainerSize = tabDrawerLayout.getLayoutSize_ListContainer();
 
         tabDrawerLayout.removeAllViews();
         if (tabBarPositionBottomOrRight()) {
