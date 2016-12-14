@@ -115,21 +115,47 @@ TabArray tabArray = new TabArray()
 | Method | Explanation|
 |--------|------------|
 | **TabArray** | OBJECT |
-| **.setTabListItemTextColor()** | Set the color of the text of all list items in Drawer |
-| **.setTabListItemTextSize()**  | Set the size of the text of all list items in Drawer  |
-| **.addTab()**  | Add a new Tab  |
+| `.setTabListItemTextColor()` | Set the color of the text of all list items in Drawer |
+| `.setTabListItemTextSize()`  | Set the size of the text of all list items in Drawer  |
+| `.addTab()`  | Add a new Tab  |
 | | |
 | **Tab** | OBJECT |
-| **.setTitle()** | Set Tab's title text |
-| **.setDrawableId()** | Set Tab's icon |
-| **.setSelectedDrawableId()** | Set selected/highlighted Tab's icon |
-| **.setTabListItemTextColor()** | Set the color of the text of that tab's list items in Drawer |
-| **.setTabListItemTextSize()**  | Set the size of the text of that tab's list items in Drawer  |
-| **.addTabListItem()** | Add list item to that tab's drawer |
+| `.setTitle()` | Set Tab's title text |
+| `.setDrawableId()` | Set Tab's icon |
+| `.setSelectedDrawableId()` | Set selected/highlighted Tab's icon |
+| `.setTabListItemTextColor()` | Set the color of the text of that tab's list items in Drawer |
+| `.setTabListItemTextSize()`  | Set the size of the text of that tab's list items in Drawer  |
+| `.addTabListItem()` | Add list item to that tab's drawer |
 | | |
 | **TabListItem** | OBJECT |
 | | Instantiates with `new TabListItem(Title)` or `new TabListItem(Title, Icon)`  |
 
+
+* Prepare TabDrawer and Initialize
+ * TabDrawer takes following parameters: Context, Activity, TabDrawerLayout's Id, and TabArray
+ * You need to override `onTabDrawerClicked()` to get clicked Tab's and item's positions.
+ * `onTabDrawerClicked()` only passes the clicks you need. So you don't have to do checks for open/close drawer; or whether the Tab or item already selected.
+ * Call `initialize()`
+```
+TabDrawer tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
+            @Override
+            public void onTabDrawerClicked(int tabPosition, int itemPosition) {
+                super.onTabDrawerClicked(tabPosition, itemPosition);
+            }
+        };
+
+        tabDrawer.initialize();
+```
+* You can override onBackPressed() to close Drawer when pressed 'Back'.
+```
+@Override
+public void onBackPressed() {
+    if (tabDrawer.isDrawerOpen())
+        tabDrawer.closeDrawer();
+    else
+        super.onBackPressed();
+}
+```
 
 
 ### TODO
