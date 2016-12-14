@@ -56,37 +56,37 @@ dependencies {
         />
 ```
 
-| Attribute                 | Explanation                                         |
-|---------------------------|-----------------------------------------------------|
-| **NameSpace: android**    |                                                     |
-| **layout_width**          | "match_parent" for Top/Bottom TabDrawer; "wrap_content" for Left/Right TabDrawer |
-| **layout_height**         | "wrap_content" for Top/Bottom TabDrawer; "match_parent" for Left/Right TabDrawer |
-|                           |                                                     |
-| **NameSpace: tab**        |                                                     |
-| **topBarPosition**        | top / bottom / left / right                         |
-| **size_tabBar**           | Size (in 'dp') of the TabBar only.                  |
-|                           | Height for Top / Bottom TabDrawer                   |
-|                           | Width for Left / Right TabDrawer                    |
-| **size_Total**            | Size (in 'dp') of the TabBar & Drawer (when opened) |
-|                           | Height for Top / Bottom TabDrawer; Width for Left / Right TabDrawer |
-| **defaultSelectedTab**    | Default highlighted Tab number. (integer)         |
-|                           | Human-readable ;-)  1 for first Tab. (not 0)      |
-| **padding**               | Padding of the Tab itself. (in 'dp')              |
-|                           | Can also use  **paddingTop**, **paddingBottom**,  **paddingLeft**, **paddingRight** |
-| **list_padding**          | Padding for the Drawer's ListView (in 'dp')       |
-|                           | Can also use  **list_paddingTop**, **list_paddingBottom**,  **list_paddingLeft**, **list_paddingRight** |
-| **titleSize**             | Size of the Tab's title text. (in 'sp')           |
-| **titleColor**            | Color of the Tab's title text (color)            |
-| **titleColor_selected**   | Color of the Tab's title text, when Tab is selected  |
-| **backgroundColor**       | Tab's background color |
-| **backgroundColor_selected** | Tab's background color, when Tab is selected |
+| Attribute                    | Explanation                                                                                             |
+|------------------------------|---------------------------------------------------------------------------------------------------------|
+| **NameSpace: android**       |                                                                                                         |
+| **layout_width**             | "match_parent" for Top/Bottom TabDrawer; "wrap_content" for Left/Right TabDrawer                        |
+| **layout_height**            | "wrap_content" for Top/Bottom TabDrawer; "match_parent" for Left/Right TabDrawer                        |
+|                              |                                                                                                         |
+| **NameSpace: tab**           |                                                                                                         |
+| **topBarPosition**           | top / bottom / left / right                                                                             |
+| **size_tabBar**              | Size (in 'dp') of the TabBar only.                                                                      |
+|                              | Height for Top / Bottom TabDrawer                                                                       |
+|                              | Width for Left / Right TabDrawer                                                                        |
+| **size_Total**               | Size (in 'dp') of the TabBar & Drawer (when opened)                                                     |
+|                              | Height for Top / Bottom TabDrawer; Width for Left / Right TabDrawer                                     |
+| **defaultSelectedTab**       | Default highlighted Tab number. (integer)                                                               |
+|                              | Human-readable ;-)  1 for first Tab. (not 0)                                                            |
+| **padding**                  | Padding of the Tab itself. (in 'dp')                                                                    |
+|                              | Can also use  **paddingTop**, **paddingBottom**,  **paddingLeft**, **paddingRight**                     |
+| **list_padding**             | Padding for the Drawer's ListView (in 'dp')                                                             |
+|                              | Can also use  **list_paddingTop**, **list_paddingBottom**,  **list_paddingLeft**, **list_paddingRight** |
+| **titleSize**                | Size of the Tab's title text. (in 'sp')                                                                 |
+| **titleColor**               | Color of the Tab's title text (color)                                                                   |
+| **titleColor_selected**      | Color of the Tab's title text, when Tab is selected                                                     |
+| **backgroundColor**          | Tab's background color                                                                                  |
+| **backgroundColor_selected** | Tab's background color, when Tab is selected                                                            |
 
 
 ##### In Your Code
 * Prepare **TabArray**, object that holds all Tabs and Tabs' list items.
 
  * Tabs can be Icon only, Text only, or Icon and Text (as in the sample app.)
- * Tabs can have item lists (TabDetailItem), or just Tab only (Standard tab; no drawer opens, will be selected immediately when clicked)
+ * Tabs can have item lists (TabListItem), or just Tab only (Standard tab; no drawer opens, will be selected immediately when clicked)
  * Tab list items can be Text only, or Icon and Text (as in the sample app.)
 ```
 TabArray tabArray = new TabArray()
@@ -111,23 +111,23 @@ TabArray tabArray = new TabArray()
                         .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
                 );
 ```
-| Method | Explanation|
-|--------|------------|
-| **TabArray** | OBJECT |
-| `.setTabListItemTextColor()` | Set the color of the text of all list items in Drawer |
-| `.setTabListItemTextSize()`  | Set the size of the text of all list items in Drawer  |
-| `.addTab()`  | Add a new Tab  |
-| | |
-| **Tab** | OBJECT |
-| `.setTitle()` | Set Tab's title text |
-| `.setDrawableId()` | Set Tab's icon |
-| `.setSelectedDrawableId()` | Set selected/highlighted Tab's icon |
-| `.setTabListItemTextColor()` | Set the color of the text of that tab's list items in Drawer |
-| `.setTabListItemTextSize()`  | Set the size of the text of that tab's list items in Drawer  |
-| `.addTabListItem()` | Add list item to that tab's drawer |
-| | |
-| **TabListItem** | OBJECT |
-| | Instantiates with `new TabListItem(Title)` or `new TabListItem(Title, Icon)`  |
+| Method                       | Explanation                                                                  |
+|------------------------------|------------------------------------------------------------------------------|
+| **TabArray**                 | OBJECT                                                                       |
+| `.setTabListItemTextColor()` | Set the color of the text of all list items in Drawer                        |
+| `.setTabListItemTextSize()`  | Set the size of the text of all list items in Drawer                         |
+| `.addTab()`                  | Add a new Tab                                                                |
+|                              |                                                                              |
+| **Tab**                      | OBJECT                                                                       |
+| `.setTitle()`                | Set Tab's title text                                                         |
+| `.setDrawableId()`           | Set Tab's icon                                                               |
+| `.setSelectedDrawableId()`   | Set selected/highlighted Tab's icon                                          |
+| `.setTabListItemTextColor()` | Set the color of the text of that tab's list items in Drawer                 |
+| `.setTabListItemTextSize()`  | Set the size of the text of that tab's list items in Drawer                  |
+| `.addTabListItem()`          | Add list item to that tab's drawer                                           |
+|                              |                                                                              |
+| **TabListItem**              | OBJECT                                                                       |
+|                              | Instantiates with `new TabListItem(Title)` or `new TabListItem(Title, Icon)` |
 
 
 * Prepare TabDrawer and Initialize
