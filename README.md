@@ -15,8 +15,6 @@ After seeing the design in Scott Jensen's article titled *Designing an Alternati
 
 
 ### Adding TabDrawer Library
-**PS:** *Including library as a Gradle dependency coming soon*
-
 * Download the repository.
 * Click `File -> New -> Import Module` on Android Studio and select `tabDrawer` library folder. Set the module name as "**tabDrawer**". Android Studio will automatically import the module and add required lines to `settings.gradle` file.
 * Then update your dependencies in your app's `build.gradle` file:
@@ -25,6 +23,7 @@ dependencies {
     compile project(':tabDrawer')
 }
 ```
+**PS:** *Including library as a Gradle dependency coming soon*
 
 ### Using TabDrawer
 ##### Layout
