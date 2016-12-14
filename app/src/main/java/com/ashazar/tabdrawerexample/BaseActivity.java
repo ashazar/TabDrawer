@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabArray;
-import com.ashazar.tabdrawer.model.TabDetail;
+import com.ashazar.tabdrawer.model.TabListItem;
 
 public class BaseActivity extends AppCompatActivity {
     Context context;
@@ -29,61 +29,61 @@ public class BaseActivity extends AppCompatActivity {
 
     private TabArray prepareTabArray() {
         TabArray tabArray = new TabArray()
-                .setTabItemListTextColor(Color.parseColor("#ffffff"))
-                .setTabItemListTextSize(16)
+                .setTabListItemTextColor(Color.parseColor("#ffffff"))
+                .setTabListItemTextSize(16)
 
                 .addTab( new Tab()
                         .setTitle("Demo")
                         .setDrawableId(R.drawable.n_activity)
                         .setSelectedDrawableId(R.drawable.s_activity)
-                        .addTabDetailItem( new TabDetail("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Bottom TabDrawer", R.drawable.ic_action_collapse) )
-                        .addTabDetailItem( new TabDetail("Top TabDrawer", R.drawable.ic_action_expand) )
-                        .addTabDetailItem( new TabDetail("Left TabDrawer", R.drawable.ic_action_next_item) )
-                        .addTabDetailItem( new TabDetail("Right TabDrawer", R.drawable.ic_action_previous_item) )
+                        .addTabListItem( new TabListItem("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
+                        .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
+                        .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
+                        .addTabListItem( new TabListItem("Left TabDrawer", R.drawable.ic_action_next_item) )
+                        .addTabListItem( new TabListItem("Right TabDrawer", R.drawable.ic_action_previous_item) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Queue")
                         .setDrawableId(R.drawable.n_queue)
                         .setSelectedDrawableId(R.drawable.s_queue)
-                        .addTabDetailItem( new TabDetail("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
-                        .addTabDetailItem( new TabDetail("Archive", R.drawable.ic_archive_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Delete", R.drawable.ic_delete_forever_white_24dp) )
+                        .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
+                        .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
+                        .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Chat")
                         .setDrawableId(R.drawable.n_chat)
                         .setSelectedDrawableId(R.drawable.s_chat)
-                        .addTabDetailItem( new TabDetail("Friends", R.drawable.ic_face_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Add Friend", R.drawable.ic_person_add_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Start Group Chat", R.drawable.ic_people_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Funny Moments", R.drawable.ic_sentiment_very_satisfied_white_24dp) )
+                        .addTabListItem( new TabListItem("Friends", R.drawable.ic_face_white_24dp) )
+                        .addTabListItem( new TabListItem("Add Friend", R.drawable.ic_person_add_white_24dp) )
+                        .addTabListItem( new TabListItem("Start Group Chat", R.drawable.ic_people_white_24dp) )
+                        .addTabListItem( new TabListItem("Funny Moments", R.drawable.ic_sentiment_very_satisfied_white_24dp) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Reports")
                         .setDrawableId(R.drawable.n_report)
                         .setSelectedDrawableId(R.drawable.s_report)
-                        .addTabDetailItem( new TabDetail("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Documents", R.drawable.ic_description_white_24dp) )
+                        .addTabListItem( new TabListItem("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
+                        .addTabListItem( new TabListItem("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
+                        .addTabListItem( new TabListItem("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
+                        .addTabListItem( new TabListItem("Documents", R.drawable.ic_description_white_24dp) )
                 )
 
                 .addTab( new Tab()
                         .setTitle("Settings")
                         .setDrawableId(R.drawable.n_settings)
                         .setSelectedDrawableId(R.drawable.s_settings)
-                        .addTabDetailItem( new TabDetail("General", R.drawable.ic_settings_white_24dp) )
-                        .addTabDetailItem( new TabDetail("My Account", R.drawable.ic_lock_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Accesibility", R.drawable.ic_accessibility_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Notifications", R.drawable.ic_notifications_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Bookmarks", R.drawable.ic_collections_bookmark_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Shared Folders", R.drawable.ic_folder_shared_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Cast to TV", R.drawable.ic_cast_white_24dp) )
-                        .addTabDetailItem( new TabDetail("Other Applications", R.drawable.ic_apps_white_24dp) )
+                        .addTabListItem( new TabListItem("General", R.drawable.ic_settings_white_24dp) )
+                        .addTabListItem( new TabListItem("My Account", R.drawable.ic_lock_white_24dp) )
+                        .addTabListItem( new TabListItem("Accesibility", R.drawable.ic_accessibility_white_24dp) )
+                        .addTabListItem( new TabListItem("Notifications", R.drawable.ic_notifications_white_24dp) )
+                        .addTabListItem( new TabListItem("Bookmarks", R.drawable.ic_collections_bookmark_white_24dp) )
+                        .addTabListItem( new TabListItem("Shared Folders", R.drawable.ic_folder_shared_white_24dp) )
+                        .addTabListItem( new TabListItem("Cast to TV", R.drawable.ic_cast_white_24dp) )
+                        .addTabListItem( new TabListItem("Other Applications", R.drawable.ic_apps_white_24dp) )
                 );
 
         return tabArray;
