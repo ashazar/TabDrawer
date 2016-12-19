@@ -1,1 +1,1 @@
-include ':app', ':tabDrawer'
+include ':example', ':tabdrawer'
