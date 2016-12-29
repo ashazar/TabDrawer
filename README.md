@@ -65,12 +65,11 @@ dependencies {
 | **NameSpace: tab**           |                                                                                                         |
 | **topBarPosition**           | top / bottom / left / right                                                                             |
 | **size_tabBar**              | Size (in 'dp') of the TabBar only.                                                                      |
-|                              | Height for Top / Bottom TabDrawer                                                                       |
-|                              | Width for Left / Right TabDrawer                                                                        |
+|                              | Height for Top / Bottom TabDrawer; Width for Left / Right TabDrawer                                                                        |
 | **size_Total**               | Size (in 'dp') of the TabBar & Drawer (when opened)                                                     |
 |                              | Height for Top / Bottom TabDrawer; Width for Left / Right TabDrawer                                     |
 | **defaultSelectedTab**       | Default highlighted Tab number. (integer)                                                               |
-|                              | Human-readable ;-)  1 for first Tab. (not 0)                                                            |
+|                              | **1** for first Tab. *(not 0)*   Human-readable ;-)                                                     |
 | **padding**                  | Padding of the Tab itself. (in 'dp')                                                                    |
 |                              | Can also use  **paddingTop**, **paddingBottom**,  **paddingLeft**, **paddingRight**                     |
 | **list_padding**             | Padding for the Drawer's ListView (in 'dp')                                                             |
@@ -85,9 +84,9 @@ dependencies {
 ##### In Your Code
 * Prepare **TabArray**, object that holds all Tabs and Tabs' list items.
 
- * Tabs can be Icon only, Text only, or Icon and Text (as in the sample app.)
- * Tabs can have item lists (TabListItem), or just Tab only (Standard tab; no drawer opens, will be selected immediately when clicked)
- * Tab list items can be Text only, or Icon and Text (as in the sample app.)
+ * **Tabs can be:**  ***(a)** Icon only*, ***(b)** Text only*, or ***(c)** Icon and Text* (as in the sample app.)
+ * **Tabs can:**  ***(a)** have item lists (TabListItem)*, or  ***(b)** Tab only (act as a normal tab in a standard Tab Bar; no drawer opens, will be selected immediately, when clicked)*
+ * **Tab list items can be:**  ***(a)** Text only, or  ***(b)** Icon and Text* (as in the sample app.)
 ```
 TabArray tabArray = new TabArray()
                 .setTabListItemTextColor(Color.parseColor("#ffffff"))
