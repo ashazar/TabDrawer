@@ -1,5 +1,5 @@
 # TabDrawer
-Navigation Tab Drawer for Android - Alternative to Hamburger Menu (Navigation Drawer)
+Navigation Tab Bar Drawer for Android - Alternative to Hamburger Menu (Navigation Drawer)
 
 ![Demo](https://github.com/ashazar/TabDrawer/raw/master/images/demo.gif)
 
@@ -15,15 +15,27 @@ After seeing the design in Scott Jensen's article titled *Designing an Alternati
 
 
 ### Adding TabDrawer Library
-* Download the repository.
-* Click `File -> New -> Import Module` on Android Studio and select `tabdrawer` library folder. Set the module name as "**tabdrawer**". Android Studio will automatically import the module and add required lines to `settings.gradle` file.
-* Then update your dependencies in your app's `build.gradle` file:
+**Gradle**  *(through JCenter)*
+
+Simply add `compile 'com.ashazar.tabdrawer:tabdrawer:1.0.0'` in *dependencies* in your app's `build.gradle` file
 ```
 dependencies {
-    compile project(':tabdrawer')
+    compile 'com.ashazar.tabdrawer:tabdrawer:1.0.0'
 }
 ```
-**PS:** *Including library as a Gradle dependency coming soon*
+
+
+**Maven**
+
+```
+<dependency>
+    <groupId>com.ashazar.tabdrawer</groupId>
+    <artifactId>tabdrawer</artifactId>
+    <version>1.0.0</version>
+    <type>pom</type>
+</dependency>
+```
+
 
 ### Using TabDrawer
 ##### Layout
