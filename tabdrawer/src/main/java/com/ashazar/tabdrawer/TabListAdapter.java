@@ -37,7 +37,7 @@ class TabListAdapter extends ArrayAdapter<TabListItem> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.tab_detail_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.tabdrawer_tab_list_item, parent, false);
         }
 
         TabListItem item = getItem(position);
