@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -63,11 +64,6 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     private int tabBarPosition;
 
     /**
-     * When tab drawer opened for some other tab, real-selected tab's opacity decreases.
-     */
-    private final float INACTIVE_SELECTED_TAB_ALPHA_VALUE = 0.7f;
-
-    /**
      * size in px
      * size = height for Bottom & Top; tabBarHeight and tabListContainerHeight
      * size = width  for Left & Right; tabBarWidth and tabListContainerWidth
@@ -87,6 +83,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     private static int previousSelectedTabItemPos = -1;
     private static int previousSelectedTabWithListPos = -1;
 
+
+    private boolean hasCustomTabLayout = false;
 
     /**
      * TabDrawer's status
@@ -194,55 +192,67 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      * @return LinearLayout view (Tab view)
      */
     private LinearLayout prepareTab(int pos) {
-        // TODO: Prepare an XML Tab Layout, and give the customization to developer.
+        LinearLayout tabLayout = null;
+        ImageView icon = null;
+        TextView title = null;
+
         Tab tab = tabArray.getTab(pos);
 
-        LinearLayout tabLayout = new LinearLayout(context);
-        tabLayout.setOrientation(LinearLayout.VERTICAL);
+        if (tabArray.getTab(pos).getCustomTabLayoutResourceId() != 0) {
+            tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(tabArray.getTab(pos).getCustomTabLayoutResourceId(), tabDrawerLayout, false);
+            hasCustomTabLayout = true;
+        }
+        else if (tabArray.getCustomTabLayoutResourceId() != 0) {
+            tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(tabArray.getCustomTabLayoutResourceId(), tabDrawerLayout, false);
+            hasCustomTabLayout = true;
+        }
+        else {
+            tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.tabdrawer_tab_item, tabDrawerLayout, false);
+            tabLayout.setOrientation(LinearLayout.VERTICAL);
+            tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
+            tabLayout.setBackgroundColor(tab.getBackgroundColor());
+            if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) tabLayout.setWeightSum(10);
+        }
 
         if (tabBarPositionTopOrBottom())
             tabLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         else
             tabLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
 
-        tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
-        tabLayout.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor());
-
-        if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) tabLayout.setWeightSum(10);
-
-        tabLayout.setId(1000 + pos);
-        tabLayout.setClickable(true);
 
         if (tab.getDrawableId() != 0) {
-            ImageView icon = new ImageView(context);
+            icon = (ImageView) tabLayout.findViewById(R.id.tab_icon);
             icon.setImageResource(tab.getDrawableId());
-
-            if (tab.getTitle() == null)
-                icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            else
-                icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 6));
-
             icon.setId(1100 + pos);
-            tabLayout.addView(icon);
+
+            if (!hasCustomTabLayout) {
+                if (tab.getTitle() == null)
+                    icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                else
+                    icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 6));
+            }
         }
 
         if (tab.getTitle() != null) {
-            TextView title = new TextView(context);
-
-            if (tab.getDrawableId() != 0)
-                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 4));
-            else
-                title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-            title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            title = (TextView) tabLayout.findViewById(R.id.tab_title);
             title.setText(tab.getTitle());
-            title.setTextColor(tabDrawerLayout.getTabTitleColor());
-            title.setTextSize(tabDrawerLayout.getTabTitleSize());
+            title.setTextColor(tab.getTitleColor());
+            title.setTextSize(tab.getTitleSize());
+
+            if (!hasCustomTabLayout) {
+                title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+
+                if (tab.getDrawableId() != 0)
+                    title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 4));
+                else
+                    title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
 
             title.setId(1200 + pos);
-            tabLayout.addView(title);
         }
 
+        tabLayout.setId(1000 + pos);
+        tabLayout.setClickable(true);
         tabLayout.setOnClickListener(this);
 
         return tabLayout;
@@ -265,7 +275,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabListContainer.setOrientation(LinearLayout.VERTICAL);
             tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(tabListContainerSize, getScreenHeight() * tabCount));
         }
-        tabListContainer.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor_selected());
+        tabListContainer.setBackgroundColor(tabArray.getSelectedTabBackgroundColor());
         //tabListContainer.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
 
         for (int i = 0; i < tabCount; i++) {
@@ -319,6 +329,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             boolean hasIcon = false;
             boolean hasSelectedIcon = false;
             boolean hasTitle = false;
+            LinearLayout tabLayout = null;
             ImageView icon = null;
             TextView title = null;
 
@@ -327,7 +338,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             if (tab.getDrawableId_selected() != 0) hasSelectedIcon = true;
             if (tab.getTitle() != null) hasTitle = true;
 
-            LinearLayout tabLayout = (LinearLayout) tabContainer.getChildAt(i);
+            tabLayout = (LinearLayout) tabContainer.getChildAt(i);
             if (hasIcon)
                 icon = (ImageView) tabLayout.findViewById(1100 + i);
 
@@ -335,19 +346,38 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
                 title = (TextView) tabLayout.findViewById(1200 + i);
 
             if (i == tabPos) {
-                tabLayout.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor_selected());
-                if (hasIcon  &&  hasSelectedIcon) icon.setImageResource(tab.getDrawableId_selected());
-                if (hasTitle) title.setTextColor(tabDrawerLayout.getTabTitleColor_selected());
-                tabLayout.setAlpha(1);
+                if (hasCustomTabLayout)
+                    setSelectedTabView(tabLayout, icon, title);
+                else {
+                    tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
+                    if (hasIcon) {
+                        if (hasSelectedIcon)
+                            icon.setImageResource(tab.getDrawableId_selected());
+                        else if (tab.getSelectedIconColor() != 0)
+                            icon.setColorFilter(tab.getSelectedIconColor());
+                    }
+                    if (hasTitle)
+                        title.setTextColor(tab.getSelectedTitleColor());
+                }
             }
             else if (i == currentSelectedTabPos) {
-                tabLayout.setAlpha(INACTIVE_SELECTED_TAB_ALPHA_VALUE);
+                if (hasCustomTabLayout)
+                    setInactiveSelectedTabView(tabLayout, icon, title);
+                else
+                    tabLayout.setBackgroundColor(tab.getSelectedInactiveBackgroundColor());
             }
             else {
-                tabLayout.setBackgroundColor(tabDrawerLayout.getTabBackgroundColor());
-                if (hasIcon) icon.setImageResource(tab.getDrawableId());
-                if (hasTitle) title.setTextColor(tabDrawerLayout.getTabTitleColor());
-                tabLayout.setAlpha(1);
+                if (hasCustomTabLayout)
+                    setUnselectedTabView(tabLayout, icon, title);
+                else {
+                    tabLayout.setBackgroundColor(tab.getBackgroundColor());
+                    if (hasIcon) {
+                        icon.setImageResource(tab.getDrawableId());
+                        if (tab.getIconColor() != 0)
+                            icon.setColorFilter(tab.getIconColor());
+                    }
+                    if (hasTitle) title.setTextColor(tab.getTitleColor());
+                }
             }
         }
     }
@@ -570,6 +600,10 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
 
 
     /**
+     ***** Methods for overriding *****
+     */
+
+    /**
      * On tab drawer clicked. (Tab or TabListItem)
      * This will be overridden to get clicked positions.
      * <p>
@@ -580,4 +614,24 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      * @param itemPosition the item position (This will be 0, if the selected Tab has no list items.)
      */
     public void onTabDrawerClicked(int tabPosition, int itemPosition) { }
+
+
+    /*
+    public void setSelectedTabView(int tabPosition, LinearLayout tabLayout, ImageView iconView) {
+        setSelectedTabView(tabPosition, tabLayout, iconView, null);
+    }
+
+    public void setSelectedTabView(int tabPosition, LinearLayout tabLayout, TextView titleView) {
+        setSelectedTabView(tabPosition, tabLayout, null, titleView);
+    }
+    */
+
+    public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView) {
+
+    }
+    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView) {
+    }
+    public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView) {
+    }
+
 }

@@ -3,7 +3,6 @@ package com.ashazar.tabdrawer;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
@@ -20,19 +19,12 @@ public class TabDrawerLayout extends LinearLayout {
 
     // TAB
     private int defaultSelectedTab;
-    private int customTabItemLayoutResId;
 
     private int tabPadding;
     private int tabPaddingLeft;
     private int tabPaddingRight;
     private int tabPaddingTop;
     private int tabPaddingBottom;
-
-    private int tabTitleSize;
-    private int tabTitleColor;
-    private int tabTitleColor_selected;
-    private int tabBackgroundColor;
-    private int tabBackgroundColor_selected;
 
     // TAB Detail List
     private int defaultSelectedTabItem;
@@ -103,7 +95,6 @@ public class TabDrawerLayout extends LinearLayout {
 
         defaultSelectedTab = arr.getInteger(R.styleable.TabDrawerLayout_defaultSelectedTab, 1);
         defaultSelectedTabItem = arr.getInteger(R.styleable.TabDrawerLayout_defaultSelectedTabItem, 1);
-        customTabItemLayoutResId = arr.getInteger(R.styleable.TabDrawerLayout_custom_tabItemLayout, 0);
 
         tabBarPosition = arr.getInteger(R.styleable.TabDrawerLayout_tabBarPosition, 0);
         size_tabBar = (int) arr.getDimension(R.styleable.TabDrawerLayout_size_tabBar, 120);
@@ -115,12 +106,6 @@ public class TabDrawerLayout extends LinearLayout {
         tabPaddingRight = (int) arr.getDimension(R.styleable.TabDrawerLayout_paddingRight, 0);
         tabPaddingTop = (int) arr.getDimension(R.styleable.TabDrawerLayout_paddingTop, 0);
         tabPaddingBottom = (int) arr.getDimension(R.styleable.TabDrawerLayout_paddingBottom, 0);
-
-        tabTitleSize = (int) arr.getDimension(R.styleable.TabDrawerLayout_titleSize, 12);
-        tabTitleColor = arr.getColor(R.styleable.TabDrawerLayout_titleColor, ContextCompat.getColor(context, R.color.default_TabTitle));
-        tabTitleColor_selected = arr.getColor(R.styleable.TabDrawerLayout_titleColor_selected, ContextCompat.getColor(context, R.color.default_TabTitle_selected));
-        tabBackgroundColor = arr.getColor(R.styleable.TabDrawerLayout_backgroundColor, ContextCompat.getColor(context, R.color.default_TabBackground));
-        tabBackgroundColor_selected = arr.getColor(R.styleable.TabDrawerLayout_backgroundColor_selected, ContextCompat.getColor(context, R.color.default_TabBackground_selected));
 
         // TAB Detail List
         list_padding = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_padding, 0);
@@ -151,13 +136,6 @@ public class TabDrawerLayout extends LinearLayout {
      * @return the default selected tab item
      */
     public int getDefaultSelectedTabItem() { return defaultSelectedTabItem - 1; }
-
-    /**
-     * Gets custom tab item layout res id.
-     *
-     * @return the custom tab item layout res id
-     */
-    public int getCustomTabItemLayoutResId() { return customTabItemLayoutResId; }
 
     /**
      * Gets tab bar position.
@@ -259,40 +237,4 @@ public class TabDrawerLayout extends LinearLayout {
      * @return the tab list padding bottom
      */
     public int getTabListPaddingBottom() { return (list_paddingBottom != 0) ? list_paddingBottom : list_padding; }
-
-    /**
-     * Gets tab title size.
-     *
-     * @return the tab title size
-     */
-    public int getTabTitleSize() { return tabTitleSize; }
-
-    /**
-     * Gets tab title color.
-     *
-     * @return the tab title color
-     */
-    public int getTabTitleColor() { return tabTitleColor; }
-
-    /**
-     * Gets tab title color selected.
-     *
-     * @return the tab title color selected
-     */
-    public int getTabTitleColor_selected() { return tabTitleColor_selected; }
-
-    /**
-     * Gets tab background color.
-     *
-     * @return the tab background color
-     */
-    public int getTabBackgroundColor() { return tabBackgroundColor; }
-
-    /**
-     * Gets tab background color selected.
-     *
-     * @return the tab background color selected
-     */
-    public int getTabBackgroundColor_selected() { return tabBackgroundColor_selected; }
-
 }

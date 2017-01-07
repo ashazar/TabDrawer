@@ -29,6 +29,15 @@ public class TabListItem {
     /**
      * Instantiates a new TabListItem.
      *
+     * @param iconDrawableId Drawable Resource Id of the icon
+     */
+    public TabListItem(int iconDrawableId) {
+        drawableId = iconDrawableId;
+    }
+
+    /**
+     * Instantiates a new TabListItem.
+     *
      * @param itemTitle      title text
      * @param iconDrawableId Drawable Resource Id of the icon
      */
@@ -38,13 +47,6 @@ public class TabListItem {
     }
 
     /**
-     * Gets title.
-     *
-     * @return the title
-     */
-    public String getTitle() { return title; }
-
-    /**
      * Sets title.
      *
      * @param title the title
@@ -52,11 +54,11 @@ public class TabListItem {
     public void setTitle(String title) { this.title = title; }
 
     /**
-     * Gets drawable id.
+     * Gets title.
      *
-     * @return the drawable id
+     * @return the title
      */
-    public int getDrawableId() { return drawableId; }
+    public String getTitle() { return title; }
 
     /**
      * Sets drawable id.
@@ -64,6 +66,13 @@ public class TabListItem {
      * @param drawableId the drawable id
      */
     public void setDrawableId(int drawableId) { this.drawableId = drawableId; }
+
+    /**
+     * Gets drawable id.
+     *
+     * @return the drawable id
+     */
+    public int getDrawableId() { return drawableId; }
 
     /**
      * Sets selected status.

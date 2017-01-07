@@ -14,19 +14,12 @@
 
         <attr name="defaultSelectedTab" format="integer"/>
         <attr name="defaultSelectedTabItem" format="integer"/>
-        <attr name="custom_tabItemLayout" format="integer"/>
 
         <attr name="padding" format="dimension"/>
         <attr name="paddingLeft" format="dimension"/>
         <attr name="paddingRight" format="dimension"/>
         <attr name="paddingTop" format="dimension"/>
         <attr name="paddingBottom" format="dimension"/>
-
-        <attr name="titleSize" format="dimension"/>
-        <attr name="titleColor" format="color"/>
-        <attr name="titleColor_selected" format="color"/>
-        <attr name="backgroundColor" format="color"/>
-        <attr name="backgroundColor_selected" format="color"/>
 
         <attr name="list_padding" format="dimension"/>
         <attr name="list_paddingLeft" format="dimension"/>
