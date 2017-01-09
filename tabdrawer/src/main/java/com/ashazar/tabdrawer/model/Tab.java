@@ -1,5 +1,7 @@
 package com.ashazar.tabdrawer.model;
 
+import android.graphics.Typeface;
+
 import java.util.ArrayList;
 
 /**
@@ -19,7 +21,8 @@ public class Tab {
     private int backgroundColor = 0;
     private int backgroundColor_selected = 0;
     private int backgroundColor_selectedInactive = 0;
-    private int titleSize = 12;
+    private Typeface titleFont = null;
+    private int titleSize = 0;
     private int titleColor = 0;
     private int titleColor_selected = 0;
     private int titleColor_selectedInactive = 0;
@@ -29,6 +32,9 @@ public class Tab {
     private int drawableId_selected = 0;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 0;
+    private boolean animateScaleIconWhenSelected = true;
+    private float iconScaleValueWhenSelected = 1.2f;
+    private boolean boldTitleWhenSelected = true;
     private ArrayList<TabListItem> list = null;
 
     /**
@@ -110,75 +116,270 @@ public class Tab {
      */
     public int getCustomTabLayoutResourceId() { return tabLayoutResourceId; }
 
+    /**
+     * Sets background color.
+     *
+     * @param color the color
+     * @return the Tab
+     */
     public Tab setBackgroundColor(int color) {
         backgroundColor = color;
         return this;
     }
 
+    /**
+     * Gets background color.
+     *
+     * @return the tab background color
+     */
     public int getBackgroundColor() { return backgroundColor; }
 
+    /**
+     * Sets background color for selected tab.
+     *
+     * @param color the color
+     * @return the Tab
+     */
     public Tab setSelectedBackgroundColor(int color) {
         backgroundColor_selected = color;
         return this;
     }
 
+    /**
+     * Gets background color for the selected tab.
+     *
+     * @return the selected tab background color
+     */
     public int getSelectedBackgroundColor() { return backgroundColor_selected; }
 
-    public Tab setSelectedInactiveBackgroundColor(int color) {
+    /**
+     * Sets background color for inactive selected tab
+     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
+     *
+     * @param color the color
+     * @return the Tab
+     */
+    public Tab setInactiveSelectedBackgroundColor(int color) {
         backgroundColor_selectedInactive = color;
         return this;
     }
 
-    public int getSelectedInactiveBackgroundColor() { return backgroundColor_selectedInactive; }
+    /**
+     * Gets background color of the inactive selected tab .
+     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
+     *
+     * @return the inactive selected tab background color
+     */
+    public int getInactiveSelectedBackgroundColor() { return backgroundColor_selectedInactive; }
 
+    /**
+     * Sets Typeface of the Title
+     *
+     * @param font Typeface of Title
+     * @return the Tab
+     */
+    public Tab setTitleFont(Typeface font) {
+        titleFont = font;
+        return this;
+    }
+
+    /**
+     * Gets the typeface of Title.
+     *
+     * @return the typeface of title
+     */
+    public Typeface getTitleFont() { return titleFont; }
+
+    /**
+     * Sets title size.
+     *
+     * @param size the size
+     * @return the Tab
+     */
     public Tab setTitleSize(int size) {
         titleSize = size;
         return this;
     }
 
+    /**
+     * Gets tab title size.
+     *
+     * @return the tab title size
+     */
     public int getTitleSize() { return titleSize; }
 
+    /**
+     * Sets title color for all tabs.
+     *
+     * @param color the color
+     * @return the Tab
+     */
     public Tab setTitleColor(int color) {
         titleColor = color;
         return this;
     }
 
+    /**
+     * Gets tab title color.
+     *
+     * @return the tab title color
+     */
     public int getTitleColor() { return titleColor; }
 
+    /**
+     * Sets title color for the selected tab.
+     *
+     * @param color the color
+     * @return the Tab
+     */
     public Tab setSelectedTitleColor(int color) {
         titleColor_selected = color;
         return this;
     }
 
+    /**
+     * Gets selected tab title color.
+     *
+     * @return the selected tab title color
+     */
     public int getSelectedTitleColor() { return titleColor_selected; }
 
-    public Tab setSelectedInactiveTitleColor(int color) {
+    /**
+     * Sets title color of the inactive selected tab .
+     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
+     *
+     * @param color the color
+     * @return the Tab
+     */
+    public Tab setInactiveSelectedTitleColor(int color) {
         titleColor_selectedInactive = color;
         return this;
     }
 
-    public int getSelectedInactiveTitleColor() { return titleColor_selectedInactive; }
+    /**
+     * Gets inactive selected tab title color.
+     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
+     *
+     * @return the inactive selected tab title color
+     */
+    public int getInactiveSelectedTitleColor() { return titleColor_selectedInactive; }
 
+    /**
+     * Sets tab icon color. (Tint ImageView)
+     *
+     * @param color the color
+     * @return the Tab
+     */
     public Tab setIconColor(int color) {
         iconColor = color;
         return this;
     }
 
+    /**
+     * Gets tab icon color. (Tint ImageView)
+     *
+     * @return the tab icon color
+     */
     public int getIconColor() { return iconColor; }
 
+    /**
+     * Sets selected tab icon color.
+     *
+     * @param color the color
+     * @return the Tab
+     */
     public Tab setSelectedIconColor(int color) {
         iconColor_selected = color;
         return this;
     }
 
+    /**
+     * Gets selected tab icon color.
+     *
+     * @return the selected tab icon color
+     */
     public int getSelectedIconColor() { return iconColor_selected; }
 
-    public Tab setSelectedInactiveIconColor(int color) {
+    /**
+     * Sets inactive selected tab icon color.
+     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
+     *
+     * @param color the color
+     * @return the Tab
+     */
+    public Tab setInactiveSelectedIconColor(int color) {
         iconColor_selectedInactive = color;
         return this;
     }
 
-    public int getSelectedInactiveIconColor() { return iconColor_selectedInactive; }
+    /**
+     * Gets inactive selected tab icon color.
+     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
+     *
+     * @return the inactive selected tab icon color
+     */
+    public int getInactiveSelectedIconColor() { return iconColor_selectedInactive; }
+
+    /**
+     * Sets if to animate and scale up the icon, when tab is selected
+     * Default: true
+     *
+     * @param scale scale
+     * @return the Tab
+     */
+    public Tab setAnimateScaleIconWhenSelected(boolean scale) {
+        animateScaleIconWhenSelected = scale;
+        return this;
+    }
+
+    /**
+     * Gets status of if animate & scale when the tab is selected
+     * Default: true
+     *
+     * @return boolean
+     */
+    public boolean getAnimateScaleIconWhenSelected() { return animateScaleIconWhenSelected; }
+
+    /**
+     * Sets the scale value of selected tab's icon
+     * Default: 1.2f
+     *
+     * @param value scale value
+     * @return Tab
+     */
+    public Tab setIconScaleValueWhenSelected(float value) {
+        iconScaleValueWhenSelected = value;
+        return this;
+    }
+
+    /**
+     * Gets the scale value of selected tab's icon
+     * Default: 1.2f
+     *
+     * @return scale value
+     */
+    public float getIconScaleValueWhenSelected() { return iconScaleValueWhenSelected; }
+
+    /**
+     * Sets if to make the title bold, when tab is selected
+     * Default: true
+     *
+     * @param bold bold
+     * @return the Tab
+     */
+
+    public Tab setBoldTitleWhenSelected(boolean bold) {
+        boldTitleWhenSelected = bold;
+        return this;
+    }
+
+    /**
+     * Gets status of bold title when the tab is selected
+     * Default: true
+     *
+     * @return boolean
+     */
+    public boolean getBoldTitleWhenSelected() { return boldTitleWhenSelected; }
 
     /**
      * Add Item to Tab's item list.

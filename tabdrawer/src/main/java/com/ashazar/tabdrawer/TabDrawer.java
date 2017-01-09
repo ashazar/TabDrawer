@@ -3,6 +3,7 @@ package com.ashazar.tabdrawer;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import com.ashazar.tabdrawer.model.TabArray;
  * Alternative to Navigation Drawer (Hamburger Menu)
  *
  * @author      Serdar Hazar (ashazar) https://github.com/ashazar
- * @version     1.0.0
+ * @version     1.1.0
  *
  *
  * Created by Serdar Hazar on 26/04/16.
@@ -202,10 +203,6 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(tabArray.getTab(pos).getCustomTabLayoutResourceId(), tabDrawerLayout, false);
             hasCustomTabLayout = true;
         }
-        else if (tabArray.getCustomTabLayoutResourceId() != 0) {
-            tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(tabArray.getCustomTabLayoutResourceId(), tabDrawerLayout, false);
-            hasCustomTabLayout = true;
-        }
         else {
             tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.tabdrawer_tab_item, tabDrawerLayout, false);
             tabLayout.setOrientation(LinearLayout.VERTICAL);
@@ -223,6 +220,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         if (tab.getDrawableId() != 0) {
             icon = (ImageView) tabLayout.findViewById(R.id.tab_icon);
             icon.setImageResource(tab.getDrawableId());
+            icon.setColorFilter(tab.getIconColor());
             icon.setId(1100 + pos);
 
             if (!hasCustomTabLayout) {
@@ -238,6 +236,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             title.setText(tab.getTitle());
             title.setTextColor(tab.getTitleColor());
             title.setTextSize(tab.getTitleSize());
+            title.setTypeface(tab.getTitleFont());
 
             if (!hasCustomTabLayout) {
                 title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -247,6 +246,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
                 else
                     title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
+
+
 
             title.setId(1200 + pos);
         }
@@ -275,7 +276,6 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabListContainer.setOrientation(LinearLayout.VERTICAL);
             tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(tabListContainerSize, getScreenHeight() * tabCount));
         }
-        tabListContainer.setBackgroundColor(tabArray.getSelectedTabBackgroundColor());
         //tabListContainer.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
 
         for (int i = 0; i < tabCount; i++) {
@@ -314,6 +314,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
 
         listView.setOnItemClickListener(this);
 
+        container.setBackgroundColor(tabArray.getTab(tabPos).getSelectedBackgroundColor());
         container.addView(listView);
         return container;
     }
@@ -326,58 +327,44 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      */
     private void refreshTabBar(int tabPos) {
         for (int i = 0; i < tabCount; i++) {
-            boolean hasIcon = false;
-            boolean hasSelectedIcon = false;
-            boolean hasTitle = false;
-            LinearLayout tabLayout = null;
-            ImageView icon = null;
-            TextView title = null;
-
             Tab tab = tabArray.getTab(i);
-            if (tab.getDrawableId() != 0) hasIcon = true;
-            if (tab.getDrawableId_selected() != 0) hasSelectedIcon = true;
-            if (tab.getTitle() != null) hasTitle = true;
 
-            tabLayout = (LinearLayout) tabContainer.getChildAt(i);
-            if (hasIcon)
-                icon = (ImageView) tabLayout.findViewById(1100 + i);
+            LinearLayout tabLayout = (LinearLayout) tabContainer.getChildAt(i);
+            ImageView iconView = null;
+            TextView titleView = null;
 
-            if (hasTitle)
-                title = (TextView) tabLayout.findViewById(1200 + i);
+            if (tab.getDrawableId() != 0)
+                iconView = (ImageView) tabLayout.findViewById(1100 + i);
+
+            if (tab.getTitle() != null)
+                titleView = (TextView) tabLayout.findViewById(1200 + i);
 
             if (i == tabPos) {
-                if (hasCustomTabLayout)
-                    setSelectedTabView(tabLayout, icon, title);
-                else {
-                    tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
-                    if (hasIcon) {
-                        if (hasSelectedIcon)
-                            icon.setImageResource(tab.getDrawableId_selected());
-                        else if (tab.getSelectedIconColor() != 0)
-                            icon.setColorFilter(tab.getSelectedIconColor());
-                    }
-                    if (hasTitle)
-                        title.setTextColor(tab.getSelectedTitleColor());
-                }
+                setSelectedTabView(tabLayout, iconView, titleView, i);
+
+                if (iconView != null)
+                    iconView.requestLayout();
+                if (titleView != null)
+                    titleView.requestLayout();
+                tabLayout.requestLayout();
             }
             else if (i == currentSelectedTabPos) {
-                if (hasCustomTabLayout)
-                    setInactiveSelectedTabView(tabLayout, icon, title);
-                else
-                    tabLayout.setBackgroundColor(tab.getSelectedInactiveBackgroundColor());
+                setInactiveSelectedTabView(tabLayout, iconView, titleView, i);
+
+                if (iconView != null)
+                    iconView.requestLayout();
+                if (titleView != null)
+                    titleView.requestLayout();
+                tabLayout.requestLayout();
             }
             else {
-                if (hasCustomTabLayout)
-                    setUnselectedTabView(tabLayout, icon, title);
-                else {
-                    tabLayout.setBackgroundColor(tab.getBackgroundColor());
-                    if (hasIcon) {
-                        icon.setImageResource(tab.getDrawableId());
-                        if (tab.getIconColor() != 0)
-                            icon.setColorFilter(tab.getIconColor());
-                    }
-                    if (hasTitle) title.setTextColor(tab.getTitleColor());
-                }
+                setUnselectedTabView(tabLayout, iconView, titleView, i);
+
+                if (iconView != null)
+                    iconView.requestLayout();
+                if (titleView != null)
+                    titleView.requestLayout();
+                tabLayout.requestLayout();
             }
         }
     }
@@ -616,22 +603,69 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     public void onTabDrawerClicked(int tabPosition, int itemPosition) { }
 
 
-    /*
-    public void setSelectedTabView(int tabPosition, LinearLayout tabLayout, ImageView iconView) {
-        setSelectedTabView(tabPosition, tabLayout, iconView, null);
+    public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+        Tab tab = tabArray.getTab(tabPosition);
+
+        tabLayout.setBackgroundColor(tab.getBackgroundColor());
+        if (iconView != null  &&  tab.getDrawableId() != 0) {
+            iconView.setImageResource(tab.getDrawableId());
+            if (tab.getIconColor() != 0)
+                iconView.setColorFilter(tab.getIconColor());
+
+            if (tab.getAnimateScaleIconWhenSelected()) {
+                iconView
+                        .animate()
+                        .scaleY(1)
+                        .scaleX(1);
+            }
+        }
+        if (titleView != null  &&  tab.getTitle() != null) {
+            if (tab.getSelectedTitleColor() != 0)
+                titleView.setTextColor(tab.getTitleColor());
+
+            if (tab.getBoldTitleWhenSelected())
+                titleView.setTypeface(tab.getTitleFont(), Typeface.NORMAL);
+        }
     }
 
-    public void setSelectedTabView(int tabPosition, LinearLayout tabLayout, TextView titleView) {
-        setSelectedTabView(tabPosition, tabLayout, null, titleView);
-    }
-    */
+    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+        Tab tab = tabArray.getTab(tabPosition);
 
-    public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView) {
+        tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
+        if (iconView != null  &&  tab.getDrawableId() != 0) {
+            if (tab.getDrawableId_selected() != 0)
+                iconView.setImageResource(tab.getDrawableId_selected());
+            else if (tab.getSelectedIconColor() != 0)
+                iconView.setColorFilter(tab.getSelectedIconColor());
 
+            if (tab.getAnimateScaleIconWhenSelected()) {
+                iconView
+                        .animate()
+                        .scaleY(tab.getIconScaleValueWhenSelected())
+                        .scaleX(tab.getIconScaleValueWhenSelected());
+            }
+        }
+        if (titleView != null  &&  tab.getTitle() != null) {
+            if (tab.getSelectedTitleColor() != 0)
+                titleView.setTextColor(tab.getSelectedTitleColor());
+
+            if (tab.getBoldTitleWhenSelected())
+                titleView.setTypeface(tab.getTitleFont(), Typeface.BOLD);
+        }
     }
-    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView) {
-    }
-    public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView) {
+    public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+        Tab tab = tabArray.getTab(tabPosition);
+
+        tabLayout.setBackgroundColor(tab.getInactiveSelectedBackgroundColor());
+        if (iconView != null  &&  tab.getDrawableId() != 0  &&  tab.getInactiveSelectedIconColor() != 0) {
+            iconView.setColorFilter(tab.getInactiveSelectedIconColor());
+
+            if (tab.getAnimateScaleIconWhenSelected())
+                iconView.animate().scaleY(1).scaleX(1);
+        }
+        if (titleView != null  &&  tab.getTitle() != null  &&  tab.getInactiveSelectedTitleColor() != 0) {
+            titleView.setTextColor(tab.getInactiveSelectedTitleColor());
+        }
     }
 
 }
