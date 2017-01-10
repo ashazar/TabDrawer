@@ -127,18 +127,24 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         if (tabBarPositionBottomOrRight()) {
             prepareTabContainer();
             prepareTabListContainer();
-            if (tabBarPosition == TAB_BAR_POSITION_BOTTOM)
-                tabDrawerLayout.setTranslationY(tabListContainerSize);
-            else
-                tabDrawerLayout.setTranslationX(tabListContainerSize);
+
+            if (tabArray.hasDrawerForList()) {
+                if (tabBarPosition == TAB_BAR_POSITION_BOTTOM)
+                    tabDrawerLayout.setTranslationY(tabListContainerSize);
+                else
+                    tabDrawerLayout.setTranslationX(tabListContainerSize);
+            }
         }
         else {
             prepareTabListContainer();
             prepareTabContainer();
-            if (tabBarPosition == TAB_BAR_POSITION_TOP)
-                tabDrawerLayout.setTranslationY(0 - tabListContainerSize);
-            else
-                tabDrawerLayout.setTranslationX(0 - tabListContainerSize);
+
+            if (tabArray.hasDrawerForList()) {
+                if (tabBarPosition == TAB_BAR_POSITION_TOP)
+                    tabDrawerLayout.setTranslationY(0 - tabListContainerSize);
+                else
+                    tabDrawerLayout.setTranslationX(0 - tabListContainerSize);
+            }
         }
 
         if (currentSelectedTabPos == -1) {
@@ -269,6 +275,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      * Add each Tab's List containers to this view.
      */
     private void prepareTabListContainer() {
+        if (!tabArray.hasDrawerForList()) return;
+
         tabListContainer = new LinearLayout(context);
 
         if (tabBarPositionTopOrBottom()) {
@@ -402,6 +410,9 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      * @param tabItemPos Position of the newly clicked item.
      */
     private void refreshTabLists(int tabPos, int tabItemPos) {
+        if (!tabArray.hasDrawerForList()  ||  !tabArray.getTab(tabPos).hasItems())
+            return;
+
         TabListAdapter adapter;
 
         if (previousSelectedTabItemPos > -1  &&  previousSelectedTabWithListPos > -1) {

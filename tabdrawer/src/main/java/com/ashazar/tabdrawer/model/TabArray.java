@@ -28,6 +28,7 @@ public class TabArray {
     private float tabIconScaleValueWhenSelected = 1.2f;
     private boolean boldTabTitleWhenSelected = true;
 
+    private boolean hasAtLeastOneDrawerForList = false;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 16;
 
@@ -101,13 +102,16 @@ public class TabArray {
         /*  Before adding the Tab,
             set TabListItem's text color and text size, if not set before.
          */
-        if (tab.getListItemTextColor() == 0) {
+        if (tab.hasItems())
+            hasAtLeastOneDrawerForList = true;
+
+        if (tab.hasItems()  &&  tab.getListItemTextColor() == 0) {
             for (TabListItem tabListItem : tab.getTabItemList()) {
                 tabListItem.setTextColor(tabListItemTextColor);
             }
         }
 
-        if (tab.getListItemTextSize() == 0) {
+        if (tab.hasItems()  &&  tab.getListItemTextSize() == 0) {
             for (TabListItem tabListItem : tab.getTabItemList()) {
                 tabListItem.setTextSize(tabListItemTextSize);
             }
@@ -131,6 +135,13 @@ public class TabArray {
      * @return the size of the array
      */
     public int getTabCount() { return tabArray.size(); }
+
+    /**
+     * Get if a tab drawer exists;
+     *
+     * @return boolean : true if at least one tab has drawer (list items)
+     */
+    public boolean hasDrawerForList() { return hasAtLeastOneDrawerForList; }
 
     /**
      * Sets the Layout Resource Id of tabs
