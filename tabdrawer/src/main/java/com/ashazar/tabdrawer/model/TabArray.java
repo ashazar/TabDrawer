@@ -44,17 +44,20 @@ public class TabArray {
      * @return the TabArray
      */
     public TabArray addTab(Tab tab) {
+        // If selected tab title color not set for general, use tabTitleColor
         if (tabTitleColor_selected == 0)
             tabTitleColor_selected = tabTitleColor;
 
+        // If inactive selected tab title color not set for general, use tabTitleColor
         if (tabTitleColor_selectedInactive == 0)
             tabTitleColor_selectedInactive = tabTitleColor;
+
 
         /*  Before adding the Tab,
             set general Tab properties (custom Tab layout, background color, title color&size, colors when tab is selected, etc.)
             set TabListItem's text color and text size, if not set before.
          */
-        if (tab.getCustomTabLayoutResourceId() == 0)
+        if (tab.getCustomTabLayoutResourceId() == 0  &&  !tab.willUseDefaultLayout())
             tab.setCustomTabLayoutResourceId(tabLayoutResourceId);
 
         if (tab.getBackgroundColor() == 0)

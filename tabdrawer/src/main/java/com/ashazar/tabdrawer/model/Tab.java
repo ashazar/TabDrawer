@@ -18,6 +18,7 @@ public class Tab {
     private int drawableId = 0;
 
     private int tabLayoutResourceId = 0;
+    private boolean useDefaultLayout = true;
     private int backgroundColor = 0;
     private int backgroundColor_selected = 0;
     private int backgroundColor_selectedInactive = 0;
@@ -106,6 +107,7 @@ public class Tab {
      */
     public Tab setCustomTabLayoutResourceId(int resourceId) {
         tabLayoutResourceId = resourceId;
+        useDefaultLayout = false;
         return this;
     }
 
@@ -115,6 +117,28 @@ public class Tab {
      * @return int Tab Layout Resource Id
      */
     public int getCustomTabLayoutResourceId() { return tabLayoutResourceId; }
+
+    /**
+     * If a common tab layout resource id set in TabArray, and don't want to use it for this tab,
+     * instead of defining another custom tab layout,
+     * force this tab to use internal default layout.
+     *
+     * @return the Tab
+     */
+    public Tab forceDefaultLayout() {
+        useDefaultLayout = true;
+        tabLayoutResourceId = 0;
+        return this;
+    }
+
+    /**
+     * Get if the tab is forced ( forceDefaultLayout() ) to use default layout
+     *
+     * @return boolean
+     */
+    boolean willUseDefaultLayout() {
+        return useDefaultLayout;
+    }
 
     /**
      * Sets background color.
