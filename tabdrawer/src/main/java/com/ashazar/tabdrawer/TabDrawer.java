@@ -287,7 +287,6 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabListContainer.setOrientation(LinearLayout.VERTICAL);
             tabListContainer.setLayoutParams(new LinearLayout.LayoutParams(tabListContainerSize, getScreenHeight() * tabCount));
         }
-        //tabListContainer.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
 
         for (int i = 0; i < tabCount; i++) {
             RelativeLayout layout = prepareItemListContainerView(i);
@@ -304,7 +303,14 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      * @return RelativeLayout view (Tab's item list container). RelativeLayout is chosen for future flexibility needs.
      */
     private RelativeLayout prepareItemListContainerView(int tabPos) {
-        RelativeLayout container = new RelativeLayout(context);
+        RelativeLayout container;
+
+        if (tabArray.getTab(tabPos).getCustomDrawerLayoutResourceId() != 0)
+            container = (RelativeLayout) LayoutInflater.from(context).inflate(tabArray.getTab(tabPos).getCustomDrawerLayoutResourceId(), tabListContainer, false);
+        else
+            container = new RelativeLayout(context);
+
+
         if (tabBarPositionTopOrBottom())
             container.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth(), RelativeLayout.LayoutParams.MATCH_PARENT));
         else
@@ -319,13 +325,13 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         listView.setDivider(null);
         listView.setId(10000 + tabPos);
 
-
         TabListAdapter adapter = new TabListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(this);
 
         container.setBackgroundColor(tabArray.getTab(tabPos).getSelectedBackgroundColor());
+        container.requestLayout();
         container.addView(listView);
         return container;
     }

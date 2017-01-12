@@ -29,6 +29,7 @@ public class TabArray {
     private boolean boldTabTitleWhenSelected = true;
 
     private boolean hasAtLeastOneDrawerForList = false;
+    private int customDrawerLayoutResourceId = 0;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 16;
 
@@ -103,8 +104,11 @@ public class TabArray {
             tab.setBoldTitleWhenSelected(boldTabTitleWhenSelected);
 
         /*  Before adding the Tab,
-            set TabListItem's text color and text size, if not set before.
+            set custom drawer layout, TabListItem's text color and text size, if not set before.
          */
+        if (tab.getCustomDrawerLayoutResourceId() == 0  &&  !tab.willUseDefaultDrawerLayout())
+            tab.setCustomDrawerLayoutResourceId(customDrawerLayoutResourceId);
+
         if (tab.hasItems())
             hasAtLeastOneDrawerForList = true;
 
@@ -429,6 +433,25 @@ public class TabArray {
      */
     public boolean getBoldTabTitleWhenSelected() { return boldTabTitleWhenSelected; }
 
+
+    /**
+     * Sets the custom drawer layout (RelativeLayout) resource Id for all tabs.
+     *
+     * @param resourceId Custom Drawer layout resource Id
+     *
+     * @return the Tab
+     */
+    public TabArray setCustomDrawerLayoutResourceId(int resourceId) {
+        customDrawerLayoutResourceId = resourceId;
+        return this;
+    }
+
+    /**
+     * Gets the custom drawer layout resource id
+     *
+     * @return resource id
+     */
+    public int getCustomDrawerLayoutResourceId() { return customDrawerLayoutResourceId; }
 
     /**
      * Sets tab item list text color.

@@ -36,6 +36,9 @@ public class Tab {
     private boolean animateScaleIconWhenSelected = true;
     private float iconScaleValueWhenSelected = 1.2f;
     private boolean boldTitleWhenSelected = true;
+
+    private int customDrawerLayoutResourceId = 0;
+    private boolean useDefaultDrawerLayout = false; // will be used to force using default (internal) drawer layout
     private ArrayList<TabListItem> list = null;
 
     /**
@@ -436,6 +439,46 @@ public class Tab {
     public boolean hasItems() {
         return !(list == null  ||  list.size() == 0);
     }
+
+    /**
+     * Sets the custom drawer layout (RelativeLayout) resource Id.
+     *
+     * @param resourceId Custom Drawer layout resource Id
+     *
+     * @return the Tab
+     */
+    public Tab setCustomDrawerLayoutResourceId(int resourceId) {
+        customDrawerLayoutResourceId = resourceId;
+        useDefaultDrawerLayout = false;
+        return this;
+    }
+
+    /**
+     * Gets the custom drawer layout resource id
+     *
+     * @return resource id
+     */
+    public int getCustomDrawerLayoutResourceId() { return customDrawerLayoutResourceId; }
+
+    /**
+     * If a common tab drawer layout resource id set in TabArray, and don't want to use it for this tab,
+     * instead of defining another custom drawer layout,
+     * force this tab to use internal default drawer layout.
+     *
+     * @return the Tab
+     */
+    public Tab forceDefaultDrawerLayout() {
+        useDefaultDrawerLayout = true;
+        customDrawerLayoutResourceId = 0;
+        return this;
+    }
+
+    /**
+     * Get if the tab is forced ( forceDefaultLayout() ) to use default layout
+     *
+     * @return boolean
+     */
+    boolean willUseDefaultDrawerLayout() { return useDefaultDrawerLayout; }
 
     /**
      * Sets tab item list text color.
