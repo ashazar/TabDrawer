@@ -18,7 +18,7 @@ public class Tab {
     private int drawableId = 0;
 
     private int tabLayoutResourceId = 0;
-    private boolean useDefaultLayout = true;
+    private boolean useDefaultLayout = false; // will be used to force using default (internal) tab layout
     private int backgroundColor = 0;
     private int backgroundColor_selected = 0;
     private int backgroundColor_selectedInactive = 0;
@@ -136,9 +136,7 @@ public class Tab {
      *
      * @return boolean
      */
-    boolean willUseDefaultLayout() {
-        return useDefaultLayout;
-    }
+    boolean willUseDefaultLayout() { return useDefaultLayout; }
 
     /**
      * Sets background color.
