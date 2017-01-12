@@ -349,6 +349,10 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             LinearLayout tabLayout = (LinearLayout) tabContainer.getChildAt(i);
             ImageView iconView = null;
             TextView titleView = null;
+            RelativeLayout drawerLayout = null;
+
+            if (tabArray.hasDrawerForList())
+                drawerLayout = (RelativeLayout) tabListContainer.getChildAt(tabPos);
 
             if (tab.getDrawableId() != 0)
                 iconView = (ImageView) tabLayout.findViewById(1100 + i);
@@ -357,7 +361,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
                 titleView = (TextView) tabLayout.findViewById(1200 + i);
 
             if (i == tabPos) {
-                setSelectedTabView(tabLayout, iconView, titleView, i);
+                setSelectedTabView(tabLayout, iconView, titleView, i, drawerLayout);
 
                 if (iconView != null)
                     iconView.requestLayout();
@@ -648,7 +652,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         }
     }
 
-    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition, RelativeLayout drawerLayout) {
         Tab tab = tabArray.getTab(tabPosition);
 
         tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
