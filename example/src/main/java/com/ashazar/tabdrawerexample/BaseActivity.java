@@ -55,6 +55,8 @@ public class BaseActivity extends AppCompatActivity {
                         .setIconColor(Color.parseColor("#ffffff"))
                         .setSelectedIconColor(Color.parseColor("#ff0000"))
                         .setInactiveSelectedIconColor(Color.parseColor("#990000"))
+                        .setCustomDrawerLayoutResourceId(R.layout.drawerlayout_with_listview)
+                        .setCustomDrawerListViewId(R.id.drawer_listview)
                         .addTabListItem( new TabListItem("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
                         .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
                         .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
@@ -68,6 +70,7 @@ public class BaseActivity extends AppCompatActivity {
                         .setTitleColor(Color.parseColor("#333333"))
                         .setSelectedTitleColor(Color.parseColor("#ffffff"))
                         .setDrawableId(R.drawable.n_queue)
+                        .setCustomDrawerListItemLayoutResourceId(R.layout.list_item)
                         .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
                         .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
                         .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
@@ -188,7 +191,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 if (tabPosition == 1) {
                     tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));
-                    drawerLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));
+                    drawerLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
                 }
             }
 

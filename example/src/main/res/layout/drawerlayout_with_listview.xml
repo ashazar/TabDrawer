@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     >
 
-    <ImageView
+
+    <ListView
+        android:id="@+id/drawer_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:alpha="0.2"
-        android:src="@drawable/ic_settings_white_24dp"/>
-
+        android:background="#66444444"
+        android:dividerHeight="2dp"
+        android:divider="#444444"
+        />
 
 </RelativeLayout>
