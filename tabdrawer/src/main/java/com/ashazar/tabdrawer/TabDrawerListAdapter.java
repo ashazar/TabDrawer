@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * <p>
  * Created by Serdar Hazar on 12/7/16.
  */
-class TabListAdapter extends ArrayAdapter<TabListItem> {
+public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
 
     /**
      * Instantiates a new Tab list adapter.
@@ -29,13 +29,13 @@ class TabListAdapter extends ArrayAdapter<TabListItem> {
      * @param context the context
      * @param list    the list
      */
-    TabListAdapter(Context context, ArrayList<TabListItem> list) {
+    TabDrawerListAdapter(Context context, ArrayList<TabListItem> list) {
         super(context, 0, list);
     }
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.tabdrawer_tab_list_item, parent, false);
         }

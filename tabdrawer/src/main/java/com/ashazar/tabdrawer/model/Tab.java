@@ -2,6 +2,8 @@ package com.ashazar.tabdrawer.model;
 
 import android.graphics.Typeface;
 
+import com.ashazar.tabdrawer.TabDrawerListAdapter;
+
 import java.util.ArrayList;
 
 /**
@@ -39,6 +41,9 @@ public class Tab {
 
     private int customDrawerLayoutResourceId = 0;
     private boolean useDefaultDrawerLayout = false; // will be used to force using default (internal) drawer layout
+    private int customDrawerListViewId = 0;
+    private int customDrawerListItemLayoutResourceId = 0;
+    private TabDrawerListAdapter customDrawerListAdapter = null;
     private ArrayList<TabListItem> list = null;
 
     /**
@@ -439,6 +444,64 @@ public class Tab {
     public boolean hasItems() {
         return !(list == null  ||  list.size() == 0);
     }
+
+    /**
+     * Sets the id for the custom listview inside the custom drawer layout
+     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     *
+     * @param viewId ListView id
+     * @return the Tab
+     */
+    public Tab setCustomDrawerListViewId(int viewId) {
+        customDrawerListViewId = viewId;
+        return this;
+    }
+
+    /**
+     * Gets the id for the custom listview inside the custom drawer layout
+     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     *
+     * @return int id of ListView
+     */
+    public int getCustomDrawerListViewId() { return customDrawerListViewId; }
+
+
+    /**
+     * Sets the resource id for the custom item layout to be used in listview inside the drawer
+     *
+     * @param resourceId Custom Layout Resource Id
+     * @return the Tab
+     */
+    public Tab setCustomDrawerListItemLayoutResourceId(int resourceId) {
+        customDrawerListItemLayoutResourceId = resourceId;
+        return this;
+    }
+
+    /**
+     * Gets the layout resource id for the custom item layout in listview inside the drawer
+     *
+     * @return int layout resource id
+     */
+    public int getCustomDrawerListItemLayoutResourceId() { return customDrawerListItemLayoutResourceId; }
+
+    /**
+     * Sets the Custom Drawer List adapter
+     *
+     * @param adapter Custom Array adapter
+     * @return the Tab
+     */
+    public Tab setCustomDrawerListAdapter(TabDrawerListAdapter adapter) {
+        customDrawerListAdapter = adapter;
+        return this;
+    }
+
+    /**
+     * Gets the custom drawer list adapter
+     *
+     * @return Custom TabDrawerListAdapter
+     */
+    public TabDrawerListAdapter getCustomDrawerListAdapter() { return customDrawerListAdapter; }
+
 
     /**
      * Sets the custom drawer layout (RelativeLayout) resource Id.

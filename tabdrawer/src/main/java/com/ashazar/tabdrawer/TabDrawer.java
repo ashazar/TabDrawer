@@ -304,35 +304,43 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      */
     private RelativeLayout prepareItemListContainerView(int tabPos) {
         RelativeLayout container;
+        ListView listView;
 
-        if (tabArray.getTab(tabPos).getCustomDrawerLayoutResourceId() != 0)
-            container = (RelativeLayout) LayoutInflater.from(context).inflate(tabArray.getTab(tabPos).getCustomDrawerLayoutResourceId(), tabListContainer, false);
+        Tab tab = tabArray.getTab(tabPos);
+
+        if (tab.getCustomDrawerLayoutResourceId() != 0)
+            container = (RelativeLayout) LayoutInflater.from(context).inflate(tab.getCustomDrawerLayoutResourceId(), tabListContainer, false);
         else
             container = new RelativeLayout(context);
 
+        if (!tab.hasItems())
+            return container;
 
         if (tabBarPositionTopOrBottom())
             container.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth(), RelativeLayout.LayoutParams.MATCH_PARENT));
         else
             container.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, getScreenHeight()));
 
-        if (!tabArray.getTab(tabPos).hasItems()) return container;
 
-        ListView listView = new ListView(context);
-        listView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-        listView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
-        listView.setDividerHeight(0);
-        listView.setDivider(null);
-        listView.setId(10000 + tabPos);
+        if (tab.getCustomDrawerListViewId() != 0  &&  tab.getCustomDrawerLayoutResourceId() != 0)
+            listView = (ListView) container.findViewById(tab.getCustomDrawerListViewId());
+        else {
+            listView = new ListView(context);
+            listView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
+            listView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+            listView.setDividerHeight(0);
+            listView.setDivider(null);
+            container.addView(listView);
+        }
 
-        TabListAdapter adapter = new TabListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
+        TabDrawerListAdapter adapter = new TabDrawerListAdapter(context, tab.getTabItemList());
         listView.setAdapter(adapter);
 
+        listView.setId(10000 + tabPos);
         listView.setOnItemClickListener(this);
 
-        container.setBackgroundColor(tabArray.getTab(tabPos).getSelectedBackgroundColor());
+        container.setBackgroundColor(tab.getSelectedBackgroundColor());
         container.requestLayout();
-        container.addView(listView);
         return container;
     }
 
@@ -423,13 +431,13 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         if (!tabArray.hasDrawerForList()  ||  !tabArray.getTab(tabPos).hasItems())
             return;
 
-        TabListAdapter adapter;
+        TabDrawerListAdapter adapter;
 
         if (previousSelectedTabItemPos > -1  &&  previousSelectedTabWithListPos > -1) {
             tabArray.getTab(previousSelectedTabWithListPos).getTabItemList().get(previousSelectedTabItemPos).setSelected(false);
             ListView prevListView = (ListView) tabListContainer.findViewById(10000 + previousSelectedTabWithListPos);
 
-            adapter = new TabListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
+            adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
             prevListView.setAdapter(adapter);
         }
 
@@ -437,7 +445,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabArray.getTab(tabPos).getTabItemList().get(tabItemPos).setSelected(true);
         ListView listView = (ListView) tabListContainer.findViewById(10000 + tabPos);
 
-        adapter = new TabListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
+        adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
         listView.setAdapter(adapter);
 
 

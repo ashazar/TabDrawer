@@ -2,6 +2,8 @@ package com.ashazar.tabdrawer.model;
 
 import android.graphics.Typeface;
 
+import com.ashazar.tabdrawer.TabDrawerListAdapter;
+
 import java.util.ArrayList;
 
 /**
@@ -30,6 +32,9 @@ public class TabArray {
 
     private boolean hasAtLeastOneDrawerForList = false;
     private int customDrawerLayoutResourceId = 0;
+    private int customDrawerListViewId = 0;
+    private int customDrawerListItemLayoutResourceId = 0;
+    private TabDrawerListAdapter customDrawerListAdapter = null;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 16;
 
@@ -112,15 +117,27 @@ public class TabArray {
         if (tab.hasItems())
             hasAtLeastOneDrawerForList = true;
 
-        if (tab.hasItems()  &&  tab.getListItemTextColor() == 0) {
-            for (TabListItem tabListItem : tab.getTabItemList()) {
-                tabListItem.setTextColor(tabListItemTextColor);
-            }
-        }
+        if (tab.hasItems()) {
+            if (tab.getCustomDrawerListViewId() == 0)
+                tab.setCustomDrawerListViewId(customDrawerListViewId);
 
-        if (tab.hasItems()  &&  tab.getListItemTextSize() == 0) {
-            for (TabListItem tabListItem : tab.getTabItemList()) {
-                tabListItem.setTextSize(tabListItemTextSize);
+            if (tab.getCustomDrawerListItemLayoutResourceId() == 0)
+                tab.setCustomDrawerListItemLayoutResourceId(customDrawerListItemLayoutResourceId);
+
+            if (tab.getCustomDrawerListAdapter() == null)
+                tab.setCustomDrawerListAdapter(customDrawerListAdapter);
+
+
+            if (tab.getListItemTextColor() == 0) {
+                for (TabListItem tabListItem : tab.getTabItemList()) {
+                    tabListItem.setTextColor(tabListItemTextColor);
+                }
+            }
+
+            if (tab.getListItemTextSize() == 0) {
+                for (TabListItem tabListItem : tab.getTabItemList()) {
+                    tabListItem.setTextSize(tabListItemTextSize);
+                }
             }
         }
 
@@ -452,6 +469,63 @@ public class TabArray {
      * @return resource id
      */
     public int getCustomDrawerLayoutResourceId() { return customDrawerLayoutResourceId; }
+
+    /**
+     * Sets the id for the custom listview inside the custom drawer layout
+     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     *
+     * @param viewId ListView id
+     * @return the TabArray
+     */
+    public TabArray setCustomDrawerListViewId(int viewId) {
+        customDrawerListViewId = viewId;
+        return this;
+    }
+
+    /**
+     * Gets the id for the custom listview inside the custom drawer layout
+     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     *
+     * @return int id of ListView
+     */
+    public int getCustomDrawerListViewId() { return customDrawerListViewId; }
+
+
+    /**
+     * Sets the resource id for the custom item layout to be used in listview inside the drawer
+     *
+     * @param resourceId Custom Layout Resource Id
+     * @return the TabArray
+     */
+    public TabArray setCustomDrawerListItemLayoutResourceId(int resourceId) {
+        customDrawerListItemLayoutResourceId = resourceId;
+        return this;
+    }
+
+    /**
+     * Gets the layout resource id for the custom item layout in listview inside the drawer
+     *
+     * @return int layout resource id
+     */
+    public int getCustomDrawerListItemLayoutResourceId() { return customDrawerListItemLayoutResourceId; }
+
+    /**
+     * Sets the Custom Drawer List adapter
+     *
+     * @param adapter Custom Array adapter
+     * @return the TabArray
+     */
+    public TabArray setCustomDrawerListAdapter(TabDrawerListAdapter adapter) {
+        customDrawerListAdapter = adapter;
+        return this;
+    }
+
+    /**
+     * Gets the custom drawer list adapter
+     *
+     * @return Custom TabDrawerListAdapter
+     */
+    public TabDrawerListAdapter getCustomDrawerListAdapter() { return customDrawerListAdapter; }
 
     /**
      * Sets tab item list text color.
