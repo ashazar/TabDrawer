@@ -333,7 +333,12 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             container.addView(listView);
         }
 
-        TabDrawerListAdapter adapter = new TabDrawerListAdapter(context, tab.getTabItemList());
+        TabDrawerListAdapter adapter;
+        if (tab.getCustomDrawerListItemLayoutResourceId() != 0)
+            adapter = new TabDrawerListAdapter(context, tab.getCustomDrawerListItemLayoutResourceId(), tab.getTabItemList());
+        else
+            adapter = new TabDrawerListAdapter(context, tab.getTabItemList());
+
         listView.setAdapter(adapter);
 
         listView.setId(10000 + tabPos);
@@ -437,7 +442,10 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
             tabArray.getTab(previousSelectedTabWithListPos).getTabItemList().get(previousSelectedTabItemPos).setSelected(false);
             ListView prevListView = (ListView) tabListContainer.findViewById(10000 + previousSelectedTabWithListPos);
 
-            adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
+            if (tabArray.getTab(previousSelectedTabWithListPos).getCustomDrawerListItemLayoutResourceId() != 0)
+                adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getCustomDrawerListItemLayoutResourceId(), tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
+            else
+                adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
             prevListView.setAdapter(adapter);
         }
 
@@ -445,7 +453,11 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         tabArray.getTab(tabPos).getTabItemList().get(tabItemPos).setSelected(true);
         ListView listView = (ListView) tabListContainer.findViewById(10000 + tabPos);
 
-        adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
+        if (tabArray.getTab(tabPos).getCustomDrawerListItemLayoutResourceId() != 0)
+            adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getCustomDrawerListItemLayoutResourceId(), tabArray.getTab(tabPos).getTabItemList());
+        else
+            adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
+
         listView.setAdapter(adapter);
 
 

@@ -22,6 +22,8 @@ import java.util.ArrayList;
  * Created by Serdar Hazar on 12/7/16.
  */
 public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
+    private int layoutResourceId = 0;
+    private boolean customItemLayout;
 
     /**
      * Instantiates a new Tab list adapter.
@@ -29,15 +31,23 @@ public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
      * @param context the context
      * @param list    the list
      */
-    TabDrawerListAdapter(Context context, ArrayList<TabListItem> list) {
+    public TabDrawerListAdapter(Context context, ArrayList<TabListItem> list) {
         super(context, 0, list);
+        layoutResourceId = R.layout.tabdrawer_tab_list_item;
+        customItemLayout = false;
+    }
+
+    public TabDrawerListAdapter(Context context, int layoutId, ArrayList<TabListItem> list) {
+        super(context, layoutId, list);
+        layoutResourceId = layoutId;
+        customItemLayout = true;
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.tabdrawer_tab_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(layoutResourceId, parent, false);
         }
 
         TabListItem item = getItem(position);
@@ -46,10 +56,11 @@ public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
         boolean isSelected = item.isSelected();
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
-        TextView titleView= (TextView) convertView.findViewById(R.id.list_item_title);
+        TextView titleView = (TextView) convertView.findViewById(R.id.list_item_title);
 
         if (imgDrawableId == -1) {
-            imageView.setVisibility(View.GONE);
+            if (!customItemLayout)
+                imageView.setVisibility(View.GONE);
         }
         else {
             imageView.setVisibility(View.VISIBLE);
@@ -62,23 +73,26 @@ public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
 
             imageView.requestLayout();
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(20, 0, 0, 0);
-            titleView.setLayoutParams(layoutParams);
+            if (!customItemLayout  &&  title != null) {
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                layoutParams.setMargins(20, 0, 0, 0);
+                titleView.setLayoutParams(layoutParams);
+            }
         }
 
-        titleView.setText(title);
-        titleView.setTextColor(item.getTextColor());
-        if (isSelected) {
-            titleView.setTypeface(null, Typeface.BOLD);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, item.getTextSize() + 1);
-        }
-        else {
-            titleView.setTypeface(null, Typeface.NORMAL);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, item.getTextSize());
-        }
+        if (title != null) {
+            titleView.setText(title);
+            titleView.setTextColor(item.getTextColor());
+            if (isSelected) {
+                titleView.setTypeface(null, Typeface.BOLD);
+                titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, item.getTextSize() + 1);
+            } else {
+                titleView.setTypeface(null, Typeface.NORMAL);
+                titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, item.getTextSize());
+            }
 
-        titleView.requestLayout();
+            titleView.requestLayout();
+        }
 
         return convertView;
     }
