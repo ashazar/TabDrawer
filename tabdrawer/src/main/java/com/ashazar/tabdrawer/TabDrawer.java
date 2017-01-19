@@ -374,7 +374,7 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
                 titleView = (TextView) tabLayout.findViewById(1200 + i);
 
             if (i == tabPos) {
-                setSelectedTabView(tabLayout, iconView, titleView, i, drawerLayout);
+                setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, i);
 
                 if (iconView != null)
                     iconView.requestLayout();
@@ -647,6 +647,18 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
     public void onTabDrawerClicked(int tabPosition, int itemPosition) { }
 
 
+    /**
+     * Sets the views of default(unselected) tab/icon/title.
+     * <p>
+     * If other than color, background color, etc. needed;
+     * by overriding this method, you can modify the views of entire layout.
+     *
+     *
+     * @param tabLayout Tab Layout itself; LinearLayout
+     * @param iconView Icon (Image); ImageView
+     * @param titleView Title; TextView
+     * @param tabPosition Tab Position, to modify the tab you want; int
+     */
     public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabArray.getTab(tabPosition);
 
@@ -672,7 +684,20 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         }
     }
 
-    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition, RelativeLayout drawerLayout) {
+    /**
+     * Sets the views of selected tab/icon/title/drawer.
+     * <p>
+     * If other than color, background color, etc. needed;
+     * by overriding this method, you can modify the views of entire layout.
+     *
+     *
+     * @param tabLayout Tab Layout itself; LinearLayout
+     * @param iconView Icon (Image); ImageView
+     * @param titleView Title; TextView
+     * @param drawerLayout Drawer layout of the tab; RelativeLayout
+     * @param tabPosition Tab Position, to modify the tab you want; int
+     */
+    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
         Tab tab = tabArray.getTab(tabPosition);
 
         tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
@@ -697,6 +722,22 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
                 titleView.setTypeface(tab.getTitleFont(), Typeface.BOLD);
         }
     }
+
+    /**
+     * Sets the views of inactive selected tab/icon/title.
+     * Inactive Selected:
+     *      When the tab is selected, but another tab's drawer is open
+     *      this tab becomes selected but inactive at the moment.
+     * <p>
+     * If other than color, background color, etc. needed;
+     * by overriding this method, you can modify the views of entire layout.
+     *
+     *
+     * @param tabLayout Tab Layout itself; LinearLayout
+     * @param iconView Icon (Image); ImageView
+     * @param titleView Title; TextView
+     * @param tabPosition Tab Position, to modify the tab you want; int
+     */
     public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabArray.getTab(tabPosition);
 
