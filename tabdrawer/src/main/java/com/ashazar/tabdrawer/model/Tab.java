@@ -41,7 +41,8 @@ public class Tab {
 
     private int customDrawerLayoutResourceId = 0;
     private boolean useDefaultDrawerLayout = false; // will be used to force using default (internal) drawer layout
-    private int customDrawerListViewId = 0;
+    private int customDrawerGridViewId = 0;
+    private int drawerListNumColumns = 0;
     private int customDrawerListItemLayoutResourceId = 0;
     private TabDrawerListAdapter customDrawerListAdapter = null;
     private ArrayList<TabListItem> list = null;
@@ -446,28 +447,46 @@ public class Tab {
     }
 
     /**
-     * Sets the id for the custom listview inside the custom drawer layout
-     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     * Sets the number of columns in GridView in the drawer
      *
-     * @param viewId ListView id
+     * @param num Number of columns in GridView
      * @return the Tab
      */
-    public Tab setCustomDrawerListViewId(int viewId) {
-        customDrawerListViewId = viewId;
+    public Tab setDrawerListColumnNumber(int num) {
+        drawerListNumColumns = num;
         return this;
     }
 
     /**
-     * Gets the id for the custom listview inside the custom drawer layout
+     * Gets the number of columns in GridView in the drawer
+     *
+     * @return number of columns
+     */
+    public int getDrawerListColumnNumber() { return drawerListNumColumns; }
+
+    /**
+     * Sets the id for the custom GridView inside the custom drawer layout
      * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
      *
-     * @return int id of ListView
+     * @param viewId GridView id
+     * @return the Tab
      */
-    public int getCustomDrawerListViewId() { return customDrawerListViewId; }
+    public Tab setCustomDrawerGridViewId(int viewId) {
+        customDrawerGridViewId = viewId;
+        return this;
+    }
+
+    /**
+     * Gets the id for the custom GridView inside the custom drawer layout
+     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     *
+     * @return int id of GridView
+     */
+    public int getCustomDrawerGridViewId() { return customDrawerGridViewId; }
 
 
     /**
-     * Sets the resource id for the custom item layout to be used in listview inside the drawer
+     * Sets the resource id for the custom item layout to be used in GridView inside the drawer
      *
      * @param resourceId Custom Layout Resource Id
      * @return the Tab
@@ -478,7 +497,7 @@ public class Tab {
     }
 
     /**
-     * Gets the layout resource id for the custom item layout in listview inside the drawer
+     * Gets the layout resource id for the custom item layout in GridView inside the drawer
      *
      * @return int layout resource id
      */

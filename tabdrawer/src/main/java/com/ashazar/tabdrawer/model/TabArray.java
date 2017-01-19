@@ -32,7 +32,8 @@ public class TabArray {
 
     private boolean hasAtLeastOneDrawerForList = false;
     private int customDrawerLayoutResourceId = 0;
-    private int customDrawerListViewId = 0;
+    private int customDrawerGridViewId = 0;
+    private int drawerListNumColumns = 0;
     private int customDrawerListItemLayoutResourceId = 0;
     private TabDrawerListAdapter customDrawerListAdapter = null;
     private int tabListItemTextColor = 0;
@@ -118,8 +119,11 @@ public class TabArray {
             hasAtLeastOneDrawerForList = true;
 
         if (tab.hasItems()) {
-            if (tab.getCustomDrawerListViewId() == 0)
-                tab.setCustomDrawerListViewId(customDrawerListViewId);
+            if (tab.getDrawerListColumnNumber() == 0)
+                tab.setDrawerListColumnNumber(drawerListNumColumns);
+
+            if (tab.getCustomDrawerGridViewId() == 0)
+                tab.setCustomDrawerGridViewId(customDrawerGridViewId);
 
             if (tab.getCustomDrawerListItemLayoutResourceId() == 0)
                 tab.setCustomDrawerListItemLayoutResourceId(customDrawerListItemLayoutResourceId);
@@ -471,28 +475,46 @@ public class TabArray {
     public int getCustomDrawerLayoutResourceId() { return customDrawerLayoutResourceId; }
 
     /**
-     * Sets the id for the custom listview inside the custom drawer layout
-     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     * Sets the number of columns in GridView in the drawer
      *
-     * @param viewId ListView id
+     * @param num Number of columns in GridView
      * @return the TabArray
      */
-    public TabArray setCustomDrawerListViewId(int viewId) {
-        customDrawerListViewId = viewId;
+    public TabArray setDrawerListColumnNumber(int num) {
+        drawerListNumColumns = num;
         return this;
     }
 
     /**
-     * Gets the id for the custom listview inside the custom drawer layout
+     * Gets the number of columns in GridView in the drawer
+     *
+     * @return number of columns
+     */
+    public int getDrawerListColumnNumber() { return drawerListNumColumns; }
+
+    /**
+     * Sets the id for the custom GridView inside the custom drawer layout
      * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
      *
-     * @return int id of ListView
+     * @param viewId GridView id
+     * @return the TabArray
      */
-    public int getCustomDrawerListViewId() { return customDrawerListViewId; }
+    public TabArray setCustomDrawerGridViewId(int viewId) {
+        customDrawerGridViewId = viewId;
+        return this;
+    }
+
+    /**
+     * Gets the id for the custom GridView inside the custom drawer layout
+     * Works only with Custom Drawer layout is set with setCustomDrawerLayoutResourceId()
+     *
+     * @return int id of GridView
+     */
+    public int getCustomDrawerGridViewId() { return customDrawerGridViewId; }
 
 
     /**
-     * Sets the resource id for the custom item layout to be used in listview inside the drawer
+     * Sets the resource id for the custom item layout to be used in GridView inside the drawer
      *
      * @param resourceId Custom Layout Resource Id
      * @return the TabArray
@@ -503,7 +525,7 @@ public class TabArray {
     }
 
     /**
-     * Gets the layout resource id for the custom item layout in listview inside the drawer
+     * Gets the layout resource id for the custom item layout in GridView inside the drawer
      *
      * @return int layout resource id
      */

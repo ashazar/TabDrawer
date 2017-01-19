@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,7 +30,7 @@ import com.ashazar.tabdrawer.model.TabArray;
  *
  * Created by Serdar Hazar on 26/04/16.
  */
-public class TabDrawer implements View.OnClickListener, ListView.OnItemClickListener {
+public class TabDrawer implements View.OnClickListener, GridView.OnItemClickListener {
     /**
      * Context and the Activity of TabDrawer is being called.
      */
@@ -304,14 +304,16 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
      */
     private RelativeLayout prepareItemListContainerView(int tabPos) {
         RelativeLayout container;
-        ListView listView;
+        GridView gridView;
 
         Tab tab = tabArray.getTab(tabPos);
 
         if (tab.getCustomDrawerLayoutResourceId() != 0)
             container = (RelativeLayout) LayoutInflater.from(context).inflate(tab.getCustomDrawerLayoutResourceId(), tabListContainer, false);
-        else
+        else {
             container = new RelativeLayout(context);
+            container.setBackgroundColor(tab.getSelectedBackgroundColor());
+        }
 
         if (!tab.hasItems())
             return container;
@@ -321,16 +323,20 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         else
             container.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, getScreenHeight()));
 
-
-        if (tab.getCustomDrawerListViewId() != 0  &&  tab.getCustomDrawerLayoutResourceId() != 0)
-            listView = (ListView) container.findViewById(tab.getCustomDrawerListViewId());
+        if (tab.getCustomDrawerGridViewId() != 0  &&  tab.getCustomDrawerLayoutResourceId() != 0)
+            gridView = (GridView) container.findViewById(tab.getCustomDrawerGridViewId());
         else {
-            listView = new ListView(context);
-            listView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
-            listView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-            listView.setDividerHeight(0);
-            listView.setDivider(null);
-            container.addView(listView);
+            gridView = new GridView(context);
+            gridView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
+            gridView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+            container.addView(gridView);
+        }
+
+        gridView.setId(10000 + tabPos);
+        gridView.setOnItemClickListener(this);
+
+        if (gridView.getNumColumns() != tab.getDrawerListColumnNumber()  &&  tab.getDrawerListColumnNumber() > 0) {
+            gridView.setNumColumns(tab.getDrawerListColumnNumber());
         }
 
         TabDrawerListAdapter adapter;
@@ -339,12 +345,8 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
         else
             adapter = new TabDrawerListAdapter(context, tab.getTabItemList());
 
-        listView.setAdapter(adapter);
+        gridView.setAdapter(adapter);
 
-        listView.setId(10000 + tabPos);
-        listView.setOnItemClickListener(this);
-
-        container.setBackgroundColor(tab.getSelectedBackgroundColor());
         container.requestLayout();
         return container;
     }
@@ -440,25 +442,25 @@ public class TabDrawer implements View.OnClickListener, ListView.OnItemClickList
 
         if (previousSelectedTabItemPos > -1  &&  previousSelectedTabWithListPos > -1) {
             tabArray.getTab(previousSelectedTabWithListPos).getTabItemList().get(previousSelectedTabItemPos).setSelected(false);
-            ListView prevListView = (ListView) tabListContainer.findViewById(10000 + previousSelectedTabWithListPos);
+            GridView prevGridView = (GridView) tabListContainer.findViewById(10000 + previousSelectedTabWithListPos);
 
             if (tabArray.getTab(previousSelectedTabWithListPos).getCustomDrawerListItemLayoutResourceId() != 0)
                 adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getCustomDrawerListItemLayoutResourceId(), tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
             else
                 adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
-            prevListView.setAdapter(adapter);
+            prevGridView.setAdapter(adapter);
         }
 
 
         tabArray.getTab(tabPos).getTabItemList().get(tabItemPos).setSelected(true);
-        ListView listView = (ListView) tabListContainer.findViewById(10000 + tabPos);
+        GridView gridView = (GridView) tabListContainer.findViewById(10000 + tabPos);
 
         if (tabArray.getTab(tabPos).getCustomDrawerListItemLayoutResourceId() != 0)
             adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getCustomDrawerListItemLayoutResourceId(), tabArray.getTab(tabPos).getTabItemList());
         else
             adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
 
-        listView.setAdapter(adapter);
+        gridView.setAdapter(adapter);
 
 
         previousSelectedTabWithListPos = tabPos;
