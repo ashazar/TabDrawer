@@ -71,9 +71,17 @@ public class BaseActivity extends AppCompatActivity {
                         .setSelectedTitleColor(Color.parseColor("#ffffff"))
                         .setDrawableId(R.drawable.n_queue)
                         .setCustomDrawerListItemLayoutResourceId(R.layout.list_item)
-                        .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
-                        .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
-                        .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
+                        //.addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
+                        //.addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
+                        //.addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
+
+                        //.addTabListItem( new TabListItem("Add to Queue") )
+                        //.addTabListItem( new TabListItem("Archive") )
+                        //.addTabListItem( new TabListItem("Delete") )
+
+                        .addTabListItem( new TabListItem(R.drawable.ic_add_box_white_24dp ) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_archive_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_delete_forever_white_24dp) )
                 )
 
                 .addTab( new Tab()
@@ -186,8 +194,8 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition, RelativeLayout drawerLayout) {
-                super.setSelectedTabView(tabLayout, iconView, titleView, tabPosition, drawerLayout);
+            public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
+                super.setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, tabPosition);
 
                 if (tabPosition == 1) {
                     tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));

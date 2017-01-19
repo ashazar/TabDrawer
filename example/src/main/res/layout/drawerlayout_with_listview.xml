@@ -6,13 +6,22 @@
     >
 
 
-    <ListView
-        android:id="@+id/drawer_listview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#66444444"
-        android:dividerHeight="2dp"
-        android:divider="#444444"
-        />
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+
+        <ListView
+            android:id="@+id/drawer_listview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#66444444"
+            android:dividerHeight="2dp"
+            android:divider="#444444"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
