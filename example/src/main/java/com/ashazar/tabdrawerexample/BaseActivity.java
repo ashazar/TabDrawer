@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,50 +46,47 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Demo")
+                        .setDrawableId(R.drawable.n_activity)
                         .setTitleSize(14)
                         .setTitleColor(Color.parseColor("#ffffff"))
                         .setSelectedTitleColor(Color.parseColor("#ff0000"))
                         .setInactiveSelectedTitleColor(Color.parseColor("#990000"))
-                        .setDrawableId(R.drawable.n_activity)
                         .setIconColor(Color.parseColor("#ffffff"))
                         .setSelectedIconColor(Color.parseColor("#ff0000"))
                         .setInactiveSelectedIconColor(Color.parseColor("#990000"))
-                        .setCustomDrawerLayoutResourceId(R.layout.drawerlayout_with_listview)
-                        .setCustomDrawerListViewId(R.id.drawer_listview)
                         .addTabListItem( new TabListItem("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
-                        .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
-                        .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
                         .addTabListItem( new TabListItem("Left TabDrawer", R.drawable.ic_action_next_item) )
+                        .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
                         .addTabListItem( new TabListItem("Right TabDrawer", R.drawable.ic_action_previous_item) )
+                        .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
                 )
 
                 .addTab( new Tab()
-                        .setCustomTabLayoutResourceId(R.layout.item_tab2)
                         .setTitle("Queue")
-                        .setTitleColor(Color.parseColor("#333333"))
-                        .setSelectedTitleColor(Color.parseColor("#ffffff"))
                         .setDrawableId(R.drawable.n_queue)
+                        .setCustomTabLayoutResourceId(R.layout.item_tab2)
+                        .setTitleColor(Color.parseColor("#ffffff"))
+                        .setSelectedTitleColor(Color.parseColor("#00ff00"))
+                        .setIconColor(Color.parseColor("#ffffff"))
+                        .setSelectedIconColor(Color.parseColor("#00ff00"))
                         .setCustomDrawerListItemLayoutResourceId(R.layout.list_item)
-                        //.addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
-                        //.addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
-                        //.addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
-
-                        //.addTabListItem( new TabListItem("Add to Queue") )
-                        //.addTabListItem( new TabListItem("Archive") )
-                        //.addTabListItem( new TabListItem("Delete") )
-
-                        .addTabListItem( new TabListItem(R.drawable.ic_add_box_white_24dp ) )
-                        .addTabListItem( new TabListItem(R.drawable.ic_archive_white_24dp) )
-                        .addTabListItem( new TabListItem(R.drawable.ic_delete_forever_white_24dp) )
+                        .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
+                        .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
+                        .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
                 )
 
                 .addTab( new Tab()
-                        .setCustomTabLayoutResourceId(R.layout.item_tab3)
-                        .setBackgroundColor(Color.parseColor("#ff99ff"))
-                        .setSelectedBackgroundColor(Color.parseColor("#99ff99"))
-                        .setInactiveSelectedBackgroundColor(Color.parseColor("#55ff00"))
                         .setTitle("Chat")
                         .setDrawableId(R.drawable.n_chat)
+                        .setCustomTabLayoutResourceId(R.layout.item_tab3)
+                        .setIconColor(Color.parseColor("#6666ee"))
+                        .setSelectedIconColor(Color.parseColor("#ffffff"))
+                        .setTitleColor(Color.parseColor("#6666ee"))
+                        .setSelectedTitleColor(Color.parseColor("#ffffff"))
+                        .setBackgroundColor(Color.parseColor("#FF4E4B76"))
+                        .setSelectedBackgroundColor(Color.parseColor("#FF726EA9"))
+                        .setInactiveSelectedBackgroundColor(Color.parseColor("#FF2F2A79"))
+                        .setCustomDrawerLayoutResourceId(R.layout.drawerlayout)
                         .addTabListItem( new TabListItem("Friends", R.drawable.ic_face_white_24dp) )
                         .addTabListItem( new TabListItem("Add Friend", R.drawable.ic_person_add_white_24dp) )
                         .addTabListItem( new TabListItem("Start Group Chat", R.drawable.ic_people_white_24dp) )
@@ -98,13 +94,13 @@ public class BaseActivity extends AppCompatActivity {
                 )
 
                 .addTab( new Tab()
+                        .setTitle("Reports")
+                        .setDrawableId(R.drawable.n_report)
+                        .setTitleSize(10)
                         .setCustomTabLayoutResourceId(R.layout.item_tab4)
                         .setBackgroundColor(Color.parseColor("#003366"))
                         .setSelectedBackgroundColor(Color.parseColor("#336699"))
                         .setInactiveSelectedBackgroundColor(Color.parseColor("#6699ff"))
-                        .setTitle("Reports")
-                        .setTitleSize(10)
-                        .setDrawableId(R.drawable.n_report)
                         .addTabListItem( new TabListItem("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
                         .addTabListItem( new TabListItem("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
                         .addTabListItem( new TabListItem("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
@@ -112,20 +108,31 @@ public class BaseActivity extends AppCompatActivity {
                 )
 
                 .addTab( new Tab()
+                        .setTitle(".more.")
                         .forceDefaultLayout()
                         .setBackgroundColor(Color.parseColor("#990066"))
                         .setSelectedBackgroundColor(Color.parseColor("#660099"))
                         .setInactiveSelectedBackgroundColor(Color.parseColor("#6633ff"))
-                        .setTitle(".more.")
-                        .setCustomDrawerLayoutResourceId(R.layout.drawerlayout)
-                        .addTabListItem( new TabListItem("General Settings", R.drawable.ic_settings_white_24dp) )
+                        .setCustomDrawerLayoutResourceId(R.layout.drawerlayout_with_gridview)
+                        .setCustomDrawerGridViewId(R.id.drawer_gridview)
+                        .setCustomDrawerListItemLayoutResourceId(R.layout.list_item2)
+                        .setDrawerListColumnNumber(4)
+                        .addTabListItem( new TabListItem(R.drawable.ic_settings_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_lock_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_accessibility_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_notifications_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_collections_bookmark_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_folder_shared_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_cast_white_24dp) )
+                        .addTabListItem( new TabListItem(R.drawable.ic_apps_white_24dp) )
+/*                        .addTabListItem( new TabListItem("General Settings", R.drawable.ic_settings_white_24dp) )
                         .addTabListItem( new TabListItem("My Account", R.drawable.ic_lock_white_24dp) )
                         .addTabListItem( new TabListItem("Accesibility", R.drawable.ic_accessibility_white_24dp) )
                         .addTabListItem( new TabListItem("Notifications", R.drawable.ic_notifications_white_24dp) )
                         .addTabListItem( new TabListItem("Bookmarks", R.drawable.ic_collections_bookmark_white_24dp) )
                         .addTabListItem( new TabListItem("Shared Folders", R.drawable.ic_folder_shared_white_24dp) )
                         .addTabListItem( new TabListItem("Cast to TV", R.drawable.ic_cast_white_24dp) )
-                        .addTabListItem( new TabListItem("Other Applications", R.drawable.ic_apps_white_24dp) )
+                        .addTabListItem( new TabListItem("Other Applications", R.drawable.ic_apps_white_24dp) )*/
                 );
     }
 
@@ -152,9 +159,10 @@ public class BaseActivity extends AppCompatActivity {
                 String text = tabArray.getTab(tabPosition).getTitle();
 
                 if (tabArray.getTab(tabPosition).hasItems()) {
-                    text += " -> "
-                            + tabArray.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle()
-                            + " - ( " + tabPosition + ", " + itemPosition + " )";
+                    if (tabArray.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle() != null)
+                        text += " -> " + tabArray.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle();
+
+                    text += " - ( " + tabPosition + ", " + itemPosition + " )";
                 }
                 else
                     text += " - ( " + tabPosition + " )";
@@ -190,7 +198,7 @@ public class BaseActivity extends AppCompatActivity {
                 super.setUnselectedTabView(tabLayout, iconView, titleView, tabPosition);
 
                 if (tabPosition == 1)
-                    tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
+                    tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));
             }
 
             @Override
@@ -198,7 +206,7 @@ public class BaseActivity extends AppCompatActivity {
                 super.setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, tabPosition);
 
                 if (tabPosition == 1) {
-                    tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));
+                    tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
                     drawerLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
                 }
             }
@@ -208,7 +216,7 @@ public class BaseActivity extends AppCompatActivity {
                 super.setInactiveSelectedTabView(tabLayout, iconView, titleView, tabPosition);
 
                 if (tabPosition == 1)
-                    tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
+                    tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));
             }
         };
 

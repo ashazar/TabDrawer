@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FF726EA9"
     >
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:alpha="0.2"
-        android:src="@drawable/ic_settings_white_24dp"/>
+        android:alpha="0.5"
+        android:tint="@color/colorPrimary"
+        android:src="@drawable/ic_person_add_white_24dp"/>
 
 
 </RelativeLayout>
