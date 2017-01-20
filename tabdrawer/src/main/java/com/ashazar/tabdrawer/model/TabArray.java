@@ -35,7 +35,6 @@ public class TabArray {
     private int customDrawerGridViewId = 0;
     private int drawerListNumColumns = 0;
     private int customDrawerListItemLayoutResourceId = 0;
-    private TabDrawerListAdapter customDrawerListAdapter = null;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 16;
 
@@ -127,9 +126,6 @@ public class TabArray {
 
             if (tab.getCustomDrawerListItemLayoutResourceId() == 0)
                 tab.setCustomDrawerListItemLayoutResourceId(customDrawerListItemLayoutResourceId);
-
-            if (tab.getCustomDrawerListAdapter() == null)
-                tab.setCustomDrawerListAdapter(customDrawerListAdapter);
 
 
             if (tab.getListItemTextColor() == 0) {
@@ -530,24 +526,6 @@ public class TabArray {
      * @return int layout resource id
      */
     public int getCustomDrawerListItemLayoutResourceId() { return customDrawerListItemLayoutResourceId; }
-
-    /**
-     * Sets the Custom Drawer List adapter
-     *
-     * @param adapter Custom Array adapter
-     * @return the TabArray
-     */
-    public TabArray setCustomDrawerListAdapter(TabDrawerListAdapter adapter) {
-        customDrawerListAdapter = adapter;
-        return this;
-    }
-
-    /**
-     * Gets the custom drawer list adapter
-     *
-     * @return Custom TabDrawerListAdapter
-     */
-    public TabDrawerListAdapter getCustomDrawerListAdapter() { return customDrawerListAdapter; }
 
     /**
      * Sets tab item list text color.

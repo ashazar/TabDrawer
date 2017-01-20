@@ -250,8 +250,10 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             if (!hasCustomTabLayout) {
                 title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
-                if (tab.getDrawableId() != 0)
+                if (tab.getDrawableId() != 0) {
                     title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 4));
+                    icon.setContentDescription(tab.getTitle());
+                }
                 else {
                     icon.setVisibility(View.GONE);
                     title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -753,6 +755,17 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         if (titleView != null  &&  tab.getTitle() != null  &&  tab.getInactiveSelectedTitleColor() != 0) {
             titleView.setTextColor(tab.getInactiveSelectedTitleColor());
         }
+    }
+
+    public void setListItemView(int tabPosition, int itemPosition, View view) {
+        Tab tab = tabArray.getTab(tabPosition);
+
+        ImageView imageView = null;
+        TextView titleView = null;
+
+        if (tab.getDrawableId() != -1)
+            imageView = (ImageView) view.findViewById(R.id.list_item_img);
+
     }
 
 }

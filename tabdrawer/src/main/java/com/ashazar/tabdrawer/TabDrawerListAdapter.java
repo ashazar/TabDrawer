@@ -50,13 +50,17 @@ public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
             convertView = LayoutInflater.from(getContext()).inflate(layoutResourceId, parent, false);
         }
 
+        /*
         TabListItem item = getItem(position);
         String title = item.getTitle();
         int imgDrawableId = item.getDrawableId();
         boolean isSelected = item.isSelected();
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
-        TextView titleView = (TextView) convertView.findViewById(R.id.list_item_title);
+        ImageView imageView = null;
+        TextView titleView = null;
+
+        imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
+        titleView = (TextView) convertView.findViewById(R.id.list_item_title);
 
         if (imgDrawableId == -1) {
             if (!customItemLayout)
@@ -72,12 +76,6 @@ public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
                 imageView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, item.getTextSize() + 8, getContext().getResources().getDisplayMetrics());
 
             imageView.requestLayout();
-
-            if (!customItemLayout  &&  title != null) {
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                layoutParams.setMargins(20, 0, 0, 0);
-                titleView.setLayoutParams(layoutParams);
-            }
         }
 
         if (title != null) {
@@ -92,7 +90,11 @@ public class TabDrawerListAdapter extends ArrayAdapter<TabListItem> {
             }
 
             titleView.requestLayout();
+
+            if (imgDrawableId != -1)
+                imageView.setContentDescription(title);
         }
+        */
 
         return convertView;
     }

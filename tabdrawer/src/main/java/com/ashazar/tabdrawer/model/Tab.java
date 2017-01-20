@@ -44,7 +44,7 @@ public class Tab {
     private int customDrawerGridViewId = 0;
     private int drawerListNumColumns = 0;
     private int customDrawerListItemLayoutResourceId = 0;
-    private TabDrawerListAdapter customDrawerListAdapter = null;
+    private boolean resetListAdapterViewSettings = false;
     private ArrayList<TabListItem> list = null;
 
     /**
@@ -504,25 +504,6 @@ public class Tab {
     public int getCustomDrawerListItemLayoutResourceId() { return customDrawerListItemLayoutResourceId; }
 
     /**
-     * Sets the Custom Drawer List adapter
-     *
-     * @param adapter Custom Array adapter
-     * @return the Tab
-     */
-    public Tab setCustomDrawerListAdapter(TabDrawerListAdapter adapter) {
-        customDrawerListAdapter = adapter;
-        return this;
-    }
-
-    /**
-     * Gets the custom drawer list adapter
-     *
-     * @return Custom TabDrawerListAdapter
-     */
-    public TabDrawerListAdapter getCustomDrawerListAdapter() { return customDrawerListAdapter; }
-
-
-    /**
      * Sets the custom drawer layout (RelativeLayout) resource Id.
      *
      * @param resourceId Custom Drawer layout resource Id
@@ -597,4 +578,29 @@ public class Tab {
      * @return the item list text size
      */
     int getListItemTextSize() { return tabListItemTextSize; }
+
+    /**
+     * Sets if the developer wants to reset the default ListAdapterViewSettings status.
+     *
+     * Default: when the list item is selected;
+     * Increase the title's text size, make it bold; increase the icon size
+     *
+     *
+     * @param reset true, if developer doesn't want to use custom defined settings,
+     *              and use his/her own.
+     * @return the Tab
+     */
+    public Tab resetListAdapterViewSettings(boolean reset) {
+        resetListAdapterViewSettings = reset;
+        return this;
+    }
+
+    /**
+     * Gets the ListAdapterViewSettings status.
+     *
+     * @return true, if developer doesn't want to use custom defined settings,
+     *         and use his/her own.
+     */
+    boolean getListAdapterViewSettingsStatus() { return resetListAdapterViewSettings; }
+
 }

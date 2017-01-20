@@ -19,6 +19,8 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical|start"
         android:padding="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         />
 
 </LinearLayout>
