@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabArray;
+import com.ashazar.tabdrawer.model.TabListItem;
 
 /**
  * TabDrawer
@@ -341,16 +345,92 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             gridView.setNumColumns(tab.getDrawerListColumnNumber());
         }
 
-        TabDrawerListAdapter adapter;
-        if (tab.getCustomDrawerListItemLayoutResourceId() != 0)
-            adapter = new TabDrawerListAdapter(context, tab.getCustomDrawerListItemLayoutResourceId(), tab.getTabItemList());
-        else
-            adapter = new TabDrawerListAdapter(context, tab.getTabItemList());
-
-        gridView.setAdapter(adapter);
+        gridView.setAdapter(setDrawerListAdapter(tabPos));
 
         container.requestLayout();
         return container;
+    }
+
+    /**
+     * Custom Array Adapter
+     *
+     * @param tabPos Tab Psition
+     * @return ArrayAdapter
+     */
+    private ArrayAdapter<TabListItem> setDrawerListAdapter(final int tabPos) {
+        final Tab tab = tabArray.getTab(tabPos);
+        final int listItemLayoutResourceId;
+        final boolean customItemLayout;
+
+        if (tab.getCustomDrawerListItemLayoutResourceId() != 0) {
+            listItemLayoutResourceId = tab.getCustomDrawerListItemLayoutResourceId();
+            customItemLayout = true;
+        }
+        else {
+            listItemLayoutResourceId = R.layout.tabdrawer_tab_list_item;
+            customItemLayout = false;
+        }
+
+        return new ArrayAdapter<TabListItem>(context, listItemLayoutResourceId, tab.getTabItemList()) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(listItemLayoutResourceId, parent, false);
+                }
+
+                TabListItem item = getItem(position);
+                String title = item.getTitle();
+                int imgDrawableId = item.getDrawableId();
+                boolean isSelected = item.isSelected();
+
+                ImageView imageView = null;
+                TextView titleView = null;
+
+                if (imgDrawableId != -1) {
+                    imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
+                }
+                if (title != null  &&  !title.isEmpty()) {
+                    titleView = (TextView) convertView.findViewById(R.id.list_item_title);
+                }
+
+                if (imgDrawableId == -1) {
+                    if (!customItemLayout) {
+                        imageView.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    imageView.setImageResource(imgDrawableId);
+                }
+
+                if (title == null) {
+                    if (!customItemLayout) {
+                        titleView.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    titleView.setText(title);
+
+                    if (imgDrawableId != -1) {
+                        imageView.setContentDescription(title);
+                    }
+                }
+
+
+                if (isSelected) {
+                    setSelectedListItemView(tabPos, position, convertView, imageView, titleView);
+                }
+                else {
+                    setUnselectedListItemView(tabPos, position, convertView, imageView, titleView);
+                }
+
+
+                if (imageView != null) { imageView.requestLayout(); }
+                if (titleView != null) { titleView.requestLayout(); }
+
+                return convertView;
+            }
+        };
     }
 
     /**
@@ -440,30 +520,17 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         if (!tabArray.hasDrawerForList()  ||  !tabArray.getTab(tabPos).hasItems())
             return;
 
-        TabDrawerListAdapter adapter;
-
         if (previousSelectedTabItemPos > -1  &&  previousSelectedTabWithListPos > -1) {
             tabArray.getTab(previousSelectedTabWithListPos).getTabItemList().get(previousSelectedTabItemPos).setSelected(false);
             GridView prevGridView = (GridView) tabListContainer.findViewById(10000 + previousSelectedTabWithListPos);
 
-            if (tabArray.getTab(previousSelectedTabWithListPos).getCustomDrawerListItemLayoutResourceId() != 0)
-                adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getCustomDrawerListItemLayoutResourceId(), tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
-            else
-                adapter = new TabDrawerListAdapter(context, tabArray.getTab(previousSelectedTabWithListPos).getTabItemList());
-            prevGridView.setAdapter(adapter);
+            prevGridView.setAdapter(setDrawerListAdapter(previousSelectedTabWithListPos));
         }
 
 
         tabArray.getTab(tabPos).getTabItemList().get(tabItemPos).setSelected(true);
         GridView gridView = (GridView) tabListContainer.findViewById(10000 + tabPos);
-
-        if (tabArray.getTab(tabPos).getCustomDrawerListItemLayoutResourceId() != 0)
-            adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getCustomDrawerListItemLayoutResourceId(), tabArray.getTab(tabPos).getTabItemList());
-        else
-            adapter = new TabDrawerListAdapter(context, tabArray.getTab(tabPos).getTabItemList());
-
-        gridView.setAdapter(adapter);
-
+        gridView.setAdapter(setDrawerListAdapter(tabPos));
 
         previousSelectedTabWithListPos = tabPos;
         previousSelectedTabItemPos = tabItemPos;
@@ -757,15 +824,50 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         }
     }
 
-    public void setListItemView(int tabPosition, int itemPosition, View view) {
+    /**
+     * Sets the Custom drawer list item view
+     *
+     * @param tabPosition Tab Position of the drawer list
+     * @param itemPosition current item position of the list (from GetView of the adapter)
+     * @param view current drawer list item's view (from GetView)
+     * @param iconView current drawer list item's icon view; ImageView (from GetView)
+     * @param titleView current drawer list item's title view; TextView (from GetView)
+     */
+    public void setUnselectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
         Tab tab = tabArray.getTab(tabPosition);
 
-        ImageView imageView = null;
-        TextView titleView = null;
+        if (iconView != null) {
+            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getTabItemList().get(itemPosition).getTextSize() + 8, context.getResources().getDisplayMetrics());
+        }
 
-        if (tab.getDrawableId() != -1)
-            imageView = (ImageView) view.findViewById(R.id.list_item_img);
+        if (titleView != null) {
+            titleView.setTextColor(tab.getTabItemList().get(itemPosition).getTextColor());
+            titleView.setTypeface(null, Typeface.NORMAL);
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getTabItemList().get(itemPosition).getTextSize());
+        }
+    }
 
+    /**
+     * Sets the Custom drawer list item view, when it is selected
+     *
+     * @param tabPosition Tab Position of the drawer list
+     * @param itemPosition current item position of the list (from GetView of the adapter)
+     * @param view current drawer list item's view (from GetView)
+     * @param iconView current drawer list item's icon view; ImageView (from GetView)
+     * @param titleView current drawer list item's title view; TextView (from GetView)
+     */
+    public void setSelectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
+        Tab tab = tabArray.getTab(tabPosition);
+
+        if (iconView != null) {
+            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getTabItemList().get(itemPosition).getTextSize() + 10, context.getResources().getDisplayMetrics());
+        }
+
+        if (titleView != null) {
+            titleView.setTextColor(tab.getTabItemList().get(itemPosition).getTextColor());
+            titleView.setTypeface(null, Typeface.BOLD);
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getTabItemList().get(itemPosition).getTextSize() + 1);
+        }
     }
 
 }

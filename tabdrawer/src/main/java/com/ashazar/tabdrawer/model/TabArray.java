@@ -2,8 +2,6 @@ package com.ashazar.tabdrawer.model;
 
 import android.graphics.Typeface;
 
-import com.ashazar.tabdrawer.TabDrawerListAdapter;
-
 import java.util.ArrayList;
 
 /**
