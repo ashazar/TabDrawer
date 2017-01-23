@@ -837,13 +837,13 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         Tab tab = tabArray.getTab(tabPosition);
 
         if (iconView != null) {
-            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getTabItemList().get(itemPosition).getTextSize() + 8, context.getResources().getDisplayMetrics());
+            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getListItemTextSize() + 8, context.getResources().getDisplayMetrics());
         }
 
         if (titleView != null) {
-            titleView.setTextColor(tab.getTabItemList().get(itemPosition).getTextColor());
+            titleView.setTextColor(tab.getListItemTextColor());
             titleView.setTypeface(null, Typeface.NORMAL);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getTabItemList().get(itemPosition).getTextSize());
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize());
         }
     }
 
@@ -860,13 +860,13 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         Tab tab = tabArray.getTab(tabPosition);
 
         if (iconView != null) {
-            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getTabItemList().get(itemPosition).getTextSize() + 10, context.getResources().getDisplayMetrics());
+            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getListItemTextSize() + 10, context.getResources().getDisplayMetrics());
         }
 
         if (titleView != null) {
-            titleView.setTextColor(tab.getTabItemList().get(itemPosition).getTextColor());
+            titleView.setTextColor(tab.getListItemTextColor());
             titleView.setTypeface(null, Typeface.BOLD);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getTabItemList().get(itemPosition).getTextSize() + 1);
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize() + 1);
         }
     }
 

@@ -420,8 +420,6 @@ public class Tab {
         if (list == null)
             list = new ArrayList<>();
 
-        item.setTextColor(getListItemTextColor());
-        item.setTextSize(getListItemTextSize());
         list.add(item);
 
         return this;
@@ -547,7 +545,7 @@ public class Tab {
      * @param color the color
      * @return the Tab
      */
-    public Tab setTabListItemTextColor(int color) {
+    public Tab setListItemTextColor(int color) {
         tabListItemTextColor = color;
         return this;
     }
@@ -557,7 +555,7 @@ public class Tab {
      *
      * @return the item list text color
      */
-    int getListItemTextColor() { return tabListItemTextColor; }
+    public int getListItemTextColor() { return tabListItemTextColor; }
 
     /**
      * Sets tab item list text size.
@@ -565,7 +563,7 @@ public class Tab {
      * @param size the size
      * @return the Tab
      */
-    public Tab setTabListItemTextSize(int size) {
+    public Tab setListItemTextSize(int size) {
         tabListItemTextSize = size;
         return this;
     }
@@ -575,7 +573,7 @@ public class Tab {
      *
      * @return the item list text size
      */
-    int getListItemTextSize() { return tabListItemTextSize; }
+    public int getListItemTextSize() { return tabListItemTextSize; }
 
     /**
      * Sets if the developer wants to reset the default ListAdapterViewSettings status.
@@ -599,6 +597,6 @@ public class Tab {
      * @return true, if developer doesn't want to use custom defined settings,
      *         and use his/her own.
      */
-    boolean getListAdapterViewSettingsStatus() { return resetListAdapterViewSettings; }
+    public boolean getListAdapterViewSettingsStatus() { return resetListAdapterViewSettings; }
 
 }

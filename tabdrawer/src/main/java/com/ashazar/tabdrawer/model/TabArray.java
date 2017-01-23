@@ -35,6 +35,7 @@ public class TabArray {
     private int customDrawerListItemLayoutResourceId = 0;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 16;
+    private boolean resetTabListAdapterViewSettings = false;
 
     /**
      * Instantiates a new Tab array.
@@ -127,15 +128,11 @@ public class TabArray {
 
 
             if (tab.getListItemTextColor() == 0) {
-                for (TabListItem tabListItem : tab.getTabItemList()) {
-                    tabListItem.setTextColor(tabListItemTextColor);
-                }
+                tab.setListItemTextColor(tabListItemTextColor);
             }
 
             if (tab.getListItemTextSize() == 0) {
-                for (TabListItem tabListItem : tab.getTabItemList()) {
-                    tabListItem.setTextSize(tabListItemTextSize);
-                }
+                tab.setListItemTextSize(tabListItemTextSize);
             }
         }
 
@@ -547,4 +544,27 @@ public class TabArray {
         return this;
     }
 
+    /**
+     * Sets if the developer wants to reset the default ListAdapterViewSettings status.
+     *
+     * Default: when the list item is selected;
+     * Increase the title's text size, make it bold; increase the icon size
+     *
+     *
+     * @param reset true, if developer doesn't want to use custom defined settings,
+     *              and use his/her own.
+     * @return the TabArray
+     */
+    public TabArray resetTabListAdapterViewSettings(boolean reset) {
+        resetTabListAdapterViewSettings = reset;
+        return this;
+    }
+
+    /**
+     * Gets the ListAdapterViewSettings status.
+     *
+     * @return true, if developer doesn't want to use custom defined settings,
+     *         and use his/her own.
+     */
+    public boolean getTabListAdapterViewSettingsStatus() { return resetTabListAdapterViewSettings; }
 }

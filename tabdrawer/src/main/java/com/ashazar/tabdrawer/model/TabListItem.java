@@ -9,8 +9,6 @@ public class TabListItem {
     private String title;
     private int drawableId = -1;
     private boolean isSelected;
-    private int textColor = 0;
-    private int textSize = 16;
 
     /**
      * Instantiates a new TabListItem.
@@ -87,32 +85,4 @@ public class TabListItem {
      * @return the boolean
      */
     public boolean isSelected() { return isSelected; }
-
-    /**
-     * Sets text color.
-     *
-     * @param color the color
-     */
-    public void setTextColor(int color) { textColor = color; }
-
-    /**
-     * Gets text color.
-     *
-     * @return the text color
-     */
-    public int getTextColor() { return textColor; }
-
-    /**
-     * Sets text size.
-     *
-     * @param size the size
-     */
-    public void setTextSize(int size) { textSize = size; }
-
-    /**
-     * Gets text size.
-     *
-     * @return the text size
-     */
-    public int getTextSize() { return textSize; }
 }
