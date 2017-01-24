@@ -133,10 +133,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             prepareTabListContainer();
 
             if (tabDrawerData.hasDrawerForList()) {
-                if (tabBarPosition == TAB_BAR_POSITION_BOTTOM)
+                if (tabBarPosition == TAB_BAR_POSITION_BOTTOM) {
                     tabDrawerLayout.setTranslationY(tabListContainerSize);
-                else
+                }
+                else {
                     tabDrawerLayout.setTranslationX(tabListContainerSize);
+                }
             }
         }
         else {
@@ -144,10 +146,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             prepareTabContainer();
 
             if (tabDrawerData.hasDrawerForList()) {
-                if (tabBarPosition == TAB_BAR_POSITION_TOP)
+                if (tabBarPosition == TAB_BAR_POSITION_TOP) {
                     tabDrawerLayout.setTranslationY(0 - tabListContainerSize);
-                else
+                }
+                else {
                     tabDrawerLayout.setTranslationX(0 - tabListContainerSize);
+                }
             }
         }
 
@@ -159,8 +163,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                                         &&  (tabDrawerLayout.getDefaultSelectedTabItem() <= tabDrawerData.getTab(currentSelectedTabPos).getTabItemList().size()-1))
                                         ? tabDrawerLayout.getDefaultSelectedTabItem() : 0;
 
-            if (tabDrawerData.getTab(currentSelectedTabPos).hasItems())
+            if (tabDrawerData.getTab(currentSelectedTabPos).hasItems()) {
                 previousSelectedTabWithListPos = currentSelectedTabPos;
+            }
         }
 
         refreshTabBar(currentSelectedTabPos);
@@ -218,16 +223,20 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             tabLayout.setOrientation(LinearLayout.VERTICAL);
             tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
-            if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) tabLayout.setWeightSum(10);
+            if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) {
+                tabLayout.setWeightSum(10);
+            }
         }
 
         icon = (ImageView) tabLayout.findViewById(R.id.tab_icon);
         title = (TextView) tabLayout.findViewById(R.id.tab_title);
 
-        if (tabBarPositionTopOrBottom())
+        if (tabBarPositionTopOrBottom()) {
             tabLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        else
+        }
+        else {
             tabLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+        }
 
 
         if (tab.getDrawableId() != 0) {
@@ -240,8 +249,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                     title.setVisibility(View.GONE);
                     icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 }
-                else
+                else {
                     icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 6));
+                }
             }
         }
 
@@ -281,7 +291,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * Add each Tab's List containers to this view.
      */
     private void prepareTabListContainer() {
-        if (!tabDrawerData.hasDrawerForList()) return;
+        if (!tabDrawerData.hasDrawerForList()) {
+            return;
+        }
 
         tabListContainer = new LinearLayout(context);
 
@@ -314,23 +326,28 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         Tab tab = tabDrawerData.getTab(tabPos);
 
-        if (tab.getCustomDrawerLayoutResourceId() != 0)
+        if (tab.getCustomDrawerLayoutResourceId() != 0) {
             container = (RelativeLayout) LayoutInflater.from(context).inflate(tab.getCustomDrawerLayoutResourceId(), tabListContainer, false);
+        }
         else {
             container = new RelativeLayout(context);
             container.setBackgroundColor(tab.getSelectedBackgroundColor());
         }
 
-        if (!tab.hasItems())
+        if (!tab.hasItems()) {
             return container;
+        }
 
-        if (tabBarPositionTopOrBottom())
+        if (tabBarPositionTopOrBottom()) {
             container.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth(), RelativeLayout.LayoutParams.MATCH_PARENT));
-        else
+        }
+        else {
             container.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, getScreenHeight()));
+        }
 
-        if (tab.getCustomDrawerGridViewId() != 0  &&  tab.getCustomDrawerLayoutResourceId() != 0)
+        if (tab.getCustomDrawerGridViewId() != 0  &&  tab.getCustomDrawerLayoutResourceId() != 0) {
             gridView = (GridView) container.findViewById(tab.getCustomDrawerGridViewId());
+        }
         else {
             gridView = new GridView(context);
             gridView.setPadding(tabDrawerLayout.getTabListPaddingLeft(), tabDrawerLayout.getTabListPaddingTop(), tabDrawerLayout.getTabListPaddingRight(), tabDrawerLayout.getTabListPaddingBottom());
@@ -448,40 +465,37 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             TextView titleView = null;
             RelativeLayout drawerLayout = null;
 
-            if (tabDrawerData.hasDrawerForList())
+            if (tabDrawerData.hasDrawerForList()) {
                 drawerLayout = (RelativeLayout) tabListContainer.getChildAt(tabPos);
+            }
 
-            if (tab.getDrawableId() != 0)
+            if (tab.getDrawableId() != 0) {
                 iconView = (ImageView) tabLayout.findViewById(1100 + i);
+            }
 
-            if (tab.getTitle() != null)
+            if (tab.getTitle() != null) {
                 titleView = (TextView) tabLayout.findViewById(1200 + i);
+            }
 
             if (i == tabPos) {
                 setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, i);
 
-                if (iconView != null)
-                    iconView.requestLayout();
-                if (titleView != null)
-                    titleView.requestLayout();
+                if (iconView != null) { iconView.requestLayout(); }
+                if (titleView != null) { titleView.requestLayout(); }
                 tabLayout.requestLayout();
             }
             else if (i == currentSelectedTabPos) {
                 setInactiveSelectedTabView(tabLayout, iconView, titleView, i);
 
-                if (iconView != null)
-                    iconView.requestLayout();
-                if (titleView != null)
-                    titleView.requestLayout();
+                if (iconView != null) { iconView.requestLayout(); }
+                if (titleView != null) { titleView.requestLayout(); }
                 tabLayout.requestLayout();
             }
             else {
                 setUnselectedTabView(tabLayout, iconView, titleView, i);
 
-                if (iconView != null)
-                    iconView.requestLayout();
-                if (titleView != null)
-                    titleView.requestLayout();
+                if (iconView != null) { iconView.requestLayout(); }
+                if (titleView != null) { titleView.requestLayout(); }
                 tabLayout.requestLayout();
             }
         }
@@ -496,16 +510,20 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      */
     private void updateTabListContainer(int tabPos) {
         if (tabBarPositionTopOrBottom()) {
-            if (drawerOpen)
+            if (drawerOpen) {
                 tabListContainer.animate().translationX(0 - (getScreenWidth() * tabPos));
-            else
+            }
+            else {
                 tabListContainer.setTranslationX(0 - (getScreenWidth() * tabPos));
+            }
         }
         else {
-            if (drawerOpen)
+            if (drawerOpen) {
                 tabListContainer.animate().translationY(0 - (getScreenHeight() * tabPos));
-            else
+            }
+            else {
                 tabListContainer.setTranslationY(0 - (getScreenHeight() * tabPos));
+            }
         }
     }
 
@@ -517,8 +535,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * @param tabItemPos Position of the newly clicked item.
      */
     private void refreshTabLists(int tabPos, int tabItemPos) {
-        if (!tabDrawerData.hasDrawerForList()  ||  !tabDrawerData.getTab(tabPos).hasItems())
+        if (!tabDrawerData.hasDrawerForList()  ||  !tabDrawerData.getTab(tabPos).hasItems()) {
             return;
+        }
 
         if (previousSelectedTabItemPos > -1  &&  previousSelectedTabWithListPos > -1) {
             tabDrawerData.getTab(previousSelectedTabWithListPos).getTabItemList().get(previousSelectedTabItemPos).setSelected(false);
@@ -579,24 +598,30 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      *
      * @return the boolean
      */
-    private boolean tabBarPositionTopOrBottom() { return tabBarPosition == TAB_BAR_POSITION_TOP  ||  tabBarPosition == TAB_BAR_POSITION_BOTTOM; }
+    private boolean tabBarPositionTopOrBottom() {
+        return tabBarPosition == TAB_BAR_POSITION_TOP  ||  tabBarPosition == TAB_BAR_POSITION_BOTTOM;
+    }
 
     /**
      * Is TabBarPosition Bottom or Right
      *
      * @return the boolean
      */
-    private boolean tabBarPositionBottomOrRight() { return tabBarPosition == TAB_BAR_POSITION_BOTTOM  ||  tabBarPosition == TAB_BAR_POSITION_RIGHT; }
+    private boolean tabBarPositionBottomOrRight() {
+        return tabBarPosition == TAB_BAR_POSITION_BOTTOM  ||  tabBarPosition == TAB_BAR_POSITION_RIGHT;
+    }
 
     /**
      * Open TabDrawer
      */
     private void openDrawer() {
         drawerOpen = true;
-        if (tabBarPositionTopOrBottom())
+        if (tabBarPositionTopOrBottom()) {
             tabDrawerLayout.animate().translationY(0);
-        else
+        }
+        else {
             tabDrawerLayout.animate().translationX(0);
+        }
     }
 
     /**
@@ -606,10 +631,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         if (!isDrawerOpen()) return;
 
         int size = 0;
-        if (tabBarPositionBottomOrRight())
+        if (tabBarPositionBottomOrRight()) {
             size = tabListContainerSize;
-        else
+        }
+        else {
             size = 0 - tabListContainerSize;
+        }
 
         refreshTabBar(currentSelectedTabPos);
 
@@ -651,9 +678,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         if (clickedId >= 1000 && clickedId < (1000 + tabCount)) {
             clickedTabPos = clickedId - 1000;
-        } else {
+        }
+        else {
             refreshTabBar(tempSelectedTabPos);
-            if (isDrawerOpen()) closeDrawer();
+            if (isDrawerOpen()) {
+                closeDrawer();
+            }
             return;
         }
 
@@ -676,7 +706,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         refreshTabBar(tempSelectedTabPos);
         updateTabListContainer(tempSelectedTabPos);
 
-        if (!isDrawerOpen()) openDrawer();
+        if (!isDrawerOpen()) {
+            openDrawer();
+        }
     }
 
     /**
@@ -737,22 +769,24 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
             if (iconView != null && tab.getDrawableId() != 0) {
                 iconView.setImageResource(tab.getDrawableId());
-                if (tab.getIconColor() != 0)
+                if (tab.getIconColor() != 0) {
                     iconView.setColorFilter(tab.getIconColor());
+                }
 
                 if (tab.getAnimateScaleIconWhenSelected()) {
-                    iconView
-                            .animate()
+                    iconView.animate()
                             .scaleY(1)
                             .scaleX(1);
                 }
             }
             if (titleView != null && tab.getTitle() != null) {
-                if (tab.getSelectedTitleColor() != 0)
+                if (tab.getSelectedTitleColor() != 0) {
                     titleView.setTextColor(tab.getTitleColor());
+                }
 
-                if (tab.getBoldTitleWhenSelected())
+                if (tab.getBoldTitleWhenSelected()) {
                     titleView.setTypeface(tab.getTitleFont(), Typeface.NORMAL);
+                }
             }
         }
 
@@ -777,24 +811,28 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         if (!tab.getCustomTabViewSettingsStatus()) {
             tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
             if (iconView != null && tab.getDrawableId() != 0) {
-                if (tab.getDrawableId_selected() != 0)
+                if (tab.getDrawableId_selected() != 0) {
                     iconView.setImageResource(tab.getDrawableId_selected());
-                else if (tab.getSelectedIconColor() != 0)
+                }
+                else if (tab.getSelectedIconColor() != 0) {
                     iconView.setColorFilter(tab.getSelectedIconColor());
+                }
 
                 if (tab.getAnimateScaleIconWhenSelected()) {
-                    iconView
-                            .animate()
+                    iconView.animate()
                             .scaleY(tab.getIconScaleValueWhenSelected())
                             .scaleX(tab.getIconScaleValueWhenSelected());
                 }
             }
-            if (titleView != null && tab.getTitle() != null) {
-                if (tab.getSelectedTitleColor() != 0)
-                    titleView.setTextColor(tab.getSelectedTitleColor());
 
-                if (tab.getBoldTitleWhenSelected())
+            if (titleView != null && tab.getTitle() != null) {
+                if (tab.getSelectedTitleColor() != 0) {
+                    titleView.setTextColor(tab.getSelectedTitleColor());
+                }
+
+                if (tab.getBoldTitleWhenSelected()) {
                     titleView.setTypeface(tab.getTitleFont(), Typeface.BOLD);
+                }
             }
         }
     }
@@ -822,9 +860,11 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             if (iconView != null && tab.getDrawableId() != 0 && tab.getInactiveSelectedIconColor() != 0) {
                 iconView.setColorFilter(tab.getInactiveSelectedIconColor());
 
-                if (tab.getAnimateScaleIconWhenSelected())
+                if (tab.getAnimateScaleIconWhenSelected()) {
                     iconView.animate().scaleY(1).scaleX(1);
+                }
             }
+
             if (titleView != null && tab.getTitle() != null && tab.getInactiveSelectedTitleColor() != 0) {
                 titleView.setTextColor(tab.getInactiveSelectedTitleColor());
             }
