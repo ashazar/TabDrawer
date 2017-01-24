@@ -427,6 +427,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 }
                 else {
                     titleView.setText(title);
+                    if (tab.getListItemTitleFont() != null) {
+                        titleView.setTypeface(tab.getListItemTitleFont());
+                    }
 
                     if (imgDrawableId != -1) {
                         imageView.setContentDescription(title);
@@ -890,7 +893,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
             if (titleView != null) {
                 titleView.setTextColor(tab.getListItemTextColor());
-                titleView.setTypeface(null, Typeface.NORMAL);
+                titleView.setTypeface(tab.getListItemTitleFont(), Typeface.NORMAL);
                 titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize());
             }
         }
@@ -915,7 +918,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
             if (titleView != null) {
                 titleView.setTextColor(tab.getListItemTextColor());
-                titleView.setTypeface(null, Typeface.BOLD);
+                titleView.setTypeface(tab.getListItemTitleFont(), Typeface.BOLD);
                 titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize() + 1);
             }
         }

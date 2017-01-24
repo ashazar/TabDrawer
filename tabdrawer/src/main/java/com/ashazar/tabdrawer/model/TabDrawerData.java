@@ -36,6 +36,7 @@ public class TabDrawerData {
     private int customDrawerListItemLayoutResourceId = 0;
     private int tabListItemTextColor = 0;
     private int tabListItemTextSize = 16;
+    private Typeface tabListItemTitleFont = null;
     private boolean resetTabListAdapterViewSettings = false;
 
     /**
@@ -455,6 +456,24 @@ public class TabDrawerData {
         tabListItemTextSize = size;
         return this;
     }
+
+    /**
+     * Sets Typeface of the Tab List item's Title
+     *
+     * @param font Typeface of Tab List item's title
+     * @return the TabDrawerData
+     */
+    public TabDrawerData setTabListItemTitleFont(Typeface font) {
+        tabListItemTitleFont = font;
+        return this;
+    }
+
+    /**
+     * Gets the typeface of the Tab List item's Title.
+     *
+     * @return the typeface of Tab List item's title
+     */
+    public Typeface getTabListItemTitleFont() { return tabListItemTitleFont; }
 
     /**
      * Sets if the developer wants to reset the default ListAdapterViewSettings.

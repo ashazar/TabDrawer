@@ -31,14 +31,15 @@ public class Tab {
     private int iconColor_selected = 0;
     private int iconColor_selectedInactive = 0;
     private int drawableId_selected = 0;
-    private int tabListItemTextColor = 0;
-    private int tabListItemTextSize = 0;
     private boolean animateScaleIconWhenSelected = true;
     private float iconScaleValueWhenSelected = 1.2f;
     private boolean boldTitleWhenSelected = true;
     private boolean resetTabViewSettings = false;
     private int isResetTabViewSettingsSet = -1;
 
+    private int tabListItemTextColor = 0;
+    private int tabListItemTextSize = 0;
+    private Typeface tabListItemTitleFont = null;
     private int customDrawerLayoutResourceId = 0;
     private boolean useDefaultDrawerLayout = false; // will be used to force using default (internal) drawer layout
     private int customDrawerGridViewId = 0;
@@ -617,6 +618,24 @@ public class Tab {
      * @return the item list text size
      */
     public int getListItemTextSize() { return tabListItemTextSize; }
+
+    /**
+     * Sets Typeface of the List item's Title
+     *
+     * @param font Typeface of List item's title
+     * @return the Tab
+     */
+    public Tab setListItemTitleFont(Typeface font) {
+        tabListItemTitleFont = font;
+        return this;
+    }
+
+    /**
+     * Gets the typeface of the List item's Title.
+     *
+     * @return the typeface of title
+     */
+    public Typeface getListItemTitleFont() { return tabListItemTitleFont; }
 
     /**
      * Sets if the developer wants to reset the default ListAdapterViewSettings.
