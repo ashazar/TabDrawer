@@ -129,7 +129,7 @@ public class Tab {
     public int getCustomTabLayoutResourceId() { return tabLayoutResourceId; }
 
     /**
-     * If a common tab layout resource id set in TabArray, and don't want to use it for this tab,
+     * If a common tab layout resource id set in TabDrawerData, and don't want to use it for this tab,
      * instead of defining another custom tab layout,
      * force this tab to use internal default layout.
      *
@@ -523,7 +523,7 @@ public class Tab {
     public int getCustomDrawerLayoutResourceId() { return customDrawerLayoutResourceId; }
 
     /**
-     * If a common tab drawer layout resource id set in TabArray, and don't want to use it for this tab,
+     * If a common tab drawer layout resource id set in TabDrawerData, and don't want to use it for this tab,
      * instead of defining another custom drawer layout,
      * force this tab to use internal default drawer layout.
      *
@@ -576,7 +576,7 @@ public class Tab {
 
     /**
      * Gets if dontUseDefaultTabViewSettings() is called by the Tab itself.
-     * Only TabArray uses this method to determine if it needs to be overriden by TabArray.
+     * Only TabDrawerData uses this method to determine if it needs to be overriden by TabDrawerData.
      *
      * @return true, if dontUseDefaultTabViewSettings() is called for this tab
      */
@@ -648,7 +648,7 @@ public class Tab {
 
     /**
      * Gets if dontUseDefaultListAdapterViewSettings() is called by the Tab itself.
-     * Only TabArray uses this method to determine if it needs to be overriden by TabArray.
+     * Only TabDrawerData uses this method to determine if it needs to be overriden by TabDrawerData.
      *
      * @return true, if dontUseDefaultListAdapterViewSettings() is called for this tab
      */
