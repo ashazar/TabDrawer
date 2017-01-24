@@ -36,6 +36,8 @@ public class Tab {
     private boolean animateScaleIconWhenSelected = true;
     private float iconScaleValueWhenSelected = 1.2f;
     private boolean boldTitleWhenSelected = true;
+    private boolean resetTabViewSettings = false;
+    private int isResetTabViewSettingsSet = -1;
 
     private int customDrawerLayoutResourceId = 0;
     private boolean useDefaultDrawerLayout = false; // will be used to force using default (internal) drawer layout
@@ -43,6 +45,7 @@ public class Tab {
     private int drawerListNumColumns = 0;
     private int customDrawerListItemLayoutResourceId = 0;
     private boolean resetListAdapterViewSettings = false;
+    private int isResetListAdapterViewSettingsSet = -1;
     private ArrayList<TabListItem> list = null;
 
     /**
@@ -540,6 +543,46 @@ public class Tab {
     boolean willUseDefaultDrawerLayout() { return useDefaultDrawerLayout; }
 
     /**
+     * Sets if the developer wants to reset the default Tab view settings.
+     * (Unselected, Selected, InactiveSelected)
+     * If developer doesn't want to use the standard internal defined view settings,
+     * and wants to  use his/her own.
+     *
+     * If this method is called; developer has to override
+     * setUnselectedTabView(), setSelectedTabView() and setInactiveSelectedTabView()
+     * to define his/her custom views.
+     *
+     * Default: when the tab is selected;
+     *  Tab's   Background color is set to Selected Background Color,
+     *          Title becomes Bold, title color is set to Selected Title Color
+     *          Icon (image) scales up with animation
+     *          Drawer background color is set to Selected Background Color.
+     *
+     * @return the Tab
+     */
+    public Tab dontUseDefaultTabViewSettings() {
+        resetTabViewSettings = true;
+        isResetTabViewSettingsSet = 1;
+        return this;
+    }
+
+    /**
+     * Gets the Tab view settings status.
+     *
+     * @return true, if developer doesn't want to use standard defined settings,
+     *         and wants to use his/her own.
+     */
+    public boolean getCustomTabViewSettingsStatus() { return resetTabViewSettings; }
+
+    /**
+     * Gets if dontUseDefaultTabViewSettings() is called by the Tab itself.
+     * Only TabArray uses this method to determine if it needs to be overriden by TabArray.
+     *
+     * @return true, if dontUseDefaultTabViewSettings() is called for this tab
+     */
+    boolean isResetTabViewSettingsSet() { return (isResetTabViewSettingsSet == 1); }
+
+    /**
      * Sets tab item list text color.
      *
      * @param color the color
@@ -576,27 +619,38 @@ public class Tab {
     public int getListItemTextSize() { return tabListItemTextSize; }
 
     /**
-     * Sets if the developer wants to reset the default ListAdapterViewSettings status.
+     * Sets if the developer wants to reset the default ListAdapterViewSettings.
+     * If developer doesn't want to use the standard internal defined view settings,
+     * and wants to  use his/her own.
+     *
+     * If this method is called; developer has to override
+     * setUnselectedListItemView() and setSelectedListItemView()
+     * to define his/her custom views.
      *
      * Default: when the list item is selected;
      * Increase the title's text size, make it bold; increase the icon size
      *
-     *
-     * @param reset true, if developer doesn't want to use custom defined settings,
-     *              and use his/her own.
      * @return the Tab
      */
-    public Tab resetListAdapterViewSettings(boolean reset) {
-        resetListAdapterViewSettings = reset;
+    public Tab dontUseDefaultListAdapterViewSettings() {
+        resetListAdapterViewSettings = true;
+        isResetListAdapterViewSettingsSet = 1;
         return this;
     }
 
     /**
      * Gets the ListAdapterViewSettings status.
      *
-     * @return true, if developer doesn't want to use custom defined settings,
-     *         and use his/her own.
+     * @return true, if developer doesn't want to use standard defined settings,
+     *         and wants to use his/her own.
      */
-    public boolean getListAdapterViewSettingsStatus() { return resetListAdapterViewSettings; }
+    public boolean getCustomListAdapterViewSettingsStatus() { return resetListAdapterViewSettings; }
 
+    /**
+     * Gets if dontUseDefaultListAdapterViewSettings() is called by the Tab itself.
+     * Only TabArray uses this method to determine if it needs to be overriden by TabArray.
+     *
+     * @return true, if dontUseDefaultListAdapterViewSettings() is called for this tab
+     */
+    boolean isResetListAdapterViewSettingsSet() { return (isResetListAdapterViewSettingsSet == 1); }
 }

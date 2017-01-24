@@ -27,6 +27,7 @@ public class TabArray {
     private boolean animateScaleTabIconWhenSelected = true;
     private float tabIconScaleValueWhenSelected = 1.2f;
     private boolean boldTabTitleWhenSelected = true;
+    private boolean resetTabViewSettings = false;
 
     private boolean hasAtLeastOneDrawerForList = false;
     private int customDrawerLayoutResourceId = 0;
@@ -113,10 +114,18 @@ public class TabArray {
         if (tab.getCustomDrawerLayoutResourceId() == 0  &&  !tab.willUseDefaultDrawerLayout())
             tab.setCustomDrawerLayoutResourceId(customDrawerLayoutResourceId);
 
+        if (!tab.isResetTabViewSettingsSet()  &&  resetTabViewSettings) {
+            tab.dontUseDefaultTabViewSettings();
+        }
+
         if (tab.hasItems())
             hasAtLeastOneDrawerForList = true;
 
         if (tab.hasItems()) {
+            if (!tab.isResetListAdapterViewSettingsSet()  &&  resetTabListAdapterViewSettings) {
+                tab.dontUseDefaultListAdapterViewSettings();
+            }
+
             if (tab.getDrawerListColumnNumber() == 0)
                 tab.setDrawerListColumnNumber(drawerListNumColumns);
 
@@ -445,6 +454,29 @@ public class TabArray {
      */
     public boolean getBoldTabTitleWhenSelected() { return boldTabTitleWhenSelected; }
 
+    /**
+     * Sets if the developer wants to reset the default Tab view settings.
+     * (Unselected, Selected, InactiveSelected)
+     * If developer doesn't want to use the standard internal defined view settings,
+     * and wants to  use his/her own.
+     *
+     * If this method is called; developer has to override
+     * setUnselectedTabView(), setSelectedTabView() and setInactiveSelectedTabView()
+     * to define his/her custom views.
+     *
+     * Default: when the tab is selected;
+     *  Tab's   Background color is set to Selected Background Color,
+     *          Title becomes Bold, title color is set to Selected Title Color
+     *          Icon (image) scales up with animation
+     *          Drawer background color is set to Selected Background Color.
+     *
+     * @return the Tab
+     */
+    public TabArray dontUseDefaultTabViewSettings() {
+        resetTabViewSettings = true;
+        return this;
+    }
+
 
     /**
      * Sets the custom drawer layout (RelativeLayout) resource Id for all tabs.
@@ -545,26 +577,29 @@ public class TabArray {
     }
 
     /**
-     * Sets if the developer wants to reset the default ListAdapterViewSettings status.
+     * Sets if the developer wants to reset the default ListAdapterViewSettings.
+     * If developer doesn't want to use the standard internal defined view settings,
+     * and wants to  use his/her own.
+     *
+     * If this method is called; developer has to override
+     * setUnselectedListItemView() and setSelectedListItemView()
+     * to define his/her custom views.
      *
      * Default: when the list item is selected;
      * Increase the title's text size, make it bold; increase the icon size
      *
-     *
-     * @param reset true, if developer doesn't want to use custom defined settings,
-     *              and use his/her own.
      * @return the TabArray
      */
-    public TabArray resetTabListAdapterViewSettings(boolean reset) {
-        resetTabListAdapterViewSettings = reset;
+    public TabArray dontUseDefaultTabListAdapterViewSettings() {
+        resetTabListAdapterViewSettings = true;
         return this;
     }
 
     /**
      * Gets the ListAdapterViewSettings status.
      *
-     * @return true, if developer doesn't want to use custom defined settings,
-     *         and use his/her own.
+     * @return true, if developer doesn't want to use standard defined settings,
+     *         and wants to use his/her own.
      */
-    public boolean getTabListAdapterViewSettingsStatus() { return resetTabListAdapterViewSettings; }
+    public boolean getCustomTabListAdapterViewSettingsStatus() { return resetTabListAdapterViewSettings; }
 }

@@ -733,26 +733,29 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabArray.getTab(tabPosition);
 
-        tabLayout.setBackgroundColor(tab.getBackgroundColor());
-        if (iconView != null  &&  tab.getDrawableId() != 0) {
-            iconView.setImageResource(tab.getDrawableId());
-            if (tab.getIconColor() != 0)
-                iconView.setColorFilter(tab.getIconColor());
+        if (!tab.getCustomTabViewSettingsStatus()) {
+            tabLayout.setBackgroundColor(tab.getBackgroundColor());
+            if (iconView != null && tab.getDrawableId() != 0) {
+                iconView.setImageResource(tab.getDrawableId());
+                if (tab.getIconColor() != 0)
+                    iconView.setColorFilter(tab.getIconColor());
 
-            if (tab.getAnimateScaleIconWhenSelected()) {
-                iconView
-                        .animate()
-                        .scaleY(1)
-                        .scaleX(1);
+                if (tab.getAnimateScaleIconWhenSelected()) {
+                    iconView
+                            .animate()
+                            .scaleY(1)
+                            .scaleX(1);
+                }
+            }
+            if (titleView != null && tab.getTitle() != null) {
+                if (tab.getSelectedTitleColor() != 0)
+                    titleView.setTextColor(tab.getTitleColor());
+
+                if (tab.getBoldTitleWhenSelected())
+                    titleView.setTypeface(tab.getTitleFont(), Typeface.NORMAL);
             }
         }
-        if (titleView != null  &&  tab.getTitle() != null) {
-            if (tab.getSelectedTitleColor() != 0)
-                titleView.setTextColor(tab.getTitleColor());
 
-            if (tab.getBoldTitleWhenSelected())
-                titleView.setTypeface(tab.getTitleFont(), Typeface.NORMAL);
-        }
     }
 
     /**
@@ -771,26 +774,28 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
         Tab tab = tabArray.getTab(tabPosition);
 
-        tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
-        if (iconView != null  &&  tab.getDrawableId() != 0) {
-            if (tab.getDrawableId_selected() != 0)
-                iconView.setImageResource(tab.getDrawableId_selected());
-            else if (tab.getSelectedIconColor() != 0)
-                iconView.setColorFilter(tab.getSelectedIconColor());
+        if (!tab.getCustomTabViewSettingsStatus()) {
+            tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
+            if (iconView != null && tab.getDrawableId() != 0) {
+                if (tab.getDrawableId_selected() != 0)
+                    iconView.setImageResource(tab.getDrawableId_selected());
+                else if (tab.getSelectedIconColor() != 0)
+                    iconView.setColorFilter(tab.getSelectedIconColor());
 
-            if (tab.getAnimateScaleIconWhenSelected()) {
-                iconView
-                        .animate()
-                        .scaleY(tab.getIconScaleValueWhenSelected())
-                        .scaleX(tab.getIconScaleValueWhenSelected());
+                if (tab.getAnimateScaleIconWhenSelected()) {
+                    iconView
+                            .animate()
+                            .scaleY(tab.getIconScaleValueWhenSelected())
+                            .scaleX(tab.getIconScaleValueWhenSelected());
+                }
             }
-        }
-        if (titleView != null  &&  tab.getTitle() != null) {
-            if (tab.getSelectedTitleColor() != 0)
-                titleView.setTextColor(tab.getSelectedTitleColor());
+            if (titleView != null && tab.getTitle() != null) {
+                if (tab.getSelectedTitleColor() != 0)
+                    titleView.setTextColor(tab.getSelectedTitleColor());
 
-            if (tab.getBoldTitleWhenSelected())
-                titleView.setTypeface(tab.getTitleFont(), Typeface.BOLD);
+                if (tab.getBoldTitleWhenSelected())
+                    titleView.setTypeface(tab.getTitleFont(), Typeface.BOLD);
+            }
         }
     }
 
@@ -812,15 +817,17 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabArray.getTab(tabPosition);
 
-        tabLayout.setBackgroundColor(tab.getInactiveSelectedBackgroundColor());
-        if (iconView != null  &&  tab.getDrawableId() != 0  &&  tab.getInactiveSelectedIconColor() != 0) {
-            iconView.setColorFilter(tab.getInactiveSelectedIconColor());
+        if (!tab.getCustomTabViewSettingsStatus()) {
+            tabLayout.setBackgroundColor(tab.getInactiveSelectedBackgroundColor());
+            if (iconView != null && tab.getDrawableId() != 0 && tab.getInactiveSelectedIconColor() != 0) {
+                iconView.setColorFilter(tab.getInactiveSelectedIconColor());
 
-            if (tab.getAnimateScaleIconWhenSelected())
-                iconView.animate().scaleY(1).scaleX(1);
-        }
-        if (titleView != null  &&  tab.getTitle() != null  &&  tab.getInactiveSelectedTitleColor() != 0) {
-            titleView.setTextColor(tab.getInactiveSelectedTitleColor());
+                if (tab.getAnimateScaleIconWhenSelected())
+                    iconView.animate().scaleY(1).scaleX(1);
+            }
+            if (titleView != null && tab.getTitle() != null && tab.getInactiveSelectedTitleColor() != 0) {
+                titleView.setTextColor(tab.getInactiveSelectedTitleColor());
+            }
         }
     }
 
@@ -836,14 +843,16 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     public void setUnselectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
         Tab tab = tabArray.getTab(tabPosition);
 
-        if (iconView != null) {
-            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getListItemTextSize() + 8, context.getResources().getDisplayMetrics());
-        }
+        if (!tab.getCustomListAdapterViewSettingsStatus()) {
+            if (iconView != null) {
+                iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getListItemTextSize() + 8, context.getResources().getDisplayMetrics());
+            }
 
-        if (titleView != null) {
-            titleView.setTextColor(tab.getListItemTextColor());
-            titleView.setTypeface(null, Typeface.NORMAL);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize());
+            if (titleView != null) {
+                titleView.setTextColor(tab.getListItemTextColor());
+                titleView.setTypeface(null, Typeface.NORMAL);
+                titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize());
+            }
         }
     }
 
@@ -859,14 +868,16 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     public void setSelectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
         Tab tab = tabArray.getTab(tabPosition);
 
-        if (iconView != null) {
-            iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getListItemTextSize() + 10, context.getResources().getDisplayMetrics());
-        }
+        if (!tab.getCustomListAdapterViewSettingsStatus()) {
+            if (iconView != null) {
+                iconView.getLayoutParams().width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tab.getListItemTextSize() + 10, context.getResources().getDisplayMetrics());
+            }
 
-        if (titleView != null) {
-            titleView.setTextColor(tab.getListItemTextColor());
-            titleView.setTypeface(null, Typeface.BOLD);
-            titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize() + 1);
+            if (titleView != null) {
+                titleView.setTextColor(tab.getListItemTextColor());
+                titleView.setTypeface(null, Typeface.BOLD);
+                titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTextSize() + 1);
+            }
         }
     }
 
