@@ -37,8 +37,8 @@ public class Tab {
     private boolean resetTabViewSettings = false;
     private int isResetTabViewSettingsSet = -1;
 
-    private int tabListItemTextColor = 0;
-    private int tabListItemTextSize = 0;
+    private int tabListItemTitleColor = 0;
+    private int tabListItemTitleSize = 0;
     private Typeface tabListItemTitleFont = null;
     private int customDrawerLayoutResourceId = 0;
     private boolean useDefaultDrawerLayout = false; // will be used to force using default (internal) drawer layout
@@ -589,8 +589,8 @@ public class Tab {
      * @param color the color
      * @return the Tab
      */
-    public Tab setListItemTextColor(int color) {
-        tabListItemTextColor = color;
+    public Tab setListItemTitleColor(int color) {
+        tabListItemTitleColor = color;
         return this;
     }
 
@@ -599,7 +599,7 @@ public class Tab {
      *
      * @return the item list text color
      */
-    public int getListItemTextColor() { return tabListItemTextColor; }
+    public int getListItemTitleColor() { return tabListItemTitleColor; }
 
     /**
      * Sets tab item list text size.
@@ -607,8 +607,8 @@ public class Tab {
      * @param size the size
      * @return the Tab
      */
-    public Tab setListItemTextSize(int size) {
-        tabListItemTextSize = size;
+    public Tab setListItemTitleSize(int size) {
+        tabListItemTitleSize = size;
         return this;
     }
 
@@ -617,7 +617,7 @@ public class Tab {
      *
      * @return the item list text size
      */
-    public int getListItemTextSize() { return tabListItemTextSize; }
+    public int getListItemTitleSize() { return tabListItemTitleSize; }
 
     /**
      * Sets Typeface of the List item's Title

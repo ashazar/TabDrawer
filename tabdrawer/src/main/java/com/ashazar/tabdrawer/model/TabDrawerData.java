@@ -34,8 +34,8 @@ public class TabDrawerData {
     private int customDrawerGridViewId = 0;
     private int drawerListNumColumns = 0;
     private int customDrawerListItemLayoutResourceId = 0;
-    private int tabListItemTextColor = 0;
-    private int tabListItemTextSize = 16;
+    private int tabListItemTitleColor = 0;
+    private int tabListItemTitleSize = 16;
     private Typeface tabListItemTitleFont = null;
     private boolean resetTabListAdapterViewSettings = false;
 
@@ -158,12 +158,16 @@ public class TabDrawerData {
                 tab.setCustomDrawerListItemLayoutResourceId(customDrawerListItemLayoutResourceId);
             }
 
-            if (tab.getListItemTextColor() == 0) {
-                tab.setListItemTextColor(tabListItemTextColor);
+            if (tab.getListItemTitleColor() == 0) {
+                tab.setListItemTitleColor(tabListItemTitleColor);
             }
 
-            if (tab.getListItemTextSize() == 0) {
-                tab.setListItemTextSize(tabListItemTextSize);
+            if (tab.getListItemTitleSize() == 0) {
+                tab.setListItemTitleSize(tabListItemTitleSize);
+            }
+
+            if (tab.getListItemTitleFont() == null) {
+                tab.setListItemTitleFont(tabListItemTitleFont);
             }
         }
 
@@ -441,8 +445,8 @@ public class TabDrawerData {
      * @param color the color
      * @return the TabDrawerData
      */
-    public TabDrawerData setTabListItemTextColor(int color) {
-        tabListItemTextColor = color;
+    public TabDrawerData setTabListItemTitleColor(int color) {
+        tabListItemTitleColor = color;
         return this;
     }
 
@@ -452,8 +456,8 @@ public class TabDrawerData {
      * @param size the size
      * @return the TabDrawerData
      */
-    public TabDrawerData setTabListItemTextSize(int size) {
-        tabListItemTextSize = size;
+    public TabDrawerData setTabListItemTitleSize(int size) {
+        tabListItemTitleSize = size;
         return this;
     }
 
