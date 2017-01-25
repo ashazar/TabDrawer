@@ -29,6 +29,12 @@ public class TabDrawerLayout extends LinearLayout {
     // TAB Detail List
     private int defaultSelectedTabItem;
 
+    private int drawer_padding;
+    private int drawer_paddingLeft;
+    private int drawer_paddingRight;
+    private int drawer_paddingTop;
+    private int drawer_paddingBottom;
+
     private int list_padding;
     private int list_paddingLeft;
     private int list_paddingRight;
@@ -108,6 +114,12 @@ public class TabDrawerLayout extends LinearLayout {
         tabPaddingBottom = (int) arr.getDimension(R.styleable.TabDrawerLayout_paddingBottom, 0);
 
         // TAB Detail List
+        drawer_padding = (int) arr.getDimension(R.styleable.TabDrawerLayout_drawer_padding, 0);
+        drawer_paddingLeft = (int) arr.getDimension(R.styleable.TabDrawerLayout_drawer_paddingLeft, 0);
+        drawer_paddingRight = (int) arr.getDimension(R.styleable.TabDrawerLayout_drawer_paddingRight, 0);
+        drawer_paddingTop = (int) arr.getDimension(R.styleable.TabDrawerLayout_drawer_paddingTop, 0);
+        drawer_paddingBottom = (int) arr.getDimension(R.styleable.TabDrawerLayout_drawer_paddingBottom, 0);
+
         list_padding = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_padding, 0);
         list_paddingLeft = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_paddingLeft, 0);
         list_paddingRight = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_paddingRight, 0);
@@ -202,6 +214,41 @@ public class TabDrawerLayout extends LinearLayout {
      * @return the tab padding bottom
      */
     public int getTabPaddingBottom() { return (tabPaddingBottom != 0) ? tabPaddingBottom : tabPadding; }
+
+    /**
+     * Gets drawer padding.
+     *
+     * @return the drawer padding
+     */
+    public int getDrawerPadding() { return drawer_padding; }
+
+    /**
+     * Gets drawer padding left.
+     *
+     * @return the drawer padding left
+     */
+    public int getDrawerPaddingLeft() { return (drawer_paddingLeft != 0) ? drawer_paddingLeft : drawer_padding; }
+
+    /**
+     * Gets drawer padding right.
+     *
+     * @return the drawer padding right
+     */
+    public int getDrawerPaddingRight() { return (drawer_paddingRight != 0) ? drawer_paddingRight : drawer_padding; }
+
+    /**
+     * Gets drawer padding top.
+     *
+     * @return the drawer padding top
+     */
+    public int getDrawerPaddingTop() { return (drawer_paddingTop != 0) ? drawer_paddingTop : drawer_padding; }
+
+    /**
+     * Gets drawer padding bottom.
+     *
+     * @return the drawer padding bottom
+     */
+    public int getDrawerPaddingBottom() { return (drawer_paddingBottom != 0) ? drawer_paddingBottom : drawer_padding; }
 
     /**
      * Gets tab list padding.

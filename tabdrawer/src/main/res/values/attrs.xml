@@ -21,6 +21,12 @@
         <attr name="paddingTop" format="dimension"/>
         <attr name="paddingBottom" format="dimension"/>
 
+        <attr name="drawer_padding" format="dimension"/>
+        <attr name="drawer_paddingLeft" format="dimension"/>
+        <attr name="drawer_paddingRight" format="dimension"/>
+        <attr name="drawer_paddingTop" format="dimension"/>
+        <attr name="drawer_paddingBottom" format="dimension"/>
+
         <attr name="list_padding" format="dimension"/>
         <attr name="list_paddingLeft" format="dimension"/>
         <attr name="list_paddingRight" format="dimension"/>

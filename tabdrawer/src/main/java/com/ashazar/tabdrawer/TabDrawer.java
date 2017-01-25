@@ -332,6 +332,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         else {
             container = new RelativeLayout(context);
             container.setBackgroundColor(tab.getSelectedBackgroundColor());
+            container.setPadding(tabDrawerLayout.getDrawerPaddingLeft(), tabDrawerLayout.getDrawerPaddingTop(), tabDrawerLayout.getDrawerPaddingRight(), tabDrawerLayout.getDrawerPaddingBottom());
         }
 
         if (!tab.hasItems()) {
