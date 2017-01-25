@@ -335,15 +335,15 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             container.setPadding(tabDrawerLayout.getDrawerPaddingLeft(), tabDrawerLayout.getDrawerPaddingTop(), tabDrawerLayout.getDrawerPaddingRight(), tabDrawerLayout.getDrawerPaddingBottom());
         }
 
-        if (!tab.hasItems()) {
-            return container;
-        }
-
         if (tabBarPositionTopOrBottom()) {
             container.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth(), RelativeLayout.LayoutParams.MATCH_PARENT));
         }
         else {
             container.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, getScreenHeight()));
+        }
+
+        if (!tab.hasItems()) {
+            return container;
         }
 
         if (tab.getCustomDrawerGridViewId() != 0  &&  tab.getCustomDrawerLayoutResourceId() != 0) {
@@ -513,6 +513,10 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * @param tabPos clicked Tab position
      */
     private void updateTabListContainer(int tabPos) {
+        if (!tabDrawerData.hasDrawerForList()) {
+            return;
+        }
+
         if (tabBarPositionTopOrBottom()) {
             if (drawerOpen) {
                 tabListContainer.animate().translationX(0 - (getScreenWidth() * tabPos));
