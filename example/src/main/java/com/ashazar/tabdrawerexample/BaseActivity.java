@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 import com.ashazar.tabdrawer.TabDrawer;
 import com.ashazar.tabdrawer.model.Tab;
-import com.ashazar.tabdrawer.model.TabArray;
+import com.ashazar.tabdrawer.model.TabDrawerData;
 import com.ashazar.tabdrawer.model.TabListItem;
 
 public class BaseActivity extends AppCompatActivity {
@@ -32,8 +33,8 @@ public class BaseActivity extends AppCompatActivity {
         activity = this;
     }
 
-    private TabArray prepareTabArray() {
-        return new TabArray()
+    private TabDrawerData prepareTabArray() {
+        return new TabDrawerData()
                 .setCustomTabLayoutResourceId(R.layout.item_tab)
                 .setTabBackgroundColor(Color.parseColor("#111111"))
                 .setSelectedTabBackgroundColor(Color.parseColor("#333333"))
@@ -55,10 +56,10 @@ public class BaseActivity extends AppCompatActivity {
                         .setSelectedIconColor(Color.parseColor("#ff0000"))
                         .setInactiveSelectedIconColor(Color.parseColor("#990000"))
                         .addTabListItem( new TabListItem("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
-                        .addTabListItem( new TabListItem("Left TabDrawer", R.drawable.ic_action_next_item) )
                         .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
-                        .addTabListItem( new TabListItem("Right TabDrawer", R.drawable.ic_action_previous_item) )
                         .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
+                        .addTabListItem( new TabListItem("Left TabDrawer", R.drawable.ic_action_next_item) )
+                        .addTabListItem( new TabListItem("Right TabDrawer", R.drawable.ic_action_previous_item) )
                 )
 
                 .addTab( new Tab()
@@ -101,6 +102,8 @@ public class BaseActivity extends AppCompatActivity {
                         .setBackgroundColor(Color.parseColor("#003366"))
                         .setSelectedBackgroundColor(Color.parseColor("#336699"))
                         .setInactiveSelectedBackgroundColor(Color.parseColor("#6699ff"))
+                        //.dontUseDefaultTabViewSettings()
+                        .dontUseDefaultListAdapterViewSettings()
                         .addTabListItem( new TabListItem("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
                         .addTabListItem( new TabListItem("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
                         .addTabListItem( new TabListItem("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
@@ -139,28 +142,28 @@ public class BaseActivity extends AppCompatActivity {
     public void prepareTabDrawer() { prepareTabDrawer(false); }
 
     public void prepareTabDrawer(boolean additional) {
-        TabArray tabArrayTemp = prepareTabArray();
+        TabDrawerData tabDrawerDataTemp = prepareTabArray();
 
         // Clone 3 tabs to the end to fill space when it is Left or Right TabDrawer
         if (additional) {
-            TabArray tabArrayTemp2 = prepareTabArray();
-            tabArrayTemp.addTab(tabArrayTemp2.getTab(3).setTitle("Add 1"));
-            tabArrayTemp.addTab(tabArrayTemp2.getTab(2).setTitle("Add 2"));
-            tabArrayTemp.addTab(tabArrayTemp2.getTab(1).setTitle("Add 3"));
+            TabDrawerData tabDrawerDataTemp2 = prepareTabArray();
+            tabDrawerDataTemp.addTab(tabDrawerDataTemp2.getTab(3).setTitle("Add 1"));
+            tabDrawerDataTemp.addTab(tabDrawerDataTemp2.getTab(2).setTitle("Add 2"));
+            tabDrawerDataTemp.addTab(tabDrawerDataTemp2.getTab(1).setTitle("Add 3"));
         }
 
-        final TabArray tabArray = tabArrayTemp;
+        final TabDrawerData tabDrawerData = tabDrawerDataTemp;
 
-        tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray) {
+        tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabDrawerData) {
             @Override
             public void onTabDrawerClicked(int tabPosition, int itemPosition) {
                 super.onTabDrawerClicked(tabPosition, itemPosition);
 
-                String text = tabArray.getTab(tabPosition).getTitle();
+                String text = tabDrawerData.getTab(tabPosition).getTitle();
 
-                if (tabArray.getTab(tabPosition).hasItems()) {
-                    if (tabArray.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle() != null)
-                        text += " -> " + tabArray.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle();
+                if (tabDrawerData.getTab(tabPosition).hasItems()) {
+                    if (tabDrawerData.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle() != null)
+                        text += " -> " + tabDrawerData.getTab(tabPosition).getTabItemList().get(itemPosition).getTitle();
 
                     text += " - ( " + tabPosition + ", " + itemPosition + " )";
                 }
@@ -217,6 +220,23 @@ public class BaseActivity extends AppCompatActivity {
 
                 if (tabPosition == 1)
                     tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg2));
+            }
+
+            @Override
+            public void setUnselectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
+                super.setUnselectedListItemView(tabPosition, itemPosition, view, iconView, titleView);
+
+            }
+
+            @Override
+            public void setSelectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
+                super.setSelectedListItemView(tabPosition, itemPosition, view, iconView, titleView);
+
+                if (tabPosition == 4) {
+                    view.setBackgroundColor(Color.parseColor("#ffffff"));
+                    iconView.setColorFilter(Color.parseColor("#ff0000"));
+
+                }
             }
         };
 
