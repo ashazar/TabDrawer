@@ -30,6 +30,7 @@ public class TabDrawerData {
     private boolean resetTabViewSettings = false;
 
     private boolean hasAtLeastOneDrawerForList = false;
+    private int tabWithDrawerCount = 0;
     private int customDrawerLayoutResourceId = 0;
     private int customDrawerGridViewId = 0;
     private int drawerListNumColumns = 0;
@@ -139,6 +140,7 @@ public class TabDrawerData {
 
         if (tab.hasItems()) {
             hasAtLeastOneDrawerForList = true;
+            tabWithDrawerCount++;
         }
 
         if (tab.hasItems()) {
@@ -196,6 +198,13 @@ public class TabDrawerData {
      * @return boolean : true if at least one tab has drawer (list items)
      */
     public boolean hasDrawerForList() { return hasAtLeastOneDrawerForList; }
+
+    /**
+     * Gets the number of tabs that has list items (has drawer)
+     *
+     * @return number of the tabs with a drawer
+     */
+    public int getTabWithDrawerCount() { return tabWithDrawerCount; }
 
     /**
      * Sets the Layout Resource Id of tabs
