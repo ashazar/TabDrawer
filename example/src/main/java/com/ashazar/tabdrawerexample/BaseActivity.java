@@ -42,8 +42,8 @@ public class BaseActivity extends AppCompatActivity {
                 .setTabTitleColor(Color.parseColor("#ffffff"))
                 .setTabTitleSize(12)
 
-                .setTabListItemTextColor(Color.parseColor("#ffffff"))
-                .setTabListItemTextSize(16)
+                .setTabListItemTitleColor(Color.parseColor("#ffffff"))
+                .setTabListItemTitleSize(16)
 
                 .addTab( new Tab()
                         .setTitle("Demo")
@@ -102,8 +102,6 @@ public class BaseActivity extends AppCompatActivity {
                         .setBackgroundColor(Color.parseColor("#003366"))
                         .setSelectedBackgroundColor(Color.parseColor("#336699"))
                         .setInactiveSelectedBackgroundColor(Color.parseColor("#6699ff"))
-                        //.dontUseDefaultTabViewSettings()
-                        .dontUseDefaultListAdapterViewSettings()
                         .addTabListItem( new TabListItem("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
                         .addTabListItem( new TabListItem("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
                         .addTabListItem( new TabListItem("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
