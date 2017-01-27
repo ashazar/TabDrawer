@@ -36,23 +36,30 @@ public class BaseActivity extends AppCompatActivity {
     private TabDrawerData prepareTabArray() {
         return new TabDrawerData()
                 /*
-                .setTabIconColor(Color.parseColor("#3199ff"))
-                .setSelectedTabIconColor(Color.parseColor("#ffffff"))
+                .setTabIconColors(
+                        Color.parseColor("#3199ff"),
+                        Color.parseColor("#ffffff"),
+                        Color.parseColor("#CCCCCC")
+                    )
                 .setTabTitleSize(12)
-                .setTabTitleColor(ContextCompat.getColor(context, R.color.tabTitle))
-                .setSelectedTabTitleColor(ContextCompat.getColor(context, R.color.tabTitle_selected))
-                .setTabBackgroundColor(ContextCompat.getColor(context, R.color.tabBackground))
-                .setSelectedTabBackgroundColor(ContextCompat.getColor(context, R.color.tabBackground_selected))
-                .setInactiveSelectedTabBackgroundColor(Color.parseColor("#2C7DDC"))
-                .setInactiveSelectedTabIconColor(Color.parseColor("#CCCCCC"))
-                .setInactiveSelectedTabTitleColor(Color.parseColor("#CCCCCC"))
+                .setTabTitleColors(
+                        ContextCompat.getColor(context, R.color.tabTitle),
+                        ContextCompat.getColor(context, R.color.tabTitle_selected),
+                        Color.parseColor("#CCCCCC")
+                    )
+                .setTabBackgroundColors(
+                        ContextCompat.getColor(context, R.color.tabBackground),
+                        ContextCompat.getColor(context, R.color.tabBackground_selected),
+                        Color.parseColor("#2C7DDC")
+                    )
 
-                .setTabListItemTitleColor(Color.parseColor("#ffffff"))
+
+                .setTabListItemTitleColors(Color.parseColor("#ffffff"))
                 .setTabListItemTitleSize(16)
 
                 .addTab( new Tab()
                         .setTitle("Demo")
-                        .setDrawableId(R.drawable.n_activity)
+                        .setIconImage(R.drawable.n_activity)
                         .addTabListItem( new TabListItem("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
                         .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
                         .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
@@ -62,7 +69,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Queue")
-                        .setDrawableId(R.drawable.n_queue)
+                        .setIconImage(R.drawable.n_queue)
                         .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
                         .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
                         .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
@@ -70,7 +77,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Chat")
-                        .setDrawableId(R.drawable.n_chat)
+                        .setIconImage(R.drawable.n_chat)
                         .addTabListItem( new TabListItem("Friends", R.drawable.ic_face_white_24dp) )
                         .addTabListItem( new TabListItem("Add Friend", R.drawable.ic_person_add_white_24dp) )
                         .addTabListItem( new TabListItem("Start Group Chat", R.drawable.ic_people_white_24dp) )
@@ -79,7 +86,7 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Reports")
-                        .setDrawableId(R.drawable.n_report)
+                        .setIconImage(R.drawable.n_report)
                         .addTabListItem( new TabListItem("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
                         .addTabListItem( new TabListItem("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
                         .addTabListItem( new TabListItem("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
@@ -87,9 +94,8 @@ public class BaseActivity extends AppCompatActivity {
                 )
 
                 .addTab( new Tab()
-                        //.setDrawableId(R.drawable.ic_more_horiz_black_36dp)
                         .setTitle("Settings")
-                        .setDrawableId(R.drawable.n_settings)
+                        .setIconImage(R.drawable.n_settings)
                         .addTabListItem( new TabListItem("General", R.drawable.ic_settings_white_24dp) )
                         .addTabListItem( new TabListItem("My Account", R.drawable.ic_lock_white_24dp) )
                         .addTabListItem( new TabListItem("Accesibility", R.drawable.ic_accessibility_white_24dp) )
@@ -108,21 +114,14 @@ public class BaseActivity extends AppCompatActivity {
                         Color.parseColor("#000000")
                     )
                 .setTabTitleSize(12)
-                .setTabTitleColors(
-                        Color.parseColor("#ffffff"),
-                        Color.parseColor("#ffffff"),
-                        Color.parseColor("#ffffff")
-                    )
+                .setTabTitleColors( Color.parseColor("#ffffff") )
 
                 .setTabListItemTitleSize(16)
-                .setTabListItemTitleColors(
-                        Color.parseColor("#ffffff"),
-                        Color.parseColor("#ffffff")
-                    )
+                .setTabListItemTitleColors( Color.parseColor("#ffffff") )
 
                 .addTab( new Tab()
                         .setTitle("Demo")
-                        .setDrawableId(R.drawable.n_activity)
+                        .setIconImage(R.drawable.n_activity)
                         .setTitleSize(14)
                         .setTitleColors(
                                 Color.parseColor("#ffffff"),
@@ -143,15 +142,10 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Queue")
-                        .setDrawableId(R.drawable.n_queue)
+                        .setIconImage(R.drawable.n_queue)
                         .setCustomTabLayoutResourceId(R.layout.item_tab2)
-                        .setTitleColors(
-                                Color.parseColor("#ffffff"),
-                                Color.parseColor("#00ff00"),
-                                Color.parseColor("#00ff00")
-                            )
-                        .setIconColor(Color.parseColor("#ffffff"))
-                        .setSelectedIconColor(Color.parseColor("#00ff00"))
+                        .setTitleColors( Color.parseColor("#ffffff"), Color.parseColor("#00ff00") )
+                        .setIconColors(Color.parseColor("#ffffff"), Color.parseColor("#00ff00"))
                         .setCustomDrawerListItemLayoutResourceId(R.layout.list_item)
                         .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
                         .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
@@ -160,15 +154,11 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Chat")
-                        .setDrawableId(R.drawable.n_chat)
+                        .setIconImage(R.drawable.n_chat)
                         .setCustomTabLayoutResourceId(R.layout.item_tab3)
-                        .setIconColor(Color.parseColor("#6666ee"))
-                        .setSelectedIconColor(Color.parseColor("#ffffff"))
-                        .setTitleColor(Color.parseColor("#6666ee"))
-                        .setSelectedTitleColor(Color.parseColor("#ffffff"))
-                        .setBackgroundColor(Color.parseColor("#FF4E4B76"))
-                        .setSelectedBackgroundColor(Color.parseColor("#FF726EA9"))
-                        .setInactiveSelectedBackgroundColor(Color.parseColor("#FF2F2A79"))
+                        .setIconColors(Color.parseColor("#6666ee"), Color.parseColor("#ffffff"))
+                        .setTitleColors(Color.parseColor("#6666ee"), Color.parseColor("#ffffff"))
+                        .setBackgroundColors( Color.parseColor("#FF4E4B76"), Color.parseColor("#FF726EA9"), Color.parseColor("#FF2F2A79") )
                         .setCustomDrawerLayoutResourceId(R.layout.drawerlayout)
                         .addTabListItem( new TabListItem("Friends", R.drawable.ic_face_white_24dp) )
                         .addTabListItem( new TabListItem("Add Friend", R.drawable.ic_person_add_white_24dp) )
@@ -178,12 +168,10 @@ public class BaseActivity extends AppCompatActivity {
 
                 .addTab( new Tab()
                         .setTitle("Reports")
-                        .setDrawableId(R.drawable.n_report)
+                        .setIconImage(R.drawable.n_report)
                         .setTitleSize(10)
                         .setCustomTabLayoutResourceId(R.layout.item_tab4)
-                        .setBackgroundColor(Color.parseColor("#003366"))
-                        .setSelectedBackgroundColor(Color.parseColor("#336699"))
-                        .setInactiveSelectedBackgroundColor(Color.parseColor("#6699ff"))
+                        .setBackgroundColors(Color.parseColor("#003366"), Color.parseColor("#336699"), Color.parseColor("#6699ff"))
                         .addTabListItem( new TabListItem("Completed Jobs", R.drawable.ic_event_available_white_24dp) )
                         .addTabListItem( new TabListItem("Cancelled Jobs", R.drawable.ic_event_busy_white_24dp) )
                         .addTabListItem( new TabListItem("Customer Feedbacks", R.drawable.ic_feedback_white_24dp) )
@@ -193,9 +181,7 @@ public class BaseActivity extends AppCompatActivity {
                 .addTab( new Tab()
                         .setTitle(".more.")
                         .forceDefaultLayout()
-                        .setBackgroundColor(Color.parseColor("#990066"))
-                        .setSelectedBackgroundColor(Color.parseColor("#660099"))
-                        .setInactiveSelectedBackgroundColor(Color.parseColor("#6633ff"))
+                        .setBackgroundColors(Color.parseColor("#990066"), Color.parseColor("#660099"), Color.parseColor("#6633ff"))
                         .setCustomDrawerLayoutResourceId(R.layout.drawerlayout_with_gridview)
                         .setCustomDrawerGridViewId(R.id.drawer_gridview)
                         .setCustomDrawerListItemLayoutResourceId(R.layout.list_item2)
