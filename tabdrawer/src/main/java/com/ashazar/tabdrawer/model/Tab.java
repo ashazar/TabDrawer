@@ -15,29 +15,22 @@ public class Tab {
      * title and drawableId
      */
     private String title = null;
-    private int drawableId = 0;
+    private ArrayList<Integer> iconImage = null;
 
     private int tabLayoutResourceId = 0;
     private boolean useDefaultLayout = false; // will be used to force using default (internal) tab layout
-    private int backgroundColor = 0;
-    private int backgroundColor_selected = 0;
-    private int backgroundColor_selectedInactive = 0;
+    private ArrayList<Integer> backgroundColor = null;
     private Typeface titleFont = null;
     private int titleSize = 0;
-    private int titleColor = 0;
-    private int titleColor_selected = 0;
-    private int titleColor_selectedInactive = 0;
-    private int iconColor = 0;
-    private int iconColor_selected = 0;
-    private int iconColor_selectedInactive = 0;
-    private int drawableId_selected = 0;
+    private ArrayList<Integer> titleColor = null;
+    private ArrayList<Integer> iconColor = null;
     private boolean animateScaleIconWhenSelected = true;
     private float iconScaleValueWhenSelected = 1.2f;
     private boolean boldTitleWhenSelected = true;
     private boolean resetTabViewSettings = false;
     private int isResetTabViewSettingsSet = -1;
 
-    private int tabListItemTitleColor = 0;
+    private ArrayList<Integer> tabListItemTitleColor = null;
     private int tabListItemTitleSize = 0;
     private Typeface tabListItemTitleFont = null;
     private int customDrawerLayoutResourceId = 0;
@@ -77,38 +70,47 @@ public class Tab {
     /**
      * Sets Tab image
      *
-     * @param drawableId Drawable Resource Id for Tab icon
+     * @param drawableIds Drawable Resource Ids for Tab icon
+     *                    normal, when tab is selected, when tab is inactiveSelected
+     *
      * @return the Tab
      */
-    public Tab setDrawableId(int drawableId) {
-        this.drawableId = drawableId;
+    public Tab setIconImage(int...drawableIds) {
+        int size = drawableIds.length - 1;
+        int lastItem = 0;
+        iconImage = new ArrayList<>();
+        for (int i = 0; i <=2; i++) {
+            if (i <= size) {
+                iconImage.add(i, drawableIds[i]);
+                lastItem = drawableIds[i];
+            }
+            else {
+                iconImage.add(i, lastItem);
+            }
+        }
         return this;
     }
 
     /**
-     * Gets drawable id.
+     * Gets drawable id of the tab icon.
      *
      * @return the drawable id
      */
-    public int getDrawableId() { return drawableId; }
+    public int getIconImage() { return iconImage.get(0); }
 
     /**
-     * Sets Tab Image when it's selected.
-     *
-     * @param selectedDrawableId Drawable Resource Id for Tab icon when it's selected
-     * @return the Tab
-     */
-    public Tab setSelectedDrawableId(int selectedDrawableId) {
-        drawableId_selected = selectedDrawableId;
-        return this;
-    }
-
-    /**
-     * Gets drawable id selected.
+     * Gets drawable id of the tab icon when tab is selected.
      *
      * @return the drawable id selected
      */
-    public int getDrawableId_selected() { return drawableId_selected; }
+    public int getSelectedIconImage() { return iconImage.get(1); }
+
+    /**
+     * Gets drawable id of the tab icon when tab is selected but inactive.
+     *
+     * @return the drawable id selected
+     */
+    public int getInactiveSelectedIconImage() { return iconImage.get(2); }
 
     /**
      * Sets the Custom Layout Resource Id of tab
@@ -150,52 +152,45 @@ public class Tab {
     boolean willUseDefaultLayout() { return useDefaultLayout; }
 
     /**
-     * Sets background color.
+     * Sets background colors of the Tab.
      *
-     * @param color the color
+     * inactiveSelected:
+     *      active tab, but temporarily inactive
+     *      because another tab is clicked and the drawer opened.
+     *
+     * @param color normal (unselected) tab's background color
+     * @param selectedColor selected tab's background color
+     * @param inactiveSelectedColor inactive selected tab's background color
      * @return the Tab
      */
-    public Tab setBackgroundColor(int color) {
-        backgroundColor = color;
+    public Tab setBackgroundColors(int color, int selectedColor, int inactiveSelectedColor) {
+        backgroundColor = new ArrayList<>();
+        backgroundColor.add(0, color);
+        backgroundColor.add(1, selectedColor);
+        backgroundColor.add(2, inactiveSelectedColor);
+
         return this;
     }
+
+    /**
+     * Used by TabDrawerData only
+     * @return backgroundColors
+     */
+    ArrayList<Integer> getBackgroundColors() { return backgroundColor; }
 
     /**
      * Gets background color.
      *
      * @return the tab background color
      */
-    public int getBackgroundColor() { return backgroundColor; }
-
-    /**
-     * Sets background color for selected tab.
-     *
-     * @param color the color
-     * @return the Tab
-     */
-    public Tab setSelectedBackgroundColor(int color) {
-        backgroundColor_selected = color;
-        return this;
-    }
+    public int getBackgroundColor() { return backgroundColor.get(0); }
 
     /**
      * Gets background color for the selected tab.
      *
      * @return the selected tab background color
      */
-    public int getSelectedBackgroundColor() { return backgroundColor_selected; }
-
-    /**
-     * Sets background color for inactive selected tab
-     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
-     *
-     * @param color the color
-     * @return the Tab
-     */
-    public Tab setInactiveSelectedBackgroundColor(int color) {
-        backgroundColor_selectedInactive = color;
-        return this;
-    }
+    public int getSelectedBackgroundColor() { return backgroundColor.get(1); }
 
     /**
      * Gets background color of the inactive selected tab .
@@ -203,7 +198,7 @@ public class Tab {
      *
      * @return the inactive selected tab background color
      */
-    public int getInactiveSelectedBackgroundColor() { return backgroundColor_selectedInactive; }
+    public int getInactiveSelectedBackgroundColor() { return backgroundColor.get(2); }
 
     /**
      * Sets Typeface of the Title
@@ -242,52 +237,45 @@ public class Tab {
     public int getTitleSize() { return titleSize; }
 
     /**
-     * Sets title color for all tabs.
+     * Sets title colors of the Tab
      *
-     * @param color the color
+     * inactiveSelected:
+     *      active tab, but temporarily inactive
+     *      because another tab is clicked and the drawer opened.
+     *
+     * @param color normal (unselected) tab's title color
+     * @param selectedColor selected tab's title color
+     * @param inactiveSelectedColor inactive selected tab's title color
      * @return the Tab
      */
-    public Tab setTitleColor(int color) {
-        titleColor = color;
+    public Tab setTitleColors(int color, int selectedColor, int inactiveSelectedColor) {
+        titleColor = new ArrayList<>();
+        titleColor.add(0, color);
+        titleColor.add(1, selectedColor);
+        titleColor.add(2, inactiveSelectedColor);
+
         return this;
     }
+
+    /**
+     * Used by TabDrawerData only
+     * @return TitleColors
+     */
+    ArrayList<Integer> getTitleColors() { return titleColor; }
 
     /**
      * Gets tab title color.
      *
      * @return the tab title color
      */
-    public int getTitleColor() { return titleColor; }
-
-    /**
-     * Sets title color for the selected tab.
-     *
-     * @param color the color
-     * @return the Tab
-     */
-    public Tab setSelectedTitleColor(int color) {
-        titleColor_selected = color;
-        return this;
-    }
+    public int getTitleColor() { return titleColor.get(0); }
 
     /**
      * Gets selected tab title color.
      *
      * @return the selected tab title color
      */
-    public int getSelectedTitleColor() { return titleColor_selected; }
-
-    /**
-     * Sets title color of the inactive selected tab .
-     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
-     *
-     * @param color the color
-     * @return the Tab
-     */
-    public Tab setInactiveSelectedTitleColor(int color) {
-        titleColor_selectedInactive = color;
-        return this;
-    }
+    public int getSelectedTitleColor() { return titleColor.get(1); }
 
     /**
      * Gets inactive selected tab title color.
@@ -295,55 +283,48 @@ public class Tab {
      *
      * @return the inactive selected tab title color
      */
-    public int getInactiveSelectedTitleColor() { return titleColor_selectedInactive; }
+    public int getInactiveSelectedTitleColor() { return titleColor.get(2); }
 
     /**
      * Sets tab icon color. (Tint ImageView)
      *
-     * @param color the color
+     * inactiveSelected:
+     *      active tab, but temporarily inactive
+     *      because another tab is clicked and the drawer opened.
+     *
+     * @param color normal (unselected) tab's icon color
+     * @param selectedColor selected tab's icon color
+     * @param inactiveSelectedColor inactive selected tab's icon color
      * @return the Tab
      */
-    public Tab setIconColor(int color) {
-        iconColor = color;
+    public Tab setIconColors(int color, int selectedColor, int inactiveSelectedColor) {
+        iconColor = new ArrayList<>();
+        iconColor.add(0, color);
+        iconColor.add(1, selectedColor);
+        iconColor.add(2, inactiveSelectedColor);
+
         return this;
     }
+
+    /**
+     * Used by TabDrawerData only
+     * @return IconColors
+     */
+    ArrayList<Integer> getIconColors() { return iconColor; }
 
     /**
      * Gets tab icon color. (Tint ImageView)
      *
      * @return the tab icon color
      */
-    public int getIconColor() { return iconColor; }
-
-    /**
-     * Sets selected tab icon color.
-     *
-     * @param color the color
-     * @return the Tab
-     */
-    public Tab setSelectedIconColor(int color) {
-        iconColor_selected = color;
-        return this;
-    }
+    public int getIconColor() { return iconColor.get(0); }
 
     /**
      * Gets selected tab icon color.
      *
      * @return the selected tab icon color
      */
-    public int getSelectedIconColor() { return iconColor_selected; }
-
-    /**
-     * Sets inactive selected tab icon color.
-     * (active tab, but temporarily inactive because another tab is clicked and the drawer opened).
-     *
-     * @param color the color
-     * @return the Tab
-     */
-    public Tab setInactiveSelectedIconColor(int color) {
-        iconColor_selectedInactive = color;
-        return this;
-    }
+    public int getSelectedIconColor() { return iconColor.get(1); }
 
     /**
      * Gets inactive selected tab icon color.
@@ -351,7 +332,7 @@ public class Tab {
      *
      * @return the inactive selected tab icon color
      */
-    public int getInactiveSelectedIconColor() { return iconColor_selectedInactive; }
+    public int getInactiveSelectedIconColor() { return iconColor.get(2); }
 
     /**
      * Sets if to animate and scale up the icon, when tab is selected
@@ -421,8 +402,9 @@ public class Tab {
      * @return the Tab
      */
     public Tab addTabListItem(TabListItem item) {
-        if (list == null)
+        if (list == null) {
             list = new ArrayList<>();
+        }
 
         list.add(item);
 
@@ -584,22 +566,39 @@ public class Tab {
     boolean isResetTabViewSettingsSet() { return (isResetTabViewSettingsSet == 1); }
 
     /**
-     * Sets tab item list text color.
+     * Sets tab list item's title color.
      *
-     * @param color the color
+     * @param color normal (unselected) tab's list item's title color
+     * @param selectedColor selected tab's list item's title color
      * @return the Tab
      */
-    public Tab setListItemTitleColor(int color) {
-        tabListItemTitleColor = color;
+    public Tab setListItemTitleColors(int color, int selectedColor) {
+        tabListItemTitleColor = new ArrayList<>();
+        tabListItemTitleColor.add(0, color);
+        tabListItemTitleColor.add(1, selectedColor);
+
         return this;
     }
 
     /**
-     * Gets item list text color.
-     *
-     * @return the item list text color
+     * Used by TabDrawerData only
+     * @return ListItemTitleColors
      */
-    public int getListItemTitleColor() { return tabListItemTitleColor; }
+    ArrayList<Integer> getListItemTitleColors() { return tabListItemTitleColor; }
+
+    /**
+     * Gets item list title color.
+     *
+     * @return the item list title color
+     */
+    public int getListItemTitleColor() { return tabListItemTitleColor.get(0); }
+
+    /**
+     * Gets item list text color when it's selected.
+     *
+     * @return selected item list's title color
+     */
+    public int getSelectedListItemTitleColor() { return tabListItemTitleColor.get(1); }
 
     /**
      * Sets tab item list text size.

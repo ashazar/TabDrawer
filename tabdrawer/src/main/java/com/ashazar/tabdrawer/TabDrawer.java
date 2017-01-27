@@ -922,7 +922,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             }
 
             if (titleView != null) {
-                titleView.setTextColor(tab.getListItemTitleColor());
+                titleView.setTextColor(tab.getSelectedListItemTitleColor());
                 titleView.setTypeface(tab.getListItemTitleFont(), Typeface.BOLD);
                 titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tab.getListItemTitleSize() + 1);
             }
