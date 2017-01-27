@@ -102,25 +102,38 @@ public class BaseActivity extends AppCompatActivity {
                 */
 
                 .setCustomTabLayoutResourceId(R.layout.item_tab)
-                .setTabBackgroundColor(Color.parseColor("#111111"))
-                .setSelectedTabBackgroundColor(Color.parseColor("#333333"))
-                .setInactiveSelectedTabBackgroundColor(Color.parseColor("#000000"))
-                .setTabTitleColor(Color.parseColor("#ffffff"))
+                .setTabBackgroundColors(
+                        Color.parseColor("#111111"),
+                        Color.parseColor("#333333"),
+                        Color.parseColor("#000000")
+                    )
                 .setTabTitleSize(12)
+                .setTabTitleColors(
+                        Color.parseColor("#ffffff"),
+                        Color.parseColor("#ffffff"),
+                        Color.parseColor("#ffffff")
+                    )
 
-                .setTabListItemTitleColor(Color.parseColor("#ffffff"))
                 .setTabListItemTitleSize(16)
+                .setTabListItemTitleColors(
+                        Color.parseColor("#ffffff"),
+                        Color.parseColor("#ffffff")
+                    )
 
                 .addTab( new Tab()
                         .setTitle("Demo")
                         .setDrawableId(R.drawable.n_activity)
                         .setTitleSize(14)
-                        .setTitleColor(Color.parseColor("#ffffff"))
-                        .setSelectedTitleColor(Color.parseColor("#ff0000"))
-                        .setInactiveSelectedTitleColor(Color.parseColor("#990000"))
-                        .setIconColor(Color.parseColor("#ffffff"))
-                        .setSelectedIconColor(Color.parseColor("#ff0000"))
-                        .setInactiveSelectedIconColor(Color.parseColor("#990000"))
+                        .setTitleColors(
+                                Color.parseColor("#ffffff"),
+                                Color.parseColor("#ff0000"),
+                                Color.parseColor("#990000")
+                            )
+                        .setIconColors(
+                                Color.parseColor("#ffffff"),
+                                Color.parseColor("#ff0000"),
+                                Color.parseColor("#990000")
+                            )
                         .addTabListItem( new TabListItem("Bottom/Left TabDrawer", R.drawable.ic_home_white_24dp) )
                         .addTabListItem( new TabListItem("Bottom TabDrawer", R.drawable.ic_action_collapse) )
                         .addTabListItem( new TabListItem("Top TabDrawer", R.drawable.ic_action_expand) )
@@ -132,8 +145,11 @@ public class BaseActivity extends AppCompatActivity {
                         .setTitle("Queue")
                         .setDrawableId(R.drawable.n_queue)
                         .setCustomTabLayoutResourceId(R.layout.item_tab2)
-                        .setTitleColor(Color.parseColor("#ffffff"))
-                        .setSelectedTitleColor(Color.parseColor("#00ff00"))
+                        .setTitleColors(
+                                Color.parseColor("#ffffff"),
+                                Color.parseColor("#00ff00"),
+                                Color.parseColor("#00ff00")
+                            )
                         .setIconColor(Color.parseColor("#ffffff"))
                         .setSelectedIconColor(Color.parseColor("#00ff00"))
                         .setCustomDrawerListItemLayoutResourceId(R.layout.list_item)
