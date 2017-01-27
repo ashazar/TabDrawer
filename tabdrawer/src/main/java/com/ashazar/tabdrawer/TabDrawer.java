@@ -223,7 +223,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             tabLayout.setOrientation(LinearLayout.VERTICAL);
             tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
-            if (tab.getDrawableId() != 0  &&  tab.getTitle() != null) {
+            if (tab.getIconImage() != 0  &&  tab.getTitle() != null) {
                 tabLayout.setWeightSum(10);
             }
         }
@@ -239,8 +239,8 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         }
 
 
-        if (tab.getDrawableId() != 0) {
-            icon.setImageResource(tab.getDrawableId());
+        if (tab.getIconImage() != 0) {
+            icon.setImageResource(tab.getIconImage());
             icon.setColorFilter(tab.getIconColor());
             icon.setId(1100 + pos);
 
@@ -264,7 +264,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             if (!hasCustomTabLayout) {
                 title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
-                if (tab.getDrawableId() != 0) {
+                if (tab.getIconImage() != 0) {
                     title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 4));
                     icon.setContentDescription(tab.getTitle());
                 }
@@ -473,7 +473,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 drawerLayout = (RelativeLayout) tabListContainer.getChildAt(tabPos);
             }
 
-            if (tab.getDrawableId() != 0) {
+            if (tab.getIconImage() != 0) {
                 iconView = (ImageView) tabLayout.findViewById(1100 + i);
             }
 
@@ -775,8 +775,8 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         if (!tab.getCustomTabViewSettingsStatus()) {
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
-            if (iconView != null && tab.getDrawableId() != 0) {
-                iconView.setImageResource(tab.getDrawableId());
+            if (iconView != null && tab.getIconImage() != 0) {
+                iconView.setImageResource(tab.getIconImage());
                 if (tab.getIconColor() != 0) {
                     iconView.setColorFilter(tab.getIconColor());
                 }
@@ -818,11 +818,10 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         if (!tab.getCustomTabViewSettingsStatus()) {
             tabLayout.setBackgroundColor(tab.getSelectedBackgroundColor());
-            if (iconView != null && tab.getDrawableId() != 0) {
-                if (tab.getDrawableId_selected() != 0) {
-                    iconView.setImageResource(tab.getDrawableId_selected());
-                }
-                else if (tab.getSelectedIconColor() != 0) {
+            if (iconView != null && tab.getIconImage() != 0) {
+                iconView.setImageResource(tab.getSelectedIconImage());
+
+                if (tab.getSelectedIconColor() != 0) {
                     iconView.setColorFilter(tab.getSelectedIconColor());
                 }
 
@@ -865,8 +864,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         if (!tab.getCustomTabViewSettingsStatus()) {
             tabLayout.setBackgroundColor(tab.getInactiveSelectedBackgroundColor());
-            if (iconView != null && tab.getDrawableId() != 0 && tab.getInactiveSelectedIconColor() != 0) {
-                iconView.setColorFilter(tab.getInactiveSelectedIconColor());
+            if (iconView != null && tab.getIconImage() != 0) {
+                iconView.setImageResource(tab.getInactiveSelectedIconImage());
+
+                if (tab.getInactiveSelectedIconColor() != 0) {
+                    iconView.setColorFilter(tab.getInactiveSelectedIconColor());
+                }
 
                 if (tab.getAnimateScaleIconWhenSelected()) {
                     iconView.animate().scaleY(1).scaleX(1);

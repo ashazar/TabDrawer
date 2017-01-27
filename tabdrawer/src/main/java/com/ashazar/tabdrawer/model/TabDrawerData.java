@@ -132,10 +132,7 @@ public class TabDrawerData {
             }
 
             if (tab.getListItemTitleColors() == null  &&  tabListItemTitleColor != null) {
-                tab.setListItemTitleColors(
-                        tabListItemTitleColor.get(0),
-                        tabListItemTitleColor.get(1)
-                );
+                tab.setListItemTitleColors( tabListItemTitleColor.get(0), tabListItemTitleColor.get(1) );
             }
 
             if (tab.getListItemTitleSize() == 0) {
@@ -199,16 +196,26 @@ public class TabDrawerData {
      *      active tab, but temporarily inactive
      *      because another tab is clicked and the drawer opened.
      *
-     * @param color normal (unselected) tab's background color
-     * @param selectedColor selected tab's background color
-     * @param inactiveSelectedColor inactive selected tab's background color
+     * @param colors normal (unselected)
+     * @param colors selected
+     * @param colors inactiveSelected
+     *
      * @return the TabDrawerData
      */
-    public TabDrawerData setTabBackgroundColors(int color, int selectedColor, int inactiveSelectedColor) {
+    public TabDrawerData setTabBackgroundColors(int...colors) {
+        int size = colors.length - 1;
+        int lastItem = 0;
+
         tabBackgroundColor = new ArrayList<>();
-        tabBackgroundColor.add(0, color);
-        tabBackgroundColor.add(1, selectedColor);
-        tabBackgroundColor.add(2, inactiveSelectedColor);
+        for (int i = 0; i <= 2; i++) {
+            if (i <= size) {
+                tabBackgroundColor.add(i, colors[i]);
+                lastItem = colors[i];
+            }
+            else {
+                tabBackgroundColor.add(i, lastItem);
+            }
+        }
 
         return this;
     }
@@ -242,16 +249,26 @@ public class TabDrawerData {
      *      active tab, but temporarily inactive
      *      because another tab is clicked and the drawer opened.
      *
-     * @param color normal (unselected) tab's title color
-     * @param selectedColor selected tab's title color
-     * @param inactiveSelectedColor inactive selected tab's title color
+     * @param colors normal (unselected)
+     * @param colors selected
+     * @param colors inactiveSelected
+     *
      * @return the TabDrawerData
      */
-    public TabDrawerData setTabTitleColors(int color, int selectedColor, int inactiveSelectedColor) {
+    public TabDrawerData setTabTitleColors(int...colors) {
+        int size = colors.length - 1;
+        int lastItem = 0;
+
         tabTitleColor = new ArrayList<>();
-        tabTitleColor.add(0, color);
-        tabTitleColor.add(1, selectedColor);
-        tabTitleColor.add(2, inactiveSelectedColor);
+        for (int i = 0; i <= 2; i++) {
+            if (i <= size) {
+                tabTitleColor.add(i, colors[i]);
+                lastItem = colors[i];
+            }
+            else {
+                tabTitleColor.add(i, lastItem);
+            }
+        }
 
         return this;
     }
@@ -263,16 +280,27 @@ public class TabDrawerData {
      *      active tab, but temporarily inactive
      *      because another tab is clicked and the drawer opened.
      *
-     * @param color normal (unselected) tab's icon color
-     * @param selectedColor selected tab's icon color
-     * @param inactiveSelectedColor inactive selected tab's icon color
+     *
+     * @param colors normal (unselected)
+     * @param colors selected
+     * @param colors inactiveSelected
+     *
      * @return the TabDrawerData
      */
-    public TabDrawerData setTabIconColors(int color, int selectedColor, int inactiveSelectedColor) {
+    public TabDrawerData setTabIconColors(int...colors) {
+        int size = colors.length - 1;
+        int lastItem = 0;
+
         tabIconColor = new ArrayList<>();
-        tabIconColor.add(0, color);
-        tabIconColor.add(1, selectedColor);
-        tabIconColor.add(2, inactiveSelectedColor);
+        for (int i = 0; i <= 2; i++) {
+            if (i <= size) {
+                tabIconColor.add(i, colors[i]);
+                lastItem = colors[i];
+            }
+            else {
+                tabIconColor.add(i, lastItem);
+            }
+        }
 
         return this;
     }
@@ -386,14 +414,26 @@ public class TabDrawerData {
     /**
      * Sets tab list item's title color of all tabs.
      *
-     * @param color normal (unselected) tab's list item's title color
-     * @param selectedColor selected tab's list item's title color
+     * @param colors normal (unselected)
+     * @param colors selected
+     * @param colors inactiveSelected
+     *
      * @return the TabDrawerData
      */
-    public TabDrawerData setTabListItemTitleColors(int color, int selectedColor) {
+    public TabDrawerData setTabListItemTitleColors(int...colors) {
+        int size = colors.length - 1;
+        int lastItem = 0;
+
         tabListItemTitleColor = new ArrayList<>();
-        tabListItemTitleColor.add(0, color);
-        tabListItemTitleColor.add(1, selectedColor);
+        for (int i = 0; i <= 1; i++) {
+            if (i <= size) {
+                tabListItemTitleColor.add(i, colors[i]);
+                lastItem = colors[i];
+            }
+            else {
+                tabListItemTitleColor.add(i, lastItem);
+            }
+        }
 
         return this;
     }
