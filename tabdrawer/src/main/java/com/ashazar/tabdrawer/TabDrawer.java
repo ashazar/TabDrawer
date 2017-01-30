@@ -223,7 +223,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             tabLayout.setOrientation(LinearLayout.VERTICAL);
             tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
-            if (tab.getIconImage() != 0  &&  tab.getTitle() != null) {
+            if (tab.getIconImage() != 0  &&  !tab.getTitle().isEmpty()) {
                 tabLayout.setWeightSum(10);
             }
         }
@@ -245,7 +245,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             icon.setId(1100 + pos);
 
             if (!hasCustomTabLayout) {
-                if (tab.getTitle() == null) {
+                if (tab.getTitle().isEmpty()) {
                     title.setVisibility(View.GONE);
                     icon.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 }
@@ -255,7 +255,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             }
         }
 
-        if (tab.getTitle() != null) {
+        if (!tab.getTitle().isEmpty()) {
             title.setText(tab.getTitle());
             title.setTextColor(tab.getTitleColor());
             title.setTextSize(tab.getTitleSize());
@@ -392,51 +392,54 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         return new ArrayAdapter<TabListItem>(context, listItemLayoutResourceId, tab.getTabItemList()) {
             @NonNull
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(listItemLayoutResourceId, parent, false);
                 }
 
-                TabListItem item = getItem(position);
-                String title = item.getTitle();
-                int imgDrawableId = item.getDrawableId();
-                boolean isSelected = item.isSelected();
-
+                String title = "";
+                int imgDrawableId = 0;
                 ImageView imageView = null;
                 TextView titleView = null;
 
-                if (imgDrawableId != -1) {
-                    imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
-                }
-                if (title != null  &&  !title.isEmpty()) {
-                    titleView = (TextView) convertView.findViewById(R.id.list_item_title);
-                }
+                TabListItem item = getItem(position);
+                title = item.getTitle();
+                imgDrawableId = item.getDrawableId();
+                boolean isSelected = item.isSelected();
 
-                if (imgDrawableId == -1) {
-                    if (!customItemLayout) {
+
+                if (!customItemLayout) {
+                    imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
+                    titleView = (TextView) convertView.findViewById(R.id.list_item_title);
+                    if (imgDrawableId == -1) {
                         imageView.setVisibility(View.GONE);
                     }
-                }
-                else {
-                    imageView.setImageResource(imgDrawableId);
-                }
-
-                if (title == null) {
-                    if (!customItemLayout) {
+                    if (title.isEmpty()) {
                         titleView.setVisibility(View.GONE);
                     }
                 }
                 else {
+                    if (imgDrawableId != -1) {
+                        imageView = (ImageView) convertView.findViewById(R.id.list_item_img);
+                    }
+                    if (!title.isEmpty()) {
+                        titleView = (TextView) convertView.findViewById(R.id.list_item_title);
+                    }
+                }
+
+                if (imageView != null  &&  imgDrawableId != -1) {
+                    imageView.setImageResource(imgDrawableId);
+                }
+                if (titleView != null  &&  !title.isEmpty()) {
                     titleView.setText(title);
                     if (tab.getListItemTitleFont() != null) {
                         titleView.setTypeface(tab.getListItemTitleFont());
                     }
 
-                    if (imgDrawableId != -1) {
+                    if (imageView != null  &&  imgDrawableId != -1) {
                         imageView.setContentDescription(title);
                     }
                 }
-
 
                 if (isSelected) {
                     setSelectedListItemView(tabPos, position, convertView, imageView, titleView);
@@ -444,7 +447,6 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 else {
                     setUnselectedListItemView(tabPos, position, convertView, imageView, titleView);
                 }
-
 
                 if (imageView != null) { imageView.requestLayout(); }
                 if (titleView != null) { titleView.requestLayout(); }
@@ -477,7 +479,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 iconView = (ImageView) tabLayout.findViewById(1100 + i);
             }
 
-            if (tab.getTitle() != null) {
+            if (!tab.getTitle().isEmpty()) {
                 titleView = (TextView) tabLayout.findViewById(1200 + i);
             }
 
@@ -787,7 +789,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                             .scaleX(1);
                 }
             }
-            if (titleView != null && tab.getTitle() != null) {
+            if (titleView != null && !tab.getTitle().isEmpty()) {
                 if (tab.getSelectedTitleColor() != 0) {
                     titleView.setTextColor(tab.getTitleColor());
                 }
@@ -832,7 +834,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 }
             }
 
-            if (titleView != null && tab.getTitle() != null) {
+            if (titleView != null && !tab.getTitle().isEmpty()) {
                 if (tab.getSelectedTitleColor() != 0) {
                     titleView.setTextColor(tab.getSelectedTitleColor());
                 }
@@ -876,7 +878,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 }
             }
 
-            if (titleView != null && tab.getTitle() != null && tab.getInactiveSelectedTitleColor() != 0) {
+            if (titleView != null && !tab.getTitle().isEmpty() && tab.getInactiveSelectedTitleColor() != 0) {
                 titleView.setTextColor(tab.getInactiveSelectedTitleColor());
             }
         }

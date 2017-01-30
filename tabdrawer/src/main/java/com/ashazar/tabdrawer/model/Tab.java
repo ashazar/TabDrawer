@@ -65,7 +65,7 @@ public class Tab {
      *
      * @return the title
      */
-    public String getTitle() { return title; }
+    public String getTitle() { return (title != null) ? title : ""; }
 
     /**
      * Sets Tab image

@@ -6,7 +6,7 @@ package com.ashazar.tabdrawer.model;
  * Created by Serdar Hazar on 26/04/16.
  */
 public class TabListItem {
-    private String title;
+    private String title = null;
     private int drawableId = -1;
     private boolean isSelected;
 
@@ -56,7 +56,7 @@ public class TabListItem {
      *
      * @return the title
      */
-    public String getTitle() { return title; }
+    public String getTitle() { return (title != null) ? title : ""; }
 
     /**
      * Sets drawable id.
