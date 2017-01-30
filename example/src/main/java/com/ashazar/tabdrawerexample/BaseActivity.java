@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,25 +34,23 @@ public class BaseActivity extends AppCompatActivity {
 
     private TabDrawerData prepareTabArray() {
         return new TabDrawerData()
-                /*
+                /* Simple
                 .setTabIconColors(
                         Color.parseColor("#3199ff"),
                         Color.parseColor("#ffffff"),
                         Color.parseColor("#CCCCCC")
-                    )
+                )
                 .setTabTitleSize(12)
                 .setTabTitleColors(
                         ContextCompat.getColor(context, R.color.tabTitle),
                         ContextCompat.getColor(context, R.color.tabTitle_selected),
                         Color.parseColor("#CCCCCC")
-                    )
+                )
                 .setTabBackgroundColors(
                         ContextCompat.getColor(context, R.color.tabBackground),
                         ContextCompat.getColor(context, R.color.tabBackground_selected),
                         Color.parseColor("#2C7DDC")
-                    )
-
-
+                )
                 .setTabListItemTitleColors(Color.parseColor("#ffffff"))
                 .setTabListItemTitleSize(16)
 
@@ -156,14 +153,19 @@ public class BaseActivity extends AppCompatActivity {
                         .setTitle("Chat")
                         .setIconImage(R.drawable.n_chat)
                         .setCustomTabLayoutResourceId(R.layout.item_tab3)
-                        .setIconColors(Color.parseColor("#6666ee"), Color.parseColor("#ffffff"))
-                        .setTitleColors(Color.parseColor("#6666ee"), Color.parseColor("#ffffff"))
+                        .setIconColors(Color.parseColor("#8888ee"), Color.parseColor("#ffffff"))
+                        .setTitleColors(Color.parseColor("#8888ee"), Color.parseColor("#ffffff"))
                         .setBackgroundColors( Color.parseColor("#FF4E4B76"), Color.parseColor("#FF726EA9"), Color.parseColor("#FF2F2A79") )
                         .setCustomDrawerLayoutResourceId(R.layout.drawerlayout)
+                        .setDrawerListColumnNumber(2)
                         .addTabListItem( new TabListItem("Friends", R.drawable.ic_face_white_24dp) )
                         .addTabListItem( new TabListItem("Add Friend", R.drawable.ic_person_add_white_24dp) )
                         .addTabListItem( new TabListItem("Start Group Chat", R.drawable.ic_people_white_24dp) )
                         .addTabListItem( new TabListItem("Funny Moments", R.drawable.ic_sentiment_very_satisfied_white_24dp) )
+                        .addTabListItem( new TabListItem("Add Friend", R.drawable.ic_person_add_white_24dp) )
+                        .addTabListItem( new TabListItem("Friends", R.drawable.ic_face_white_24dp) )
+                        .addTabListItem( new TabListItem("Funny Moments", R.drawable.ic_sentiment_very_satisfied_white_24dp) )
+                        .addTabListItem( new TabListItem("Start Group Chat", R.drawable.ic_people_white_24dp) )
                 )
 
                 .addTab( new Tab()
@@ -194,14 +196,6 @@ public class BaseActivity extends AppCompatActivity {
                         .addTabListItem( new TabListItem(R.drawable.ic_folder_shared_white_24dp) )
                         .addTabListItem( new TabListItem(R.drawable.ic_cast_white_24dp) )
                         .addTabListItem( new TabListItem(R.drawable.ic_apps_white_24dp) )
-                        //.addTabListItem( new TabListItem("General Settings", R.drawable.ic_settings_white_24dp) )
-                        //.addTabListItem( new TabListItem("My Account", R.drawable.ic_lock_white_24dp) )
-                        //.addTabListItem( new TabListItem("Accesibility", R.drawable.ic_accessibility_white_24dp) )
-                        //.addTabListItem( new TabListItem("Notifications", R.drawable.ic_notifications_white_24dp) )
-                        //.addTabListItem( new TabListItem("Bookmarks", R.drawable.ic_collections_bookmark_white_24dp) )
-                        //.addTabListItem( new TabListItem("Shared Folders", R.drawable.ic_folder_shared_white_24dp) )
-                        //.addTabListItem( new TabListItem("Cast to TV", R.drawable.ic_cast_white_24dp) )
-                        //.addTabListItem( new TabListItem("Other Applications", R.drawable.ic_apps_white_24dp) )
                 );
     }
 
@@ -264,7 +258,7 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+            public void setUnselectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
                 super.setUnselectedTabView(tabLayout, iconView, titleView, tabPosition);
 
                 if (tabPosition == 1)
@@ -272,7 +266,7 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
+            public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
                 super.setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, tabPosition);
 
                 if (tabPosition == 1) {
@@ -282,7 +276,7 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+            public void setInactiveSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
                 super.setInactiveSelectedTabView(tabLayout, iconView, titleView, tabPosition);
 
                 if (tabPosition == 1)
@@ -299,7 +293,17 @@ public class BaseActivity extends AppCompatActivity {
             public void setSelectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
                 super.setSelectedListItemView(tabPosition, itemPosition, view, iconView, titleView);
 
-                if (tabPosition == 4) {
+                if (tabPosition == 1) {
+                    view.setBackgroundColor(Color.parseColor("#44000000"));
+
+                    TextView leftArrow = (TextView) view.findViewById(R.id.listitem_selected_left);
+                    TextView rightArrow = (TextView) view.findViewById(R.id.listitem_selected_right);
+
+                    leftArrow.setVisibility(View.VISIBLE);
+                    rightArrow.setVisibility(View.VISIBLE);
+
+                }
+                else if (tabPosition == 4) {
                     view.setBackgroundColor(Color.parseColor("#ffffff"));
                     iconView.setColorFilter(Color.parseColor("#ff0000"));
                 }
