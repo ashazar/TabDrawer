@@ -203,10 +203,10 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * Prepare view of one tab.
      *
      * @param pos Tab position. Get details (title, image, etc.) from TabDrawerData
-     * @return LinearLayout view (Tab view)
+     * @return RelativeLayout view (Tab view)
      */
-    private LinearLayout prepareTab(int pos) {
-        LinearLayout tabLayout = null;
+    private RelativeLayout prepareTab(int pos) {
+        RelativeLayout tabLayout = null;
         ImageView icon = null;
         TextView title = null;
 
@@ -215,18 +215,15 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         Tab tab = tabDrawerData.getTab(pos);
 
         if (tab.getCustomTabLayoutResourceId() != 0) {
-            tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(tab.getCustomTabLayoutResourceId(), tabDrawerLayout, false);
+            tabLayout = (RelativeLayout) LayoutInflater.from(context).inflate(tab.getCustomTabLayoutResourceId(), tabDrawerLayout, false);
             hasCustomTabLayout = true;
         }
         else {
-            tabLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.tabdrawer_tab_item, tabDrawerLayout, false);
-            tabLayout.setOrientation(LinearLayout.VERTICAL);
+            tabLayout = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.tabdrawer_tab_item, tabDrawerLayout, false);
             tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
-            if (tab.getIconImage() != 0  &&  !tab.getTitle().isEmpty()) {
-                tabLayout.setWeightSum(10);
-            }
         }
+        tabLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
 
         icon = (ImageView) tabLayout.findViewById(R.id.tab_icon);
         title = (TextView) tabLayout.findViewById(R.id.tab_title);
@@ -466,7 +463,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         for (int i = 0; i < tabCount; i++) {
             Tab tab = tabDrawerData.getTab(i);
 
-            LinearLayout tabLayout = (LinearLayout) tabContainer.getChildAt(i);
+            RelativeLayout tabLayout = (RelativeLayout) tabContainer.getChildAt(i);
             ImageView iconView = null;
             TextView titleView = null;
             RelativeLayout drawerLayout = null;
@@ -767,12 +764,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * by overriding this method, you can modify the views of entire layout.
      *
      *
-     * @param tabLayout Tab Layout itself; LinearLayout
+     * @param tabLayout Tab Layout itself; RelativeLayout
      * @param iconView Icon (Image); ImageView
      * @param titleView Title; TextView
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
-    public void setUnselectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+    public void setUnselectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabDrawerData.getTab(tabPosition);
 
         if (!tab.getCustomTabViewSettingsStatus()) {
@@ -809,13 +806,13 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * by overriding this method, you can modify the views of entire layout.
      *
      *
-     * @param tabLayout Tab Layout itself; LinearLayout
+     * @param tabLayout Tab Layout itself; RelativeLayout
      * @param iconView Icon (Image); ImageView
      * @param titleView Title; TextView
      * @param drawerLayout Drawer layout of the tab; RelativeLayout
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
-    public void setSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
+    public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
         Tab tab = tabDrawerData.getTab(tabPosition);
 
         if (!tab.getCustomTabViewSettingsStatus()) {
@@ -856,12 +853,12 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * by overriding this method, you can modify the views of entire layout.
      *
      *
-     * @param tabLayout Tab Layout itself; LinearLayout
+     * @param tabLayout Tab Layout itself; RelativeLayout
      * @param iconView Icon (Image); ImageView
      * @param titleView Title; TextView
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
-    public void setInactiveSelectedTabView(LinearLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+    public void setInactiveSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabDrawerData.getTab(tabPosition);
 
         if (!tab.getCustomTabViewSettingsStatus()) {
