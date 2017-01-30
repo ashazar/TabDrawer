@@ -14,9 +14,6 @@ android {
         targetSdkVersion 25
         versionCode 2
         versionName version
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -41,7 +38,7 @@ install {
             project {
                 packaging 'aar'
                 name 'TabDrawer'
-                description = 'Navigation Tab Bar Drawer for Android - Alternative to Hamburger Menu (Navigation Drawer)'
+                description = 'Navigation Tab Bar with Drawer for Android - Alternative to Navigation Drawer (Hamburger Menu)'
                 url siteUrl
 
                 licenses {
