@@ -38,7 +38,7 @@ install {
             project {
                 packaging 'aar'
                 name 'TabDrawer'
-                description = 'Navigation Tab Bar with Drawer for Android - Alternative to Navigation Drawer (Hamburger Menu)'
+                description = 'Android Navigation Tab Bar with Drawer - Alternative to Navigation Drawer (Hamburger Menu)'
                 url siteUrl
 
                 licenses {
