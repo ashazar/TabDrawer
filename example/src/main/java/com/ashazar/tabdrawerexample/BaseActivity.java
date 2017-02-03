@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private TabDrawerData prepareTabArray() {
         return new TabDrawerData()
-                /* Simple
+                // Simple
                 .setTabIconColors(
                         Color.parseColor("#3199ff"),
                         Color.parseColor("#ffffff"),
@@ -67,9 +67,17 @@ public class BaseActivity extends AppCompatActivity {
                 .addTab( new Tab()
                         .setTitle("Queue")
                         .setIconImage(R.drawable.n_queue)
+                        .setDrawerListColumnNumber(2)
                         .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
                         .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
                         .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
+                        .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
+                        .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
+                        .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
+                        .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
+                        .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
+                        .addTabListItem( new TabListItem("Delete", R.drawable.ic_delete_forever_white_24dp) )
+                        .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
                 )
 
                 .addTab( new Tab()
@@ -107,8 +115,8 @@ public class BaseActivity extends AppCompatActivity {
                         .addTabListItem( new TabListItem("Cast to TV", R.drawable.ic_cast_white_24dp) )
                         .addTabListItem( new TabListItem("Other Applications", R.drawable.ic_apps_white_24dp) )
                 );
-                */
 
+                /* Custom layouts
                 .setCustomTabLayoutResourceId(R.layout.item_tab)
                 .setTabBackgroundColors(
                         Color.parseColor("#111111"),
@@ -148,6 +156,7 @@ public class BaseActivity extends AppCompatActivity {
                         .setCustomTabLayoutResourceId(R.layout.item_tab2)
                         .setTitleColors( Color.parseColor("#ffffff"), Color.parseColor("#00ff00") )
                         .setIconColors(Color.parseColor("#ffffff"), Color.parseColor("#00ff00"))
+                        .setCustomDrawerLayoutResourceId(R.layout.drawer_layout1)
                         .setCustomDrawerListItemLayoutResourceId(R.layout.list_item)
                         .addTabListItem( new TabListItem("Add to Queue", R.drawable.ic_add_box_white_24dp ) )
                         .addTabListItem( new TabListItem("Archive", R.drawable.ic_archive_white_24dp) )
@@ -202,6 +211,7 @@ public class BaseActivity extends AppCompatActivity {
                         .addTabListItem( new TabListItem(R.drawable.ic_cast_white_24dp) )
                         .addTabListItem( new TabListItem(R.drawable.ic_apps_white_24dp) )
                 );
+                */
     }
 
     public void prepareTabDrawer() { prepareTabDrawer(false); }
@@ -262,6 +272,7 @@ public class BaseActivity extends AppCompatActivity {
                 }
             }
 
+            /* for even more customization
             @Override
             public void setUnselectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
                 super.setUnselectedTabView(tabLayout, iconView, titleView, tabPosition);
@@ -271,12 +282,11 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
-                super.setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, tabPosition);
+            public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
+                super.setSelectedTabView(tabLayout, iconView, titleView, tabPosition);
 
                 if (tabPosition == 1) {
                     tabLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
-                    drawerLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.tab_bg1));
                 }
             }
 
@@ -313,6 +323,7 @@ public class BaseActivity extends AppCompatActivity {
                     iconView.setColorFilter(Color.parseColor("#ff0000"));
                 }
             }
+            */
         };
 
         tabDrawer.initialize();
