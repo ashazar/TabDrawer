@@ -28,11 +28,8 @@ import com.ashazar.tabdrawer.model.TabListItem;
  * Navigation Tab Drawer for Android
  * Alternative to Navigation Drawer (Hamburger Menu)
  *
- * @author      Serdar Hazar (ashazar) https://github.com/ashazar
- * @version     1.1.0
- *
- *
- * Created by Serdar Hazar on 26/04/16.
+ * @author Serdar Hazar (ashazar) https://github.com/ashazar
+ * @version 1.1.0  Created by Serdar Hazar on 26/04/16.
  */
 public class TabDrawer implements View.OnClickListener, GridView.OnItemClickListener {
     /**
@@ -95,14 +92,13 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     private boolean drawerOpen = false;
 
 
-
     /**
      * Instantiates a new Tab drawer.
      *
      * @param context           the context
      * @param activity          the activity
      * @param tabDrawerLayoutId Layout Resource Id of TabDrawerLayout
-     * @param tabDrawerData          the tab array (List for tabs and their item lists)
+     * @param tabDrawerData     the tab array (List for tabs and their item lists)
      */
     protected TabDrawer(Context context, Activity activity, int tabDrawerLayoutId, TabDrawerData tabDrawerData) {
         this.context = context;
@@ -759,10 +755,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * If other than color, background color, etc. needed;
      * by overriding this method, you can modify the views of entire layout.
      *
-     *
-     * @param tabLayout Tab Layout itself; RelativeLayout
-     * @param iconView Icon (Image); ImageView
-     * @param titleView Title; TextView
+     * @param tabLayout   Tab Layout itself; RelativeLayout
+     * @param iconView    Icon (Image); ImageView
+     * @param titleView   Title; TextView
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
     public void setUnselectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
@@ -801,10 +796,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * If other than color, background color, etc. needed;
      * by overriding this method, you can modify the views of entire layout.
      *
-     *
-     * @param tabLayout Tab Layout itself; RelativeLayout
-     * @param iconView Icon (Image); ImageView
-     * @param titleView Title; TextView
+     * @param tabLayout   Tab Layout itself; RelativeLayout
+     * @param iconView    Icon (Image); ImageView
+     * @param titleView   Title; TextView
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
     public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
@@ -841,16 +835,15 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     /**
      * Sets the views of inactive selected tab/icon/title.
      * Inactive Selected:
-     *      When the tab is selected, but another tab's drawer is open
-     *      this tab becomes selected but inactive at the moment.
+     * When the tab is selected, but another tab's drawer is open
+     * this tab becomes selected but inactive at the moment.
      * <p>
      * If other than color, background color, etc. needed;
      * by overriding this method, you can modify the views of entire layout.
      *
-     *
-     * @param tabLayout Tab Layout itself; RelativeLayout
-     * @param iconView Icon (Image); ImageView
-     * @param titleView Title; TextView
+     * @param tabLayout   Tab Layout itself; RelativeLayout
+     * @param iconView    Icon (Image); ImageView
+     * @param titleView   Title; TextView
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
     public void setInactiveSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
@@ -879,11 +872,11 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     /**
      * Sets the Custom drawer list item view
      *
-     * @param tabPosition Tab Position of the drawer list
+     * @param tabPosition  Tab Position of the drawer list
      * @param itemPosition current item position of the list (from GetView of the adapter)
-     * @param view current drawer list item's view (from GetView)
-     * @param iconView current drawer list item's icon view; ImageView (from GetView)
-     * @param titleView current drawer list item's title view; TextView (from GetView)
+     * @param view         current drawer list item's view (from GetView)
+     * @param iconView     current drawer list item's icon view; ImageView (from GetView)
+     * @param titleView    current drawer list item's title view; TextView (from GetView)
      */
     public void setUnselectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
         Tab tab = tabDrawerData.getTab(tabPosition);
@@ -904,11 +897,11 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     /**
      * Sets the Custom drawer list item view, when it is selected
      *
-     * @param tabPosition Tab Position of the drawer list
+     * @param tabPosition  Tab Position of the drawer list
      * @param itemPosition current item position of the list (from GetView of the adapter)
-     * @param view current drawer list item's view (from GetView)
-     * @param iconView current drawer list item's icon view; ImageView (from GetView)
-     * @param titleView current drawer list item's title view; TextView (from GetView)
+     * @param view         current drawer list item's view (from GetView)
+     * @param iconView     current drawer list item's icon view; ImageView (from GetView)
+     * @param titleView    current drawer list item's title view; TextView (from GetView)
      */
     public void setSelectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView) {
         Tab tab = tabDrawerData.getTab(tabPosition);

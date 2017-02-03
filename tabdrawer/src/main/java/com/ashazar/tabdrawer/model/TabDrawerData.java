@@ -191,15 +191,12 @@ public class TabDrawerData {
 
     /**
      * Sets background colors of all Tabs.
-     *
+     * <p>
      * inactiveSelected:
-     *      active tab, but temporarily inactive
-     *      because another tab is clicked and the drawer opened.
+     * active tab, but temporarily inactive
+     * because another tab is clicked and the drawer opened.
      *
-     * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the TabDrawerData
      */
     public TabDrawerData setTabBackgroundColors(int...colors) {
@@ -244,15 +241,12 @@ public class TabDrawerData {
 
     /**
      * Sets title colors of all Tabs
-     *
+     * <p>
      * inactiveSelected:
-     *      active tab, but temporarily inactive
-     *      because another tab is clicked and the drawer opened.
+     * active tab, but temporarily inactive
+     * because another tab is clicked and the drawer opened.
      *
-     * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the TabDrawerData
      */
     public TabDrawerData setTabTitleColors(int...colors) {
@@ -275,16 +269,12 @@ public class TabDrawerData {
 
     /**
      * Sets tab icon colors of all Tabs. (Tint ImageView)
-     *
+     * <p>
      * inactiveSelected:
-     *      active tab, but temporarily inactive
-     *      because another tab is clicked and the drawer opened.
+     * active tab, but temporarily inactive
+     * because another tab is clicked and the drawer opened.
      *
-     *
-     * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the TabDrawerData
      */
     public TabDrawerData setTabIconColors(int...colors) {
@@ -322,7 +312,7 @@ public class TabDrawerData {
      * Default: 1.2f
      *
      * @param value scale value
-     * @return TabDrawerData
+     * @return TabDrawerData tab icon scale value when selected
      */
     public TabDrawerData setTabIconScaleValueWhenSelected(float value) {
         tabIconScaleValueWhenSelected = value;
@@ -346,16 +336,16 @@ public class TabDrawerData {
      * (Unselected, Selected, InactiveSelected)
      * If developer doesn't want to use the standard internal defined view settings,
      * and wants to  use his/her own.
-     *
+     * <p>
      * If this method is called; developer has to override
      * setUnselectedTabView(), setSelectedTabView() and setInactiveSelectedTabView()
      * to define his/her custom views.
-     *
+     * <p>
      * Default: when the tab is selected;
-     *  Tab's   Background color is set to Selected Background Color,
-     *          Title becomes Bold, title color is set to Selected Title Color
-     *          Icon (image) scales up with animation
-     *          Drawer background color is set to Selected Background Color.
+     * Tab's   Background color is set to Selected Background Color,
+     * Title becomes Bold, title color is set to Selected Title Color
+     * Icon (image) scales up with animation
+     * Drawer background color is set to Selected Background Color.
      *
      * @return the Tab
      */
@@ -369,7 +359,6 @@ public class TabDrawerData {
      * Sets the custom drawer layout (RelativeLayout) resource Id for all tabs.
      *
      * @param resourceId Custom Drawer layout resource Id
-     *
      * @return the Tab
      */
     public TabDrawerData setCustomDrawerLayoutResourceId(int resourceId) {
@@ -415,9 +404,7 @@ public class TabDrawerData {
      * Sets tab list item's title color of all tabs.
      *
      * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected (1 or 2 Arguments)
      * @return the TabDrawerData
      */
     public TabDrawerData setTabListItemTitleColors(int...colors) {
@@ -471,11 +458,11 @@ public class TabDrawerData {
      * Sets if the developer wants to reset the default ListAdapterViewSettings.
      * If developer doesn't want to use the standard internal defined view settings,
      * and wants to  use his/her own.
-     *
+     * <p>
      * If this method is called; developer has to override
      * setUnselectedListItemView() and setSelectedListItemView()
      * to define his/her custom views.
-     *
+     * <p>
      * Default: when the list item is selected;
      * Increase the title's text size, make it bold; increase the icon size
      *

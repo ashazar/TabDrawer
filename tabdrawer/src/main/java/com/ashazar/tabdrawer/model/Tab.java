@@ -48,7 +48,6 @@ public class Tab {
     public Tab() { }
 
 
-
     /**
      * Sets title text for Tab
      *
@@ -71,11 +70,7 @@ public class Tab {
      * Sets Tab image
      * Drawable Resource Ids for Tab icon
      *
-     *
-     * @param drawableIds normal (unselected)
-     * @param drawableIds selected
-     * @param drawableIds inactiveSelected
-     *
+     * @param drawableIds normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the Tab
      */
     public Tab setIconImage(int...drawableIds) {
@@ -152,21 +147,18 @@ public class Tab {
     /**
      * Get if the tab is forced ( forceDefaultLayout() ) to use default layout
      *
-     * @return boolean
+     * @return boolean boolean
      */
     boolean willUseDefaultLayout() { return useDefaultLayout; }
 
     /**
      * Sets background colors of the Tab.
-     *
+     * <p>
      * inactiveSelected:
-     *      active tab, but temporarily inactive
-     *      because another tab is clicked and the drawer opened.
+     * active tab, but temporarily inactive
+     * because another tab is clicked and the drawer opened.
      *
-     * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the Tab
      */
     public Tab setBackgroundColors(int...colors) {
@@ -189,7 +181,8 @@ public class Tab {
 
     /**
      * Used by TabDrawerData only
-     * @return backgroundColors
+     *
+     * @return backgroundColors background colors
      */
     ArrayList<Integer> getBackgroundColors() { return backgroundColor; }
 
@@ -253,16 +246,12 @@ public class Tab {
 
     /**
      * Sets title colors of the Tab
-     *
+     * <p>
      * inactiveSelected:
-     *      active tab, but temporarily inactive
-     *      because another tab is clicked and the drawer opened.
+     * active tab, but temporarily inactive
+     * because another tab is clicked and the drawer opened.
      *
-     *
-     * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the Tab
      */
     public Tab setTitleColors(int...colors) {
@@ -285,7 +274,8 @@ public class Tab {
 
     /**
      * Used by TabDrawerData only
-     * @return TitleColors
+     *
+     * @return TitleColors title colors
      */
     ArrayList<Integer> getTitleColors() { return titleColor; }
 
@@ -313,16 +303,12 @@ public class Tab {
 
     /**
      * Sets tab icon color. (Tint ImageView)
-     *
+     * <p>
      * inactiveSelected:
-     *      active tab, but temporarily inactive
-     *      because another tab is clicked and the drawer opened.
+     * active tab, but temporarily inactive
+     * because another tab is clicked and the drawer opened.
      *
-     *
-     * @param colors normal (unselected)
-     * @param colors selected
-     * @param colors inactiveSelected
-     *
+     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
      * @return the Tab
      */
     public Tab setIconColors(int...colors) {
@@ -345,7 +331,8 @@ public class Tab {
 
     /**
      * Used by TabDrawerData only
-     * @return IconColors
+     *
+     * @return IconColors icon colors
      */
     ArrayList<Integer> getIconColors() { return iconColor; }
 
@@ -384,10 +371,10 @@ public class Tab {
     }
 
     /**
-     * Gets status of if animate & scale when the tab is selected
+     * Gets status of if animate and scale when the tab is selected
      * Default: true
      *
-     * @return boolean
+     * @return boolean animate scale icon when selected
      */
     public boolean getAnimateScaleIconWhenSelected() { return animateScaleIconWhenSelected; }
 
@@ -396,7 +383,7 @@ public class Tab {
      * Default: 1.2f
      *
      * @param value scale value
-     * @return Tab
+     * @return Tab icon scale value when selected
      */
     public Tab setIconScaleValueWhenSelected(float value) {
         iconScaleValueWhenSelected = value;
@@ -418,7 +405,6 @@ public class Tab {
      * @param bold bold
      * @return the Tab
      */
-
     public Tab setBoldTitleWhenSelected(boolean bold) {
         boldTitleWhenSelected = bold;
         return this;
@@ -428,7 +414,7 @@ public class Tab {
      * Gets status of bold title when the tab is selected
      * Default: true
      *
-     * @return boolean
+     * @return boolean bold title when selected
      */
     public boolean getBoldTitleWhenSelected() { return boldTitleWhenSelected; }
 
@@ -526,7 +512,6 @@ public class Tab {
      * Sets the custom drawer layout (RelativeLayout) resource Id.
      *
      * @param resourceId Custom Drawer layout resource Id
-     *
      * @return the Tab
      */
     public Tab setCustomDrawerLayoutResourceId(int resourceId) {
@@ -558,7 +543,7 @@ public class Tab {
     /**
      * Get if the tab is forced ( forceDefaultLayout() ) to use default layout
      *
-     * @return boolean
+     * @return boolean boolean
      */
     boolean willUseDefaultDrawerLayout() { return useDefaultDrawerLayout; }
 
@@ -567,16 +552,16 @@ public class Tab {
      * (Unselected, Selected, InactiveSelected)
      * If developer doesn't want to use the standard internal defined view settings,
      * and wants to  use his/her own.
-     *
+     * <p>
      * If this method is called; developer has to override
      * setUnselectedTabView(), setSelectedTabView() and setInactiveSelectedTabView()
      * to define his/her custom views.
-     *
+     * <p>
      * Default: when the tab is selected;
-     *  Tab's   Background color is set to Selected Background Color,
-     *          Title becomes Bold, title color is set to Selected Title Color
-     *          Icon (image) scales up with animation
-     *          Drawer background color is set to Selected Background Color.
+     * Tab's   Background color is set to Selected Background Color,
+     * Title becomes Bold, title color is set to Selected Title Color
+     * Icon (image) scales up with animation
+     * Drawer background color is set to Selected Background Color.
      *
      * @return the Tab
      */
@@ -589,8 +574,7 @@ public class Tab {
     /**
      * Gets the Tab view settings status.
      *
-     * @return true, if developer doesn't want to use standard defined settings,
-     *         and wants to use his/her own.
+     * @return true, if developer doesn't want to use standard defined settings,         and wants to use his/her own.
      */
     public boolean getCustomTabViewSettingsStatus() { return resetTabViewSettings; }
 
@@ -606,8 +590,7 @@ public class Tab {
      * Sets tab list item's title color.
      *
      * @param colors normal (unselected)
-     * @param colors selected
-     *
+     * @param colors normal (unselected), selected (1 or 2 Arguments)
      * @return the Tab
      */
     public Tab setListItemTitleColors(int...colors) {
@@ -631,7 +614,8 @@ public class Tab {
 
     /**
      * Used by TabDrawerData only
-     * @return ListItemTitleColors
+     *
+     * @return ListItemTitleColors list item title colors
      */
     ArrayList<Integer> getListItemTitleColors() { return tabListItemTitleColor; }
 
@@ -688,12 +672,12 @@ public class Tab {
     /**
      * Sets if the developer wants to reset the default ListAdapterViewSettings.
      * If developer doesn't want to use the standard internal defined view settings,
-     * and wants to  use his/her own.
-     *
+     * and wants to  use his/her own.     * @param colors normal (unselected), selected, inactiveSelected (1, 2 or 3 Arguments)
+     * <p>
      * If this method is called; developer has to override
      * setUnselectedListItemView() and setSelectedListItemView()
      * to define his/her custom views.
-     *
+     * <p>
      * Default: when the list item is selected;
      * Increase the title's text size, make it bold; increase the icon size
      *
@@ -708,8 +692,7 @@ public class Tab {
     /**
      * Gets the ListAdapterViewSettings status.
      *
-     * @return true, if developer doesn't want to use standard defined settings,
-     *         and wants to use his/her own.
+     * @return true, if developer doesn't want to use standard defined settings,         and wants to use his/her own.
      */
     public boolean getCustomListAdapterViewSettingsStatus() { return resetListAdapterViewSettings; }
 
