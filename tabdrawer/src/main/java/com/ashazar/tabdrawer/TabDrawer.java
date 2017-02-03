@@ -468,10 +468,6 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             TextView titleView = null;
             RelativeLayout drawerLayout = null;
 
-            if (tabDrawerData.hasDrawerForList()) {
-                drawerLayout = (RelativeLayout) tabListContainer.getChildAt(tabPos);
-            }
-
             if (tab.getIconImage() != 0) {
                 iconView = (ImageView) tabLayout.findViewById(1100 + i);
             }
@@ -481,7 +477,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             }
 
             if (i == tabPos) {
-                setSelectedTabView(tabLayout, iconView, titleView, drawerLayout, i);
+                setSelectedTabView(tabLayout, iconView, titleView, i);
 
                 if (iconView != null) { iconView.requestLayout(); }
                 if (titleView != null) { titleView.requestLayout(); }
@@ -809,10 +805,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      * @param tabLayout Tab Layout itself; RelativeLayout
      * @param iconView Icon (Image); ImageView
      * @param titleView Title; TextView
-     * @param drawerLayout Drawer layout of the tab; RelativeLayout
      * @param tabPosition Tab Position, to modify the tab you want; int
      */
-    public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, RelativeLayout drawerLayout, int tabPosition) {
+    public void setSelectedTabView(RelativeLayout tabLayout, ImageView iconView, TextView titleView, int tabPosition) {
         Tab tab = tabDrawerData.getTab(tabPosition);
 
         if (!tab.getCustomTabViewSettingsStatus()) {
