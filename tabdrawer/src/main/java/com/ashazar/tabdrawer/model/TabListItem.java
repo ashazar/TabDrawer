@@ -6,16 +6,10 @@ package com.ashazar.tabdrawer.model;
  * Created by Serdar Hazar on 26/04/16.
  */
 public class TabListItem {
-    private String title;
+    private String title = null;
     private int drawableId = -1;
     private boolean isSelected;
-    private int textColor = 0;
-    private int textSize = 16;
 
-    /**
-     * Instantiates a new TabListItem.
-     */
-    public TabListItem() { }
 
     /**
      * Instantiates a new TabListItem.
@@ -24,6 +18,15 @@ public class TabListItem {
      */
     public TabListItem(String itemTitle) {
         title = itemTitle;
+    }
+
+    /**
+     * Instantiates a new TabListItem.
+     *
+     * @param iconDrawableId Drawable Resource Id of the icon
+     */
+    public TabListItem(int iconDrawableId) {
+        drawableId = iconDrawableId;
     }
 
     /**
@@ -42,14 +45,7 @@ public class TabListItem {
      *
      * @return the title
      */
-    public String getTitle() { return title; }
-
-    /**
-     * Sets title.
-     *
-     * @param title the title
-     */
-    public void setTitle(String title) { this.title = title; }
+    public String getTitle() { return (title != null) ? title : ""; }
 
     /**
      * Gets drawable id.
@@ -57,13 +53,6 @@ public class TabListItem {
      * @return the drawable id
      */
     public int getDrawableId() { return drawableId; }
-
-    /**
-     * Sets drawable id.
-     *
-     * @param drawableId the drawable id
-     */
-    public void setDrawableId(int drawableId) { this.drawableId = drawableId; }
 
     /**
      * Sets selected status.
@@ -78,32 +67,4 @@ public class TabListItem {
      * @return the boolean
      */
     public boolean isSelected() { return isSelected; }
-
-    /**
-     * Sets text color.
-     *
-     * @param color the color
-     */
-    public void setTextColor(int color) { textColor = color; }
-
-    /**
-     * Gets text color.
-     *
-     * @return the text color
-     */
-    public int getTextColor() { return textColor; }
-
-    /**
-     * Sets text size.
-     *
-     * @param size the size
-     */
-    public void setTextSize(int size) { textSize = size; }
-
-    /**
-     * Gets text size.
-     *
-     * @return the text size
-     */
-    public int getTextSize() { return textSize; }
 }

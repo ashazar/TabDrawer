@@ -11,6 +11,4 @@ public class MainActivity extends BaseActivity {
 
         prepareTabDrawer();
     }
-
-
 }

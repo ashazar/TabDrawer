@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="3dp"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/listitem_selected_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical|end"
+            android:textSize="26sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:text="\u2E31 \u2022 \u25CF \u2B24"
+            android:visibility="invisible"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="4">
+
+            <ImageView
+                android:id="@+id/list_item_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/list_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/listitem_selected_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical|start"
+            android:textSize="26sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:text="\u2B24 \u25CF \u2022 \u2E31"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
