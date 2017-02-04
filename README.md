@@ -203,14 +203,14 @@ public void onBackPressed() {
 | `.setCustomDrawerGridViewId()`               | Sets the id for the custom GridView inside the custom drawer layout                    | int                 |
 | `.setCustomDrawerListItemLayoutResourceId()` | Sets the resource id for the custom item layout for GridView inside the drawer         | int                 |
 | `.forceDefaultDrawerLayout()`                | Force using default drawer layout, if a custom layout set in TabDrawerData             | *void*              |
-| `.setListItemTitleColors()`                  | Sets tab list item's title colors *(default, selected, inactiveSelected)*              | int *(,int)         |
+| `.setListItemTitleColors()`                  | Sets tab list item's title colors *(default, selected, inactiveSelected)*              | int *(,int)*        |
 | `.setListItemTitleSize()`                    | Sets tab item list text size.                                                          | int (sp)            |
 | `.setListItemTitleFont()`                    | Sets Typeface of the List item's Title                                                 | TypeFace            |
 | `.dontUseDefaultListAdapterViewSettings()`   | Sets if the developer wants to reset and override the default List item view settings  | *void*              |
 |                                              |                                                                                        |                     |
 | **TabListItem**                              | OBJECT                                                                                 |                     |
 |                                              | Instantiates with                                                                      |                     |
-|                                              | `new TabListItem(Title)`,  `new TabListItem(Icon)` or `new TabListItem(Title, Icon)`   |                     |
+|                                              | `TabListItem(Title)`,  `TabListItem(Icon)` or `TabListItem(Title, Icon)`               |                     |
 
 
 
