@@ -10,10 +10,6 @@ public class TabListItem {
     private int drawableId = -1;
     private boolean isSelected;
 
-    /**
-     * Instantiates a new TabListItem.
-     */
-    public TabListItem() { }
 
     /**
      * Instantiates a new TabListItem.
@@ -45,25 +41,11 @@ public class TabListItem {
     }
 
     /**
-     * Sets title.
-     *
-     * @param title the title
-     */
-    public void setTitle(String title) { this.title = title; }
-
-    /**
      * Gets title.
      *
      * @return the title
      */
     public String getTitle() { return (title != null) ? title : ""; }
-
-    /**
-     * Sets drawable id.
-     *
-     * @param drawableId the drawable id
-     */
-    public void setDrawableId(int drawableId) { this.drawableId = drawableId; }
 
     /**
      * Gets drawable id.

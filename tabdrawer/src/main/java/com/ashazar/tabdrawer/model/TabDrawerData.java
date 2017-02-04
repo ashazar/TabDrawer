@@ -178,7 +178,7 @@ public class TabDrawerData {
     public int getTabWithDrawerCount() { return tabWithDrawerCount; }
 
     /**
-     * Sets the Layout Resource Id of tabs
+     * Sets the custom Layout Resource Id of all tabs
      * All tabs will use this layout, unless a specific layout for a tab not set
      *
      * @param resourceId Resource Layout Id of the tabs
@@ -401,9 +401,8 @@ public class TabDrawerData {
     }
 
     /**
-     * Sets tab list item's title color of all tabs.
+     * Sets tab list item's title colors of all tabs.
      *
-     * @param colors normal (unselected)
      * @param colors normal (unselected), selected (1 or 2 Arguments)
      * @return the TabDrawerData
      */

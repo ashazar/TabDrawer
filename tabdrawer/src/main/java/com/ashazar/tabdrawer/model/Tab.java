@@ -587,9 +587,8 @@ public class Tab {
     boolean isResetTabViewSettingsSet() { return (isResetTabViewSettingsSet == 1); }
 
     /**
-     * Sets tab list item's title color.
+     * Sets tab list item's title colors.
      *
-     * @param colors normal (unselected)
      * @param colors normal (unselected), selected (1 or 2 Arguments)
      * @return the Tab
      */
