@@ -7,8 +7,6 @@ Android Navigation Tab Bar with Drawer - Alternative to Navigation Drawer *(Hamb
 | **Demo** | **Standard Tab Bar** | **Custom Layouts** |
 
 ---
-After seeing the design in Scott Jensen's article titled *Designing an Alternative to the Hamburger Menu*, loved the idea.
-*http://scottjensen.design/2016/04/designing-an-alternative-to-the-hamburger-menu*
 
 
 ### Adding TabDrawer Library
@@ -176,7 +174,7 @@ public void onBackPressed() {
 | `.setDrawerListColumnNumber()`               | Sets the number of columns in GridView in the drawer (default: 1)                      | int                 |
 | `.setCustomDrawerGridViewId()`               | Sets the id for the *custom GridView* inside the *custom drawer layout*                | int                 |
 | `.setCustomDrawerListItemLayoutResourceId()` | Sets the resource id for the custom item layout for GridView inside the drawer         | int                 |
-| `.setTabListItemTitleColors()`               | Sets tab list item's title color of all Tabs *(default, selected)*                     | int *(,int)         |
+| `.setTabListItemTitleColors()`               | Sets tab list item's title color of all Tabs *(default, selected)*                     | int *(,int)*        |
 | `.setTabListItemTitleSize()`                 | Sets tab item list text size                                                           | int (sp)            |
 | `.setTabListItemTitleFont()`                 | Sets Typeface of the Tab List item's Title                                             | TypeFace            |
 | `.dontUseDefaultTabListAdapterViewSettings()`| Sets if the developer wants to reset and override the default List item view settings  | *void*              |
@@ -213,6 +211,8 @@ public void onBackPressed() {
 |                                              | `TabListItem(Title)`,  `TabListItem(Icon)` or `TabListItem(Title, Icon)`               |                     |
 
 
+
+TabDrawer idea inspired by Scott Jensen's article [Designing an Alternative to the Hamburger Menu](http://scottjensen.design/2016/04/designing-an-alternative-to-the-hamburger-menu)
 
 
 ### License
