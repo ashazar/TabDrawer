@@ -107,7 +107,7 @@ TabDrawer tabDrawer = new TabDrawer(context, activity, R.id.tabDrawer, tabArray)
         };
 
         tabDrawer.initialize();
-     ```
+   ```
 
 If you want more customization, you can override below methods to modify the views as you want.
 For Tabs:
@@ -118,7 +118,6 @@ For Tabs:
 For List Items in Drawer:
 * `setUnselectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView)`
 * `setSelectedListItemView(int tabPosition, int itemPosition, View view, ImageView iconView, TextView titleView)`
-
 
 You can override `onBackPressed()` to close Drawer when pressed 'Back'.
 ```
