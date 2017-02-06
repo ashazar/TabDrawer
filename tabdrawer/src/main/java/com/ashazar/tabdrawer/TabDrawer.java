@@ -663,6 +663,35 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         }
     }
 
+    /**
+     * Set Selected Tab and List Item.
+     * This method can be used to trigger tab selection manually.
+     *
+     * @param tabPosition New Selected Tab Position
+     * @param itemPosition New Selected Tab List Item Position. (If there is no items, it will be 0)
+     */
+    public void setSelectedTab(int tabPosition, int itemPosition) {
+        boolean willSendClickInfo = false;
+
+        if (tabPosition != currentSelectedTabPos  ||  itemPosition != currentSelectedTabItemPos) {
+            willSendClickInfo = true;
+        }
+
+        currentSelectedTabPos = tabPosition;
+        if (!tabDrawerData.getTab(tabPosition).hasItems()) {
+            itemPosition = 0;
+        }
+        else {
+            refreshTabLists(currentSelectedTabPos, itemPosition);
+        }
+
+        refreshTabBar(currentSelectedTabPos);
+        closeDrawer();
+
+        if (willSendClickInfo) {
+            onTabDrawerClicked(currentSelectedTabPos, itemPosition);
+        }
+    }
 
     /**
      * Get Clicks for Tabs.
