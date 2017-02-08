@@ -84,6 +84,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     private static int currentSelectedTabItemPos = -1;
     private static int previousSelectedTabItemPos = -1;
     private static int previousSelectedTabWithListPos = -1;
+    private static int previousHighlightedTabPos;
 
 
     /**
@@ -164,6 +165,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             }
         }
 
+        previousHighlightedTabPos = currentSelectedTabPos;
         refreshTabBar(currentSelectedTabPos);
         refreshTabLists(currentSelectedTabPos, currentSelectedTabItemPos);
 
@@ -219,10 +221,6 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             tabLayout.setPadding(tabDrawerLayout.getTabPaddingLeft(), tabDrawerLayout.getTabPaddingTop(), tabDrawerLayout.getTabPaddingRight(), tabDrawerLayout.getTabPaddingBottom());
             tabLayout.setBackgroundColor(tab.getBackgroundColor());
         }
-        tabLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-
-        icon = (ImageView) tabLayout.findViewById(R.id.tab_icon);
-        title = (TextView) tabLayout.findViewById(R.id.tab_title);
 
         if (tabBarPositionTopOrBottom()) {
             tabLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
@@ -231,6 +229,8 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             tabLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
         }
 
+        icon = (ImageView) tabLayout.findViewById(R.id.tab_icon);
+        title = (TextView) tabLayout.findViewById(R.id.tab_title);
 
         if (tab.getIconImage() != 0) {
             icon.setImageResource(tab.getIconImage());
@@ -494,6 +494,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
                 tabLayout.requestLayout();
             }
         }
+        previousHighlightedTabPos = tabPos;
     }
 
     /**
