@@ -6,6 +6,11 @@ Android Navigation Tab Bar with Drawer - Alternative to Navigation Drawer *(Hamb
 |----------|----------------------|--------------------|
 | **Demo** | **Standard Tab Bar** | **Custom Layouts** |
 
+
+TabDrawer is an Open Source library for Android apps; combining the Navigation Tab Bar and a much user-friendly alternative to Navigation Drawer (Hamburger Menu)
+
+You can easily add a fully customized Navigation Tab Bar (Bottom/Top/Left/Right), and a drawer for each tab that contains lists for navigating to different sections of the app.
+
 ---
 
 
