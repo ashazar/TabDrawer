@@ -27,6 +27,14 @@
         tab:defaultSelectedTab="1"
         tab:padding="3dp"
         tab:list_padding="16dp"
+
+        tab:badgePosition="topRight"
+        tab:badgeMarginToTabCorner="2dp"
+        tab:badgePadding="2dp"
+        tab:badgeColor="#ff0000"
+        tab:badgeTextColor="#ffffff"
+        tab:badgeSize="14dp"
+        tab:badgeTextSize="10sp"
         />
 
 </RelativeLayout>
