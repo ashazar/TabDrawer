@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * Alternative to Navigation Drawer (Hamburger Menu)
  *
  * @author Serdar Hazar (ashazar) https://github.com/ashazar
- * @version 1.1.0  Created by Serdar Hazar on 26/04/16.
+ * @version 1.2.0  Updated on 25/10/17 Created by Serdar Hazar on 26/04/16.
  */
 public class TabDrawer implements View.OnClickListener, GridView.OnItemClickListener {
     /**
