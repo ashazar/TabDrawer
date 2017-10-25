@@ -670,14 +670,10 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      *
      * @param tabPosition New Selected Tab Position
      * @param itemPosition New Selected Tab List Item Position. (If there is no items, it will be 0)
+     * @param sendClickInfo true    to trigger onTabDrawerClicked()
+     *                      false   to do nothing but change selected Tab.
      */
-    public void setSelectedTab(int tabPosition, int itemPosition) {
-        boolean willSendClickInfo = false;
-
-        if (tabPosition != currentSelectedTabPos  ||  itemPosition != currentSelectedTabItemPos) {
-            willSendClickInfo = true;
-        }
-
+    public void setSelectedTab(int tabPosition, int itemPosition, boolean sendClickInfo) {
         currentSelectedTabPos = tabPosition;
         if (!tabDrawerData.getTab(tabPosition).hasItems()) {
             itemPosition = 0;
@@ -689,7 +685,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         refreshTabBar(currentSelectedTabPos);
         closeDrawer();
 
-        if (willSendClickInfo) {
+        if (sendClickInfo) {
             onTabDrawerClicked(currentSelectedTabPos, itemPosition);
         }
     }
