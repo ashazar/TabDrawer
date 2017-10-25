@@ -33,5 +33,19 @@
         <attr name="list_paddingTop" format="dimension"/>
         <attr name="list_paddingBottom" format="dimension"/>
 
+        <attr name="badgePosition" format="enum">
+            <enum name="topRight" value="0"/>
+            <enum name="topLeft" value="1"/>
+            <enum name="bottomRight" value="2"/>
+            <enum name="bottomLeft" value="3"/>
+            <enum name="center" value="4"/>
+        </attr>
+        <attr name="badgeMarginToTabCorner" format="dimension"/>
+        <attr name="badgePadding" format="dimension"/>
+        <attr name="badgeSize" format="dimension"/>
+        <attr name="badgeTextSize" format="dimension"/>
+        <attr name="badgeColor" format="color"/>
+        <attr name="badgeTextColor" format="color"/>
+
     </declare-styleable>
 </resources>

@@ -3,6 +3,7 @@ package com.ashazar.tabdrawer;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
@@ -41,6 +42,39 @@ public class TabDrawerLayout extends LinearLayout {
     private int list_paddingTop;
     private int list_paddingBottom;
 
+    private int badgePosition;
+
+    /**
+     * The enum Badge position.
+     */
+    public  enum BadgePosition {
+        /**
+         * Top right badge position.
+         */
+        TOP_RIGHT,
+        /**
+         * Top left badge position.
+         */
+        TOP_LEFT,
+        /**
+         * Bottom right badge position.
+         */
+        BOTTOM_RIGHT,
+        /**
+         * Bottom left badge position.
+         */
+        BOTTOM_LEFT,
+        /**
+         * Center badge position.
+         */
+        CENTER
+    }
+    private int badgeMarginToTabCorner;
+    private int badgePadding;
+    private int badgeSize;
+    private int badgeTextSize;
+    private int badgeColor;
+    private int badgeTextColor;
 
     /**
      * Instantiates a new TabDrawerLayout.
@@ -125,6 +159,15 @@ public class TabDrawerLayout extends LinearLayout {
         list_paddingRight = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_paddingRight, 0);
         list_paddingTop = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_paddingTop, 0);
         list_paddingBottom = (int) arr.getDimension(R.styleable.TabDrawerLayout_list_paddingBottom, 0);
+
+        // Badge
+        badgePosition = arr.getInteger(R.styleable.TabDrawerLayout_badgePosition, 0);
+        badgeMarginToTabCorner = (int) arr.getDimension(R.styleable.TabDrawerLayout_badgeMarginToTabCorner, 0);
+        badgePadding = (int) arr.getDimension(R.styleable.TabDrawerLayout_badgePadding, 0);
+        badgeSize = (int) arr.getDimension(R.styleable.TabDrawerLayout_badgeSize, getLayoutSize_tabBar()/5);
+        badgeTextSize = (int) arr.getDimension(R.styleable.TabDrawerLayout_badgeTextSize, getLayoutSize_tabBar()/5);
+        badgeColor = arr.getColor(R.styleable.TabDrawerLayout_badgeColor, Color.parseColor("#ff0000"));
+        badgeTextColor = arr.getColor(R.styleable.TabDrawerLayout_badgeTextColor, Color.parseColor("#ffffff"));
 
         arr.recycle();
 
@@ -284,4 +327,86 @@ public class TabDrawerLayout extends LinearLayout {
      * @return the tab list padding bottom
      */
     public int getTabListPaddingBottom() { return (list_paddingBottom != 0) ? list_paddingBottom : list_padding; }
+
+    /**
+     * Gets badge position.
+     *
+     * @return the badge position
+     */
+    public BadgePosition getBadgePosition() {
+        switch (badgePosition) {
+            case 0:
+                return BadgePosition.TOP_RIGHT;
+
+            case 1:
+                return BadgePosition.TOP_LEFT;
+
+            case 2:
+                return BadgePosition.BOTTOM_RIGHT;
+
+            case 3:
+                return BadgePosition.BOTTOM_LEFT;
+
+            case 4:
+                return BadgePosition.CENTER;
+
+            default:
+                return BadgePosition.TOP_RIGHT;
+        }
+    }
+
+    /**
+     * Gets badge margin to tab corner.
+     * For corner positions, if needed to add a margin from tab corner,
+     * after the tab's inner padding.
+     *
+     * @return the badge padding to tab corner
+     */
+    public int getBadgeMarginToTabCorner() {
+        switch (getBadgePosition()) {
+            case TOP_RIGHT:
+            case TOP_LEFT:
+            case BOTTOM_RIGHT:
+            case BOTTOM_LEFT:
+                return badgeMarginToTabCorner;
+            case CENTER:
+                return 0;
+        }
+        return 0;
+    }
+
+    /**
+     * Gets badge padding.
+     *
+     * @return the badge padding
+     */
+    public int getBadgePadding() { return badgePadding; }
+
+    /**
+     * Gets badge size.
+     *
+     * @return the badge size
+     */
+    public int getBadgeSize() { return badgeSize; }
+
+    /**
+     * Gets badge text size.
+     *
+     * @return the badge text size
+     */
+    public int getBadgeTextSize() { return badgeTextSize; }
+
+    /**
+     * Gets badge color.
+     *
+     * @return the badge color
+     */
+    public int getBadgeColor() { return badgeColor; }
+
+    /**
+     * Gets badge text color.
+     *
+     * @return the badge text color
+     */
+    public int getBadgeTextColor() { return badgeTextColor; }
 }

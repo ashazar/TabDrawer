@@ -2,8 +2,12 @@ package com.ashazar.tabdrawer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.Display;
@@ -11,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -22,6 +27,8 @@ import android.widget.TextView;
 import com.ashazar.tabdrawer.model.Tab;
 import com.ashazar.tabdrawer.model.TabDrawerData;
 import com.ashazar.tabdrawer.model.TabListItem;
+
+import java.util.ArrayList;
 
 /**
  * TabDrawer
@@ -37,6 +44,8 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
      */
     private Context context;
     private Activity activity;
+    private SharedPreferences sharedPreferences;
+    private final String BADGE_SHARED = "badge_count";
 
 
     /**
@@ -64,6 +73,9 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
     private final int TAB_BAR_POSITION_LEFT = 2;
     private final int TAB_BAR_POSITION_RIGHT = 3;
     private int tabBarPosition;
+
+    private ArrayList<Integer> badgeCount;
+    private final int BADGE_ID_START = 53000;
 
     /**
      * size in px
@@ -110,6 +122,7 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         this.tabDrawerData = tabDrawerData;
         tabCount = tabDrawerData.getTabCount();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
@@ -123,6 +136,28 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
         tabBarPosition = tabDrawerLayout.getTabBarPosition();
         tabBarSize = tabDrawerLayout.getLayoutSize_tabBar();
         tabListContainerSize = tabDrawerLayout.getLayoutSize_ListContainer();
+
+        badgeCount = new ArrayList<>();
+        String badgeShared = sharedPreferences.getString(BADGE_SHARED, "");
+        if (badgeShared.isEmpty()) {
+            String shTxt = "";
+            for (int i = 0; i < tabCount; i++) {
+                if (i > 0) shTxt += ",";
+                shTxt += "0";
+
+                badgeCount.add(i, 0);
+            }
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(BADGE_SHARED, shTxt);
+            editor.apply();
+        } else {
+            String[] badgeSharedArr = badgeShared.split(",");
+            int c = badgeSharedArr.length;
+            for (int i = 0; i < c; i++) {
+                badgeCount.add(i, Integer.parseInt(badgeSharedArr[i]));
+            }
+        }
 
         tabDrawerLayout.removeAllViews();
         if (tabBarPositionBottomOrRight()) {
@@ -270,11 +305,96 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
             title.setId(1200 + pos);
         }
 
+        tabLayout.addView(prepareBadgeView(pos));
+
         tabLayout.setId(1000 + pos);
         tabLayout.setClickable(true);
         tabLayout.setOnClickListener(this);
 
         return tabLayout;
+    }
+
+    private TextView prepareBadgeView(int tabPosition) {
+        String count = String.valueOf(badgeCount.get(tabPosition));
+
+        GradientDrawable badgeBackground = new GradientDrawable();
+        badgeBackground.setShape(GradientDrawable.OVAL);
+        badgeBackground.setColor(tabDrawerLayout.getBadgeColor());
+
+        final TextView badge = new TextView(context);
+        badge.setTextColor(tabDrawerLayout.getBadgeTextColor());
+        badge.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabDrawerLayout.getBadgeTextSize());
+        badge.setBackground(badgeBackground);
+        badge.setText(count);
+        badge.setGravity(Gravity.CENTER);
+        badge.setPadding(tabDrawerLayout.getBadgePadding(), tabDrawerLayout.getBadgePadding(), tabDrawerLayout.getBadgePadding(), tabDrawerLayout.getBadgePadding());
+        if (!tabDrawerData.getTab(tabPosition).getTitle().isEmpty()) {
+            badge.setTypeface(tabDrawerData.getTab(tabPosition).getTitleFont());
+        }
+        badge.setId(BADGE_ID_START + tabPosition);
+
+        ViewTreeObserver viewTree = badge.getViewTreeObserver();
+        viewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                if (badge.getMeasuredWidth() < badge.getMeasuredHeight()) {
+                    RelativeLayout.LayoutParams rparams = (RelativeLayout.LayoutParams) badge.getLayoutParams();
+                    rparams.height = badge.getMeasuredHeight();
+                    rparams.width = badge.getMeasuredHeight();
+                    badge.setLayoutParams(rparams);
+                }
+                return true;
+            }
+        });
+
+        RelativeLayout.LayoutParams rparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        switch (tabDrawerLayout.getBadgePosition()) {
+            case TOP_RIGHT:
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    rparams.addRule(RelativeLayout.ALIGN_PARENT_END);
+                }
+                rparams.setMargins(0, tabDrawerLayout.getBadgeMarginToTabCorner(), tabDrawerLayout.getBadgeMarginToTabCorner(), 0);
+                break;
+
+            case TOP_LEFT:
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    rparams.addRule(RelativeLayout.ALIGN_PARENT_START);
+                }
+                rparams.setMargins(tabDrawerLayout.getBadgeMarginToTabCorner(), tabDrawerLayout.getBadgeMarginToTabCorner(), 0, 0);
+                break;
+
+            case BOTTOM_RIGHT:
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    rparams.addRule(RelativeLayout.ALIGN_PARENT_END);
+                }
+                rparams.setMargins(0, 0, tabDrawerLayout.getBadgeMarginToTabCorner(), tabDrawerLayout.getBadgeMarginToTabCorner());
+                break;
+
+            case BOTTOM_LEFT:
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                rparams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    rparams.addRule(RelativeLayout.ALIGN_PARENT_START);
+                }
+                rparams.setMargins(tabDrawerLayout.getBadgeMarginToTabCorner(), 0, 0, tabDrawerLayout.getBadgeMarginToTabCorner());
+                break;
+
+            case CENTER:
+                rparams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                break;
+        }
+        badge.setLayoutParams(rparams);
+
+        if (badgeCount.get(tabPosition) == 0) {
+            badge.setVisibility(View.GONE);
+        }
+
+        return badge;
     }
 
     /**
@@ -556,6 +676,55 @@ public class TabDrawer implements View.OnClickListener, GridView.OnItemClickList
 
         currentSelectedTabPos = tabPos;
         currentSelectedTabItemPos = tabItemPos;
+    }
+
+    /**
+     * Gets badge count.
+     *
+     * @param tabPosition the tab position
+     * @return the badge count
+     */
+    public int getBadgeCount(int tabPosition) {
+        return badgeCount.get(tabPosition);
+    }
+
+    /**
+     * Sets badge count.
+     *
+     * @param tabPosition the tab position
+     * @param count       the count
+     */
+    public void setBadgeCount(int tabPosition, int count) {
+        if (count <= 0) count = 0;
+
+        badgeCount.set(tabPosition, count);
+
+        TextView badge = (TextView) tabDrawerLayout.findViewById(BADGE_ID_START + tabPosition);
+        badge.setText(String.valueOf(count));
+
+        if (count == 0) {
+            badge.setVisibility(View.GONE);
+        } else {
+            badge.setVisibility(View.VISIBLE);
+        }
+
+        String txt = "";
+        for (int i = 0; i < tabCount; i++) {
+            if (i > 0) txt += ",";
+            txt += String.valueOf(getBadgeCount(i));
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(BADGE_SHARED, txt);
+        editor.apply();
+    }
+
+    /**
+     * Clear badge count.
+     *
+     * @param tabPosition the tab position
+     */
+    public void clearBadgeCount(int tabPosition) {
+        setBadgeCount(tabPosition, 0);
     }
 
     /**
