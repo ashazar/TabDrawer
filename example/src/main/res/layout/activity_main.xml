@@ -33,7 +33,6 @@
         tab:badgePadding="2dp"
         tab:badgeColor="#ff0000"
         tab:badgeTextColor="#ffffff"
-        tab:badgeSize="14dp"
         tab:badgeTextSize="10sp"
         />
 
