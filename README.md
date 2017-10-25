@@ -12,15 +12,33 @@ TabDrawer is an Open Source library for Android apps; combining the Navigation T
 You can easily add a fully customized Navigation Tab Bar (Bottom/Top/Left/Right), and a drawer for each tab that contains lists for navigating to different sections of the app.
 
 ---
+### v. 1.2.0 Release Notes:
+* Badges added for Tabs
+ * Add below sample in your layout's `TabDrawerLayout` section
+ ```
+        tab:badgePosition="topRight"
+        tab:badgeMarginToTabCorner="2dp"
+        tab:badgePadding="2dp"
+        tab:badgeColor="#ff0000"
+        tab:badgeTextColor="#ffffff"
+        tab:badgeSize="14dp"
+        tab:badgeTextSize="10sp"
+ ```
+ * `.setBadgeCount(int tabPosition, int count)`
+ * `.getBadgeCount(int tabPosition)`
+ * `.clearBadgeCount(int tabPosition)`
+* Manually trigger Tab selection via `.setSelectedTab(int tabPosition, int itemPosition, boolean sendClickInfo)`
+
+---
 
 
 ### Adding TabDrawer Library
 **Gradle**  *(through JCenter)*
 
-Simply add `compile 'com.ashazar.tabdrawer:tabdrawer:1.1.0'` in *dependencies* in your app's `build.gradle` file
+Simply add `compile 'com.ashazar.tabdrawer:tabdrawer:1.2.0'` in *dependencies* in your app's `build.gradle` file
 ```
 dependencies {
-    compile 'com.ashazar.tabdrawer:tabdrawer:1.1.0'
+    compile 'com.ashazar.tabdrawer:tabdrawer:1.2.0'
 }
 ```
 
@@ -50,6 +68,14 @@ dependencies {
         tab:padding="3dp"
         tab:drawer_padding="2dp"
         tab:list_padding="10dp"
+        
+        tab:badgePosition="topRight"
+        tab:badgeMarginToTabCorner="2dp"
+        tab:badgePadding="2dp"
+        tab:badgeColor="#ff0000"
+        tab:badgeTextColor="#ffffff"
+        tab:badgeSize="14dp"
+        tab:badgeTextSize="10sp"
         />
 ```
 
@@ -61,7 +87,7 @@ dependencies {
 
  * **Tabs can be:**  **(a)** Icon only, **(b)** Text only, or **(c)** Icon and Text *(as in the sample app.)*
  * **Tabs can:**  **(a)** have item lists *(TabListItem)*, or  **(b)** Tab only *(act as a normal tab in a standard Tab Bar; no drawer opens, will be selected immediately, when clicked)*
- * **Tab list items can be:**  **(a)** Text only, or  **(b)** Icon and Text *(as in the sample app.)*
+ * **Tab list items can be:**  **(a)** Text only, **(b)** Icon and Text *(as in the sample app.)*, or **(c)** Icon only.
 ```
 TabDrawerData tabDrawerData = new TabDrawerData()
                 .setTabIconColors(
@@ -157,9 +183,17 @@ public void onBackPressed() {
 |                              |           | Can also use  **list_paddingTop**, **list_paddingBottom**,  **list_paddingLeft**, **list_paddingRight** |
 | **list_padding**             | no        | Padding for the Drawer's GridView (in 'dp')                                                             |
 |                              |           | Can also use  **list_paddingTop**, **list_paddingBottom**,  **list_paddingLeft**, **list_paddingRight** |
+| **badgePosition**            | yes       | Position of the badges                                                                                  |
+|                              |           | **topRight**, **topLeft**,  **bottomRight**, **bottomLeft**, **center**                                 |
+| **badgeMarginToTabCorner**   | no        | Margin from the corners (in 'dp')                                                                       |
+|                              |           | *Example: For **topRight** badge; it uses `marginTop` and `marginRight`*                                |
+| **badgePadding**             | no        | Inner padding of the badge (in 'dp')                                                                    |
+| **badgeColor**               | no        | Background color of the badge                                                                           |
+| **badgeTextColor**           | no        | Text color of the badge                                                                                 |
+| **badgeTextSize**            | yes       | Text size (in 'sp')                                                                                     |
 
 
-##### Methods forTabDrawerData, Tab, TabListItem
+##### Methods for TabDrawerData, Tab, TabListItem
 
 | Method                                       | Explanation                                                                            | Argument Type       |
 |----------------------------------------------|----------------------------------------------------------------------------------------|---------------------|
